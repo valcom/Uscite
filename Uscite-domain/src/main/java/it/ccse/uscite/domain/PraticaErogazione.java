@@ -35,7 +35,7 @@ import it.ccse.uscite.domain.StatoFideiussione.FideiussionePratica;
 import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
 import it.ccse.uscite.domain.StatoUnbundling.UnbundlingPratica;
 import it.ccse.uscite.domain.util.UsciteProperties;
-import it.ccse.uscite.infrastructure.exception.ApplicationException;
+import it.ccse.uscite.exception.ApplicationException;
 
 
 /**

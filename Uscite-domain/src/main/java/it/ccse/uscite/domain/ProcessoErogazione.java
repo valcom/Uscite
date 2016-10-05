@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import org.hibernate.envers.Audited;
 
 import it.ccse.uscite.domain.StatoComitato.AutorizzazioneComitato;
-import it.ccse.uscite.infrastructure.exception.ApplicationException;
+import it.ccse.uscite.exception.ApplicationException;
 
 
 /**

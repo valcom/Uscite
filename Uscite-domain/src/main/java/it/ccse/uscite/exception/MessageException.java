@@ -1,4 +1,4 @@
-package it.ccse.uscite.infrastructure.exception;
+package it.ccse.uscite.exception;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;

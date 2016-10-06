@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation=
+	"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+     
+     
+    	<!-- CCSE -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
+		<property name="host" value="${mail.host}" />
+		<property name="port" value="${mail.port}" />
+		<property name="protocol" value="smtps" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+        <props>
+            <prop key="mail.smtps.auth">true</prop>
+            <prop key="mail.smtp.ssl.enable">true</prop>
+            <prop key="mail.transport.protocol">smtps</prop>
+        </props>
+    </property>
+	</bean>
+<!-- messaggio sblocco pratiche Template -->
+	<bean id="msgSbloccoPratiche" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
+		<property name="from" value="${mail.from}" />
+		<property name="to" value="${mail.to}" />
+		<property name="cc" value="${mail.cc}" />
+		<property name="bcc" value="${mail.bcc}" />
+		<property name="subject" value="#{'Erogazioni in Sospeso Sbloccate '+'${environmentName}'}" />
+		<property name="replyTo" value="${mail.replyTo}" />
+		<property name="text">
+			<value><![CDATA[
+La Pratica di Erogazione Istituzionale Codice Pratica %s,
+
+per il beneficiario %s
+
+avente importo di %s
+
+associata alla nota numero %s
+
+del comitato del %s
+
+e' provvista di tutte le autorizzazioni ed e' pronta all' erogazione.
+
+		]]></value>
+		</property>
+	</bean>
+	
+	
+<!-- messaggio autorizzazione pratiche Template -->
+	<bean id="msgAutorizzazioneComitato" class="org.springframework.mail.SimpleMailMessage" scope="prototype">
+		<property name="from" value="${mail.from}" />
+		<property name="to" value="${mail.to}" />
+		<property name="cc" value="${mail.cc}" />
+		<property name="bcc" value="${mail.bcc}" />
+		<property name="subject" value="#{'Autorizzazione Comitato Concessa '+'${environmentName}'}" />
+		<property name="replyTo" value="${mail.replyTo}" />
+		<property name="text">
+			<value><![CDATA[
+La Pratica di Erogazione Istituzionale Codice Pratica %s,
+
+per il beneficiario %s
+
+avente importo di %s
+
+associata alla nota numero %s
+
+del comitato del %s
+
+e' stata autorizzata dal CdG ed e' pronta per essere lavorata.
+
+		]]></value>
+		</property>
+	</bean>	
+	
+</beans>

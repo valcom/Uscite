@@ -13,6 +13,17 @@
 		<spring-framework.version>4.2.6.RELEASE</spring-framework.version>
 
 
+
+		<javax.mail.version>1.4.7</javax.mail.version>
+
+		<aspectj.version>1.8.8</aspectj.version>
+
+		<!-- logging -->
+		<slf4j.version>1.7.21</slf4j.version>
+		<logback.version>1.1.7</logback.version>
+		<logback-ext-spring.version>0.1.4</logback-ext-spring.version>
+
+
 		<!-- test -->
 		<junit.version>4.12</junit.version>
 
@@ -22,7 +33,88 @@
 
 	</properties>
 
+	<profiles>
+		<profile>
+			<id>locale</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<webserver>webserver-locale</webserver>
+				<tomcat.url>http://localhost:8080/manager/text</tomcat.url>
+				<mail.host>smtp.mail.yahoo.it</mail.host>
+				<mail.port>465</mail.port>
+				<mail.protocol>smtps</mail.protocol>
+				<mail.username>asso_mazzo82@yahoo.it</mail.username>
+				<mail.password>qwerty123456</mail.password>
+				<mail.from>asso_mazzo82@yahoo.it</mail.from>
+				<mail.to>asso_mazzo82@yahoo.it</mail.to>
+				<mail.cc>vcompagnone@inmatica.com</mail.cc>
+				<mail.bcc>vcompagnone@inmatica.com</mail.bcc>
+				<mail.replyTo>vcompagnone@inmatica.com</mail.replyTo>
+				<environmentName><![CDATA[[LOCALE]]]></environmentName>
+			</properties>
+		</profile>
+		<profile>
+			<id>collaudo</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<webserver>webserver-collaudo</webserver>
+				<tomcat.url>http://192.168.40.14:8080/manager/text</tomcat.url>
+			</properties>
+		</profile>
+
+	</profiles>
+
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+		<!-- Spring and Transactions -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>${javax.mail.version}</version>
+		</dependency>
+
 
 		<!-- Test Artifacts -->
 		<dependency>
@@ -49,18 +141,12 @@
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<resources>
 			<resource>
-				<directory>src/main/java</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
+				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
 		<testResources>
 			<testResource>
-				<directory>src/test/java</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
+				<directory>src/test/resources</directory>
 			</testResource>
 		</testResources>
 		<outputDirectory>target/classes</outputDirectory>

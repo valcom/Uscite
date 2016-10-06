@@ -3,6 +3,10 @@
  */
 package it.ccse.uscite.application.service;
 
+import it.ccse.uscite.domain.PraticaErogazione;
+import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
+import it.ccse.uscite.domain.filter.PraticaFilter;
+
 import java.math.BigInteger;
 
 import org.junit.Test;
@@ -11,14 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-
-import it.ccse.uscite.application.service.PraticaErogazioneService;
-import it.ccse.uscite.domain.PraticaErogazione;
-import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
-import it.ccse.uscite.domain.filter.PraticaFilter;
 
 /**
  * @author vcompagnone
@@ -26,8 +24,7 @@ import it.ccse.uscite.domain.filter.PraticaFilter;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations =  {"classpath:/spring/application-context.xml","classpath:/spring/datasource.xml"} )
-@WebAppConfiguration
+@ContextConfiguration(locations =  {"classpath:/spring/application-context.xml","classpath:/spring/persistence-context-test.xml"} )
 @Transactional
 public class PraticaErogazioneServiceTest {
 	

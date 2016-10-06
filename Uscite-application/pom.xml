@@ -12,11 +12,11 @@
 		<!-- Spring -->
 		<spring-framework.version>4.2.6.RELEASE</spring-framework.version>
 
-
-
 		<javax.mail.version>1.4.7</javax.mail.version>
 
 		<aspectj.version>1.8.8</aspectj.version>
+		<commons-lang.version>2.2</commons-lang.version>
+		<commons-lang3.version>3.4</commons-lang3.version>
 
 		<!-- logging -->
 		<slf4j.version>1.7.21</slf4j.version>
@@ -26,6 +26,7 @@
 
 		<!-- test -->
 		<junit.version>4.12</junit.version>
+		<maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
 
 
 		<!-- plugins -->
@@ -69,7 +70,11 @@
 	</profiles>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>Uscite</groupId>
+			<artifactId>Uscite-domain</artifactId>
+			<version>0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
@@ -92,6 +97,18 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${commons-lang.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
 		</dependency>
 
 		<!-- Logging -->
@@ -129,11 +146,7 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>Uscite</groupId>
-			<artifactId>Uscite-domain</artifactId>
-			<version>0.1</version>
-		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -142,6 +155,7 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 		<testResources>

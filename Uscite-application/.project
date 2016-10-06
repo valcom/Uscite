@@ -3,6 +3,7 @@
 	<name>Uscite-application</name>
 	<comment></comment>
 	<projects>
+		<project>Uscite-domain</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

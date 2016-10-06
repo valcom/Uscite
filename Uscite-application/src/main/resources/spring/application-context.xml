@@ -9,7 +9,7 @@
 
 	
 	<import resource="mail-context.xml"/>
-
+		
 	<context:component-scan base-package="it.ccse.uscite" />
 
 	<context:annotation-config />
@@ -19,5 +19,8 @@
 	<bean id="loggingAspect" class="it.ccse.uscite.infrastructure.aop.LoggingAspect" />
 	
 	<aop:aspectj-autoproxy />
+	
+	<tx:annotation-driven transaction-manager="transactionManager" order="3" />
+	
 
 </beans>

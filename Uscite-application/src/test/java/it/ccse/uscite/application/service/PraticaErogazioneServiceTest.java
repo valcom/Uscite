@@ -24,7 +24,7 @@ import org.springframework.util.Assert;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations =  {"classpath:/spring/application-context.xml","classpath:/spring/persistence-context-test.xml"} )
+@ContextConfiguration(locations =  {"classpath:*spring/persistence-context-test.xml","classpath:/spring/application-context.xml"} )
 @Transactional
 public class PraticaErogazioneServiceTest {
 	

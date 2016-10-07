@@ -97,41 +97,15 @@
 			<version>${ehcache.version}</version>
 			<scope>compile</scope>
 		</dependency>
-		<!-- Test Artifacts -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring-framework.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql-connector.version}</version>
-			<scope>test</scope>
-		</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-		</testResources>
 		<outputDirectory>target/classes</outputDirectory>
-		<testOutputDirectory>target/test-classes</testOutputDirectory>
     <plugins>
      
       <plugin>

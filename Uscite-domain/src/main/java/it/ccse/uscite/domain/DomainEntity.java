@@ -5,6 +5,7 @@ package it.ccse.uscite.domain;
 
 import javax.persistence.Cacheable;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import org.hibernate.envers.Audited;
@@ -19,7 +20,7 @@ import org.hibernate.envers.Audited;
 public abstract class DomainEntity<ID> extends DomainObject{
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private ID id;
 	
 	

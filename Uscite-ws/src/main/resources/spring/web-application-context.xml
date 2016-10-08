@@ -11,6 +11,7 @@
 	<import resource="classpath:spring/application-context.xml"/>
 	<import resource="facade.xml" />
 		
+		
 	<context:component-scan base-package="it.ccse.uscite.facade" />
 
 	<context:annotation-config />

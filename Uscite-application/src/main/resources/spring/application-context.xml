@@ -9,6 +9,8 @@
 
 	
 	<import resource="mail-context.xml"/>
+	<import resource="persistence-context.xml"/>
+	
 		
 	<context:component-scan base-package="it.ccse.uscite" />
 

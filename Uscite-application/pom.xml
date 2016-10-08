@@ -8,27 +8,8 @@
 	</parent>
 	<artifactId>uscite-application</artifactId>
 	<properties>
-		<!-- Generic properties -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<!-- Spring -->
-		<spring-framework.version>4.2.6.RELEASE</spring-framework.version>
-
 		<javax.mail.version>1.4.7</javax.mail.version>
-
-		<aspectj.version>1.8.8</aspectj.version>
-		<commons-lang.version>2.2</commons-lang.version>
-		<commons-lang3.version>3.4</commons-lang3.version>
-
-		<!-- logging -->
-		<slf4j.version>1.7.21</slf4j.version>
-		<logback.version>1.1.7</logback.version>
-		<logback-ext-spring.version>0.1.4</logback-ext-spring.version>
-
-
-		<!-- plugins -->
-		<maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
-
+		<spring-data-commons-version>1.12.1.RELEASE</spring-data-commons-version>
 	</properties>
 
 	<profiles>
@@ -68,65 +49,56 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>it.ccse.uscite</groupId>
-			<artifactId>uscite-domain</artifactId>
-			<version>0.1</version>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${spring-framework.version}</version>
-		</dependency>
-		<!-- Spring and Transactions -->
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>${spring-framework.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>${spring-framework.version}</version>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>${aspectj.version}</version>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>${commons-lang.version}</version>
+			<groupId>it.ccse.uscite</groupId>
+			<artifactId>uscite-domain</artifactId>
+			<version>0.1</version>
 		</dependency>
-
+		
+		
+		
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>${spring-data-commons-version}</version>
 		</dependency>
-
-		<!-- Logging -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-
+		
 		<!-- Mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>${javax.mail.version}</version>
+		</dependency>
+		
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
 	</dependencies>

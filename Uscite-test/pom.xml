@@ -60,6 +60,12 @@
 			<artifactId>logback-classic</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>it.ccse.uscite</groupId>
+			<artifactId>uscite-ws</artifactId>
+			<version>0.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 

@@ -19,16 +19,16 @@ import it.ccse.uscite.domain.ProcessoErogazione;
  *
  */
 @Mapper(uses=AssemblerDettaglioPraticaErogazioneDTO.class)
-public abstract class AssemblerDissociaPraticheDaNota {
+public abstract class AssemblerDissociaPraticheDaNota{
 
 	public List<PraticaErogazione> assembleListaPratiche(DissociaPraticheDaNota_InDTO dissociaPraticheDaNota_InDTO){	
-		Container<List<PraticaErogazione>> container = mapToListaPraticheContainer(dissociaPraticheDaNota_InDTO);
+		Container<List<PraticaErogazione>> container = assemble(dissociaPraticheDaNota_InDTO);
 		return container!=null?container.getContent() : null;
 	}
 	
 	@Mapping(source="idNota",target="id")
 	public abstract ProcessoErogazione assembleProcessoErogazione(DissociaPraticheDaNota_InDTO dissociaPraticheDaNota_InDTO);
 
-	protected abstract Container<List<PraticaErogazione>> mapToListaPraticheContainer(DissociaPraticheDaNota_InDTO dissociaPraticheDaNota_InDTO);
+	protected abstract Container<List<PraticaErogazione>> assemble(DissociaPraticheDaNota_InDTO dissociaPraticheDaNota_InDTO);
 	
 }

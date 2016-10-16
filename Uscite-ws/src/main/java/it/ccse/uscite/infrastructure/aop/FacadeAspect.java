@@ -8,9 +8,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-
 import it.ccse.uscite.application.facade.dto.input.Base_InDTO;
 import it.ccse.uscite.application.facade.dto.output.Base_OutDTO;
 import it.ccse.uscite.application.facade.dto.output.Base_OutDTO.Esito;
@@ -26,8 +23,6 @@ public class FacadeAspect {
 
 	@Around("execution(public it.ccse.uscite.application.facade.dto.output.Base_OutDTO+ it.ccse.uscite.application.facade.*.*(it.ccse.uscite.application.facade.dto.input.Base_InDTO+)) && args(input)")
 	public Object makeOutput(ProceedingJoinPoint invocation,Base_InDTO input) throws Throwable{
-		String username = input.getUsername();
-		RequestContextHolder.currentRequestAttributes().setAttribute("username",username,RequestAttributes.SCOPE_REQUEST);
 	
 		Base_OutDTO output = null;
 		try {  

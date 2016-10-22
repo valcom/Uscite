@@ -10,6 +10,7 @@ import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.ccse.uscite.application.facade.assembler.uscite.AssemblerAggiornaFideiussione;
@@ -32,6 +33,7 @@ import it.ccse.uscite.domain.filter.PraticaFilter;
  * @author vcompagnone
  *
  */
+@Service("usciteWSFacade")
 @Transactional
 @WebService(endpointInterface="it.ccse.uscite.application.facade.soap.UsciteWSFacade")
 public class UsciteWSFacadeImpl implements UsciteWSFacade {

@@ -11,6 +11,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author vcompagnone
  *
  */
+
 public abstract class BaseDTO implements Serializable {
 
 	/**

@@ -31,6 +31,8 @@
         <jaxrs:features>
         	<bean class="org.apache.cxf.feature.LoggingFeature" />
         </jaxrs:features>
-        
+       <jaxrs:providers>
+   			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+		</jaxrs:providers>
      </jaxrs:server>
 </beans>

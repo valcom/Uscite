@@ -2,6 +2,7 @@ package it.ccse.uscite.application.facade.impl.rest;
 
 import java.util.Collection;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -76,7 +77,7 @@ public class UsciteRestWSFacadeImpl implements UsciteRestWSFacade{
 	@Path("/pratiche")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Override
-	public SearchPratiche_OutDTO searchPratiche(SearchPratiche_InDTO searchPratiche_InDTO) {
+	public SearchPratiche_OutDTO searchPratiche(@BeanParam SearchPratiche_InDTO searchPratiche_InDTO) {
 		PraticaFilter filter = assemblerSearchPratiche.assemble(searchPratiche_InDTO);
 		Page<PraticaErogazione> pratiche = praticaErogazioneService.searchPraticheErogazione(filter);
 		return assemblerSearchPratiche.assemble(pratiche);
@@ -86,7 +87,7 @@ public class UsciteRestWSFacadeImpl implements UsciteRestWSFacade{
 	@Path("/note")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Override
-	public SearchNote_OutDTO searchNote(SearchNote_InDTO searchNote_InDTO) {
+	public SearchNote_OutDTO searchNote(@BeanParam SearchNote_InDTO searchNote_InDTO) {
 		ProcessoFilter req = assemblerSearchNote.assemble(searchNote_InDTO);
 		return assemblerSearchNote.assemble(processoErogazioneService.searchProcessiErogazione(req));
 	}
@@ -95,7 +96,7 @@ public class UsciteRestWSFacadeImpl implements UsciteRestWSFacade{
 	@Path("/comitati")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Override
-	public SearchComitati_OutDTO searchComitati(SearchComitati_InDTO searchComitati_InDTO) {
+	public SearchComitati_OutDTO searchComitati(@BeanParam SearchComitati_InDTO searchComitati_InDTO) {
 		OrdineDelGiornoFilter req = assemblerSearchComitati.assemble(searchComitati_InDTO);
 		return  assemblerSearchComitati.assemble(ordineDelGiornoService.searchComitati(req));
 	}
@@ -104,7 +105,7 @@ public class UsciteRestWSFacadeImpl implements UsciteRestWSFacade{
 	@Path("/tipiPeriodo")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Override
-	public GetTipiPeriodo_OutDTO getTipiPeriodo(GetTipiPeriodo_InDTO getTipiPeriodo_InDTO) {
+	public GetTipiPeriodo_OutDTO getTipiPeriodo(@BeanParam GetTipiPeriodo_InDTO getTipiPeriodo_InDTO) {
 		Collection<TipoPeriodo> tipiPeriodo = tipoPeriodoService.getTipiPeriodo();
 		return assemblerGetTipiPeriodo.assemble(tipiPeriodo);
 	}
@@ -113,7 +114,7 @@ public class UsciteRestWSFacadeImpl implements UsciteRestWSFacade{
 	@Path("/statiLegali")
 	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	@Override
-	public GetStatiLegali_OutDTO getStatiLegali(GetStatiLegali_InDTO getStatiLegali_InDTO) {
+	public GetStatiLegali_OutDTO getStatiLegali(@BeanParam GetStatiLegali_InDTO getStatiLegali_InDTO) {
 		Collection<StatoLegale> statiLegali = statoLegaleService.getStatiLegali();
 		return assemblerGetStatiLegali.assemble(statiLegali);
 	}

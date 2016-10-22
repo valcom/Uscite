@@ -10,6 +10,7 @@ import it.ccse.uscite.application.facade.dto.BaseDTO;
  * @author vcompagnone
  *
  */
+
 public abstract class Base_InDTO extends BaseDTO{
 
 	/**

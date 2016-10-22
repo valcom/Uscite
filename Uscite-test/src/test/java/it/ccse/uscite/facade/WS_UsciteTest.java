@@ -22,8 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import it.ccse.uscite.application.facade.GestionaleWSFacade;
-import it.ccse.uscite.application.facade.UsciteWSFacade;
 import it.ccse.uscite.application.facade.dto.ComitatoDTO;
 import it.ccse.uscite.application.facade.dto.DettaglioComitatoDTO;
 import it.ccse.uscite.application.facade.dto.DettaglioNotaPagamentoDTO;
@@ -67,6 +65,8 @@ import it.ccse.uscite.application.facade.dto.output.gestionale.RinviaNota_OutDTO
 import it.ccse.uscite.application.facade.dto.output.gestionale.SearchComitati_OutDTO;
 import it.ccse.uscite.application.facade.dto.output.uscite.AggiornaSemaforiAnagrafica_OutDTO;
 import it.ccse.uscite.application.facade.dto.output.uscite.SearchPratiche_OutDTO;
+import it.ccse.uscite.application.facade.soap.GestionaleWSFacade;
+import it.ccse.uscite.application.facade.soap.UsciteWSFacade;
 import it.ccse.uscite.domain.OrdineDelGiorno.TipologiaComitato;
 import it.ccse.uscite.domain.SettoreAttivita.StatoAntimafia;
 import it.ccse.uscite.domain.SettoreAttivita.Unbundling;

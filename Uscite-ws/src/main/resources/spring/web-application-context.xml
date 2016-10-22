@@ -18,7 +18,6 @@
 	
 	
 	<bean id="facadeAspect" class="it.ccse.uscite.infrastructure.aop.FacadeAspect" />
-	<bean id="usernameAspect" class="it.ccse.uscite.infrastructure.aop.UsernameAspect" />
 	
 	
 	<aop:aspectj-autoproxy />

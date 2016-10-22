@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.ccse.uscite.application.facade.impl;
+package it.ccse.uscite.application.facade.impl.soap;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,7 +11,6 @@ import javax.jws.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.ccse.uscite.application.facade.GestionaleWSFacade;
 import it.ccse.uscite.application.facade.assembler.gestionale.AssemblerAggiornaComitato;
 import it.ccse.uscite.application.facade.assembler.gestionale.AssemblerAggiornaNota;
 import it.ccse.uscite.application.facade.assembler.gestionale.AssemblerAggiungiComitato;
@@ -74,6 +73,7 @@ import it.ccse.uscite.application.facade.dto.output.gestionale.RifiutaAutorizzaz
 import it.ccse.uscite.application.facade.dto.output.gestionale.RinviaNota_OutDTO;
 import it.ccse.uscite.application.facade.dto.output.gestionale.SearchComitati_OutDTO;
 import it.ccse.uscite.application.facade.dto.output.gestionale.SearchNote_OutDTO;
+import it.ccse.uscite.application.facade.soap.GestionaleWSFacade;
 import it.ccse.uscite.application.service.OrdineDelGiornoService;
 import it.ccse.uscite.application.service.PraticaErogazioneService;
 import it.ccse.uscite.application.service.ProcessoErogazioneService;
@@ -94,7 +94,7 @@ import it.ccse.uscite.domain.filter.ProcessoFilter;
  */
 
 @Transactional
-@WebService(endpointInterface="it.ccse.uscite.application.facade.GestionaleWSFacade")
+@WebService(endpointInterface="it.ccse.uscite.application.facade.soap.GestionaleWSFacade")
 public class GestionaleWSFacadeImpl implements GestionaleWSFacade {
 	
 	@Autowired

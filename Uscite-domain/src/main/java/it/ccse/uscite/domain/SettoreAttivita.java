@@ -24,6 +24,8 @@ public class SettoreAttivita extends ValueObject {
 	private StatoAntimafia statoAntimafia;
 	@Transient
 	private Unbundling unbundling;
+	@Transient
+	private String username;
 	
 	public static enum StatoAntimafia{
 		
@@ -178,6 +180,14 @@ public class SettoreAttivita extends ValueObject {
 	 */
 	public void setRagioneSociale(String ragioneSociale) {
 		this.ragioneSociale = ragioneSociale;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.ccse.uscite.application.facade;
+package it.ccse.uscite.application.facade.soap;
 
 import javax.jws.WebService;
 

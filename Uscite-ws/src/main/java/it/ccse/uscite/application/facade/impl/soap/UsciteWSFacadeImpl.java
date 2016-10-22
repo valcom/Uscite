@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.ccse.uscite.application.facade.impl;
+package it.ccse.uscite.application.facade.impl.soap;
 
 import java.util.Collection;
 import java.util.Map;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.ccse.uscite.application.facade.UsciteWSFacade;
 import it.ccse.uscite.application.facade.assembler.uscite.AssemblerAggiornaFideiussione;
 import it.ccse.uscite.application.facade.assembler.uscite.AssemblerAggiornaSemaforiAnagrafica;
 import it.ccse.uscite.application.facade.assembler.uscite.AssemblerSearchPratiche;
@@ -22,6 +21,7 @@ import it.ccse.uscite.application.facade.dto.input.uscite.SearchPratiche_InDTO;
 import it.ccse.uscite.application.facade.dto.output.uscite.AggiornaFideiussione_OutDTO;
 import it.ccse.uscite.application.facade.dto.output.uscite.AggiornaSemaforiAnagrafica_OutDTO;
 import it.ccse.uscite.application.facade.dto.output.uscite.SearchPratiche_OutDTO;
+import it.ccse.uscite.application.facade.soap.UsciteWSFacade;
 import it.ccse.uscite.application.service.PraticaErogazioneService;
 import it.ccse.uscite.domain.PraticaErogazione;
 import it.ccse.uscite.domain.SettoreAttivita;
@@ -33,7 +33,7 @@ import it.ccse.uscite.domain.filter.PraticaFilter;
  *
  */
 @Transactional
-@WebService(endpointInterface="it.ccse.uscite.application.facade.UsciteWSFacade")
+@WebService(endpointInterface="it.ccse.uscite.application.facade.soap.UsciteWSFacade")
 public class UsciteWSFacadeImpl implements UsciteWSFacade {
 
 	@Autowired

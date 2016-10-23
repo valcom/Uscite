@@ -3,6 +3,8 @@
  */
 package it.ccse.uscite.application.facade.dto.input;
 
+import javax.ws.rs.QueryParam;
+
 /**
  * @author vcompagnone
  *
@@ -14,10 +16,14 @@ public class PageableDTO extends Base_InDTO {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	 @QueryParam("pageNumber")
 	 private Integer pageNumber;
-     private Integer pageSize;
-     private String orderProperty;
- 	 private Direction orderDirection = Direction.ASC;
+	 @QueryParam("pageSize")
+	 private Integer pageSize;
+	 @QueryParam("orderProperty")
+	 private String orderProperty;
+	 @QueryParam("orderDirection")
+	 private Direction orderDirection = Direction.ASC;
 	/**
 	 * @return the pageNumber
 	 */

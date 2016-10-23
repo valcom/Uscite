@@ -14,6 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.CollectionUtils;
 
 import it.ccse.uscite.domain.OrdineDelGiorno_;
 import it.ccse.uscite.domain.PraticaErogazione;
@@ -49,7 +50,7 @@ public class PraticaSpecifications {
 
 			@Override
 			public Predicate toPredicate(Root<PraticaErogazione> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-				        return listaIdSettoriAttivita!=null ? root.get(PraticaErogazione_.settoreAttivita).get(SettoreAttivita_.id).in(listaIdSettoriAttivita):null;
+				        return !CollectionUtils.isEmpty(listaIdSettoriAttivita) ? root.get(PraticaErogazione_.settoreAttivita).get(SettoreAttivita_.id).in(listaIdSettoriAttivita):null;
 			}
 	     
 	    };
@@ -174,7 +175,7 @@ public class PraticaSpecifications {
 
 			@Override
 			public Predicate toPredicate(Root<PraticaErogazione> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-				 return listaValoriAutorizzazioneLegale!=null ? root.get(PraticaErogazione_.statoLegale).get(StatoLegale_.valore).in(listaValoriAutorizzazioneLegale):null;
+				 return !CollectionUtils.isEmpty(listaValoriAutorizzazioneLegale) ? root.get(PraticaErogazione_.statoLegale).get(StatoLegale_.valore).in(listaValoriAutorizzazioneLegale):null;
 			}
 	     
 	    };
@@ -283,7 +284,7 @@ public class PraticaSpecifications {
 
 			@Override
 			public Predicate toPredicate(Root<PraticaErogazione> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-				        return statiPratica!=null ? root.get(PraticaErogazione_.lavorazioneContabile).in(statiPratica):null;
+				        return !CollectionUtils.isEmpty(statiPratica) ? root.get(PraticaErogazione_.lavorazioneContabile).in(statiPratica):null;
 			}
 	     
 	    };
@@ -405,7 +406,7 @@ public class PraticaSpecifications {
 
 			@Override
 			public Predicate toPredicate(Root<PraticaErogazione> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-				        return codiciPratica!=null ? root.get(PraticaErogazione_.codicePratica).in(codiciPratica):null;
+				        return !CollectionUtils.isEmpty(codiciPratica) ? root.get(PraticaErogazione_.codicePratica).in(codiciPratica):null;
 			}
 	     
 	    };

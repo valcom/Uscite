@@ -17,6 +17,8 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.QueryParam;
+
 /**
  * @author vcompagnone
  *
@@ -28,6 +30,7 @@ public class SearchPratiche_InDTO extends PageableDTO {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@QueryParam("listaIdSettoriAttivita")
 	private List<BigInteger> listaIdSettoriAttivita;
 	
 	private Date dataComitatoDa;
@@ -36,8 +39,10 @@ public class SearchPratiche_InDTO extends PageableDTO {
 	
 	private Integer numeroNota;
 	
+	@QueryParam("importoDa")
 	private BigDecimal importoDa;
 	
+	@QueryParam("importoA")
 	private BigDecimal importoA;
 		
 	private BigInteger idPosizioneFinanziaria;
@@ -58,8 +63,10 @@ public class SearchPratiche_InDTO extends PageableDTO {
 	
 	private List<StatoPratica> statiPratica;
 	
+	@QueryParam("annoDa")
 	private Integer annoDa;
 	
+	@QueryParam("annoA")
 	private Integer annoA;
 	
 	private TipoPeriodoDTO tipoPeriodo;
@@ -74,6 +81,7 @@ public class SearchPratiche_InDTO extends PageableDTO {
 	
 	private BigInteger idNota;
 	
+	@QueryParam("erogabile")
 	private Boolean erogabile;
 	
 	private List<String> codiciPratica;

@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.ccse.uscite.application.facade.assembler.gestionale.AssemblerGetStatiLegali;
 import it.ccse.uscite.application.facade.assembler.gestionale.AssemblerGetTipiPeriodo;
@@ -42,6 +43,7 @@ import it.ccse.uscite.domain.filter.ProcessoFilter;
 
 @Path("/")
 @Service("usciteRestWSFacade")
+@Transactional
 public class UsciteRestWSFacadeImpl implements UsciteRestWSFacade{
 	@Autowired
 	private AssemblerSearchPratiche assemblerSearchPratiche;

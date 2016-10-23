@@ -28,7 +28,7 @@
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>
-	
+	 
 	<logger name="it.ccse.uscite" level="info"/>
 	
 <!-- 	<logger name="org.hibernate.SQL" level="info"/> -->

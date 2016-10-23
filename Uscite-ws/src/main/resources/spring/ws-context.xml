@@ -32,7 +32,7 @@
         	<bean class="org.apache.cxf.feature.LoggingFeature" />
         </jaxrs:features>
        <jaxrs:providers>
-   			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider"/>
 		</jaxrs:providers>
      </jaxrs:server>
 </beans>

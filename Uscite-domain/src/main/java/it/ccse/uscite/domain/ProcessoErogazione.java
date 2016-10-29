@@ -1,6 +1,5 @@
 package it.ccse.uscite.domain;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Set;
@@ -46,7 +45,7 @@ import it.ccse.uscite.exception.ApplicationException;
 @Table(name="processo_erogazione")
 @AttributeOverride(name = "id", column = @Column(name = "id_processo_erogazione"))
 @Audited
-public class ProcessoErogazione extends DomainEntity<BigInteger> implements Serializable {
+public class ProcessoErogazione extends DomainEntity<BigInteger> {
 	private static final long serialVersionUID = 1L;
 
 	@Lob

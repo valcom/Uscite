@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="usciteWS" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="it.ccse.uscite.usciteWS.UsciteWS" />
+		<property name="wsdlDocumentUrl" value="classpath:wsdl/usciteWS.wsdl" />
+		<property name="namespaceUri" value="it.ccse.uscite" />
+		<property name="serviceName" value="UsciteWS" />
+		<property name="portName" value="UsciteWSFacadeImplPort" />
+		<property name="username" value="serviceBus" />
+		<property name="password" value="ccse2014" />	
+	</bean>
+	<bean id="gestionaleWS"
+		class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="it.ccse.uscite.gestionaleWS.GestionaleWSFacade" />
+		<property name="wsdlDocumentUrl" value="classpath:/wsdl/gestionaleWS.wsdl" />
+		<property name="namespaceUri" value="it.ccse.uscite" />
+		<property name="serviceName" value="GestionaleWS" />
+		<property name="portName" value="GestionaleWSFacadeImplPort" />
+		<property name="username" value="gestionale" />
+		<property name="password" value="ccse2014" />
+	</bean>
+</beans>

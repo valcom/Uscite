@@ -1,8 +1,8 @@
 package it.ccse.uscite.domain;
 
-import java.io.Serializable;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 /**
@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="tipo_periodo")
-public class TipoPeriodo  extends DomainEntity<Integer> implements Serializable{
+public class TipoPeriodo  extends DomainEntity<Integer>{
 	private static final long serialVersionUID = 1L;
 
 	private String descrizione;

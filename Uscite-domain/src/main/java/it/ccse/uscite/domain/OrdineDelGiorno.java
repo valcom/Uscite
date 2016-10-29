@@ -1,6 +1,5 @@
 package it.ccse.uscite.domain;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -53,7 +52,7 @@ import it.ccse.uscite.exception.ApplicationException;
 @AttributeOverride(name = "id", column = @Column(name = "id_ordine_del_giorno"))
 @Table(name = "ordine_del_giorno")
 @Audited
-public class OrdineDelGiorno extends DomainEntity<BigInteger> implements Serializable {
+public class OrdineDelGiorno extends DomainEntity<BigInteger> {
 	public enum StatoComitato{
 		APERTO,CHIUSO
 	}

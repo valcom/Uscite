@@ -13,7 +13,6 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
 		</property>
-	
 	</bean>
 
 	<!--transaction manager, use JtaTransactionManager for global tx -->

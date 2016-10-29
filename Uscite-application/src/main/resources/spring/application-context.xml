@@ -9,7 +9,7 @@
 
 	
 	<import resource="mail-context.xml"/>
-	<import resource="persistence-context.xml"/>
+	<import resource="classpath:spring/persistence-context.xml"/>
 	
 		
 	<context:component-scan base-package="it.ccse.uscite" />

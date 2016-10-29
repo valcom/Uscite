@@ -1,0 +1,584 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="it.ccse.uscite"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="UsciteWS" targetNamespace="it.ccse.uscite">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="it.ccse.uscite" elementFormDefault="unqualified"
+			targetNamespace="it.ccse.uscite" version="1.0">
+			<xs:element name="aggiornaFideiussione" type="tns:aggiornaFideiussione" />
+			<xs:element name="aggiornaFideiussioneResponse" type="tns:aggiornaFideiussioneResponse" />
+			<xs:element name="aggiornaSemaforiAnagrafica" type="tns:aggiornaSemaforiAnagrafica" />
+			<xs:element name="aggiornaSemaforiAnagraficaResponse"
+				type="tns:aggiornaSemaforiAnagraficaResponse" />
+			<xs:element name="searchPratiche" type="tns:searchPratiche" />
+			<xs:element name="searchPraticheOutDTO" type="tns:searchPraticheOutDTO" />
+			<xs:element name="searchPraticheResponse" type="tns:searchPraticheResponse" />
+			<xs:complexType name="searchPratiche">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:searchPraticheInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="searchPraticheInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:pageableDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="annoA" type="xs:int" />
+							<xs:element minOccurs="0" name="annoDa" type="xs:int" />
+							<xs:element minOccurs="0" name="autorizzazioneComitato"
+								type="tns:autorizzazioneComitato" />
+							<xs:element minOccurs="0" name="autorizzazioneContabile"
+								type="tns:autorizzazioneContabile" />
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="codiciPratica" nillable="true" type="xs:string" />
+							<xs:element minOccurs="0" name="dataComitatoA" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataComitatoDa" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataFideiussioneA"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataFideiussioneDa"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataInteressiA" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataInteressiDa" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataScadenzaA" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataScadenzaDa" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="erogabile" type="xs:boolean" />
+							<xs:element minOccurs="0" name="fideiussione"
+								type="tns:fideiussionePratica" />
+							<xs:element minOccurs="0" name="idComponenteTariffaria"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="idNota" type="xs:integer" />
+							<xs:element minOccurs="0" name="idPosizioneFinanziaria"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="importoA" type="xs:decimal" />
+							<xs:element minOccurs="0" name="importoDa" type="xs:decimal" />
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="listaIdSettoriAttivita" nillable="true" type="xs:integer" />
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="listaValoriAutorizzazioneLegale" nillable="true"
+								type="tns:autorizzazioneLegale" />
+							<xs:element minOccurs="0" name="numeroNota" type="xs:int" />
+							<xs:element minOccurs="0" name="periodo" type="xs:int" />
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="statiPratica" nillable="true" type="tns:statoPratica" />
+							<xs:element minOccurs="0" name="tipoPeriodo" type="tns:tipoPeriodoDTO" />
+							<xs:element minOccurs="0" name="unbundling" type="tns:unbundlingPratica" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="pageableDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="orderDirection" type="tns:direction" />
+							<xs:element minOccurs="0" name="orderProperty" type="xs:string" />
+							<xs:element minOccurs="0" name="pageNumber" type="xs:int" />
+							<xs:element minOccurs="0" name="pageSize" type="xs:int" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="baseInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="username" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="baseDTO">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="tipoPeriodoDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+							<xs:element minOccurs="0" name="id" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="domainDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="username" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="searchPraticheResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:searchPraticheOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="searchPraticheOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:pageDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:dettaglioPraticaErogazioneDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="pageDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="number" type="xs:int" />
+							<xs:element minOccurs="0" name="numberOfElements"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="size" type="xs:int" />
+							<xs:element minOccurs="0" name="totalElements" type="xs:long" />
+							<xs:element minOccurs="0" name="totalPages" type="xs:int" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="baseOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="errorCode" type="xs:string" />
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="errorParams" nillable="true" type="xs:string" />
+							<xs:element minOccurs="0" name="esito" type="tns:esito" />
+							<xs:element minOccurs="0" name="message" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="dettaglioPraticaErogazioneDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:praticaErogazioneDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="nota"
+								type="tns:dettaglioNotaPagamentoDTO" />
+							<xs:element minOccurs="0" name="settoreAttivita"
+								type="tns:settoreAttivitaDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="praticaErogazioneDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="anno" type="xs:int" />
+							<xs:element minOccurs="0" name="autorizzazioneAutorizzante"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="autorizzazioneComitato"
+								type="tns:autorizzazioneComitato" />
+							<xs:element minOccurs="0" name="autorizzazioneContabile"
+								type="tns:autorizzazioneContabile" />
+							<xs:element minOccurs="0" name="autorizzazioneLegale"
+								type="tns:autorizzazioneLegale" />
+							<xs:element minOccurs="0" name="bimestre" type="xs:string" />
+							<xs:element minOccurs="0" name="bloccoComitato" type="xs:boolean" />
+							<xs:element minOccurs="0" name="bloccoContabile" type="xs:boolean" />
+							<xs:element minOccurs="0" name="bloccoFideiussione"
+								type="xs:boolean" />
+							<xs:element minOccurs="0" name="bloccoLegale" type="xs:boolean" />
+							<xs:element minOccurs="0" name="bloccoUnbundling"
+								type="xs:boolean" />
+							<xs:element minOccurs="0" name="codicePosizioneFinanziaria"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="codicePratica" type="xs:string" />
+							<xs:element minOccurs="0" name="dataAutorizzazioneComitato"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataAutorizzazioneContabile"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataAutorizzazioneLegale"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataCompetenzaEconomica"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataContabilizzazione"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataErogabilita" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataErogazione" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataFideiussione"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataInteressi" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataLavorazione" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataScadenza" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataUnbundling" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+							<xs:element minOccurs="0" name="erogabile" type="xs:boolean" />
+							<xs:element minOccurs="0" name="fideiussione"
+								type="tns:fideiussionePratica" />
+							<xs:element minOccurs="0" name="id" type="xs:integer" />
+							<xs:element minOccurs="0" name="idArticoloAc" type="xs:integer" />
+							<xs:element minOccurs="0" name="idAutorizzante" type="xs:string" />
+							<xs:element minOccurs="0" name="idCapitoloAc" type="xs:integer" />
+							<xs:element minOccurs="0" name="idCentroCosto" type="xs:string" />
+							<xs:element minOccurs="0" name="idCentroResponsabilita"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="idComponenteTariffariaAc"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="idContoCorrenteAc"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="idContoGestioneAc"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="idLavorante" type="xs:string" />
+							<xs:element minOccurs="0" name="idPosizioneFinanziariaAc"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="idPraticaErogazioneDifferenza"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="idPraticaErogazioneOriginale"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="idPraticaErogazioneRettifica"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="idProponente" type="xs:string" />
+							<xs:element minOccurs="0" name="idSettoreAttivita"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="idSoggetto" type="xs:int" />
+							<xs:element minOccurs="0" name="impegno" type="xs:decimal" />
+							<xs:element minOccurs="0" name="lavorazioneContabile"
+								type="tns:statoPratica" />
+							<xs:element minOccurs="0" name="mandato" type="xs:decimal" />
+							<xs:element minOccurs="0" name="numeroRettifica" type="xs:int" />
+							<xs:element minOccurs="0" name="owner" type="xs:string" />
+							<xs:element minOccurs="0" name="periodo" type="xs:int" />
+							<xs:element minOccurs="0" name="statoPraticaGestionale"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="statoRiepilogativo"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="tipoPeriodo" type="tns:tipoPeriodoDTO" />
+							<xs:element minOccurs="0" name="tipologia" type="xs:string" />
+							<xs:element minOccurs="0" name="unbundling" type="tns:unbundlingPratica" />
+							<xs:element minOccurs="0" name="vistoConformita" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="dettaglioNotaPagamentoDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:notaPagamentoDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="numeroPratiche" type="xs:int" />
+							<xs:element minOccurs="0" name="ordineDelGiorno" type="tns:comitatoDTO" />
+							<xs:element minOccurs="0" name="owner" type="xs:string" />
+							<xs:element minOccurs="0" name="totaleImporto" type="xs:decimal" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="notaPagamentoDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="causale" type="xs:string" />
+							<xs:element minOccurs="0" name="id" type="xs:integer" />
+							<xs:element minOccurs="0" name="lavorazioneContabile"
+								type="tns:statoLavorazioneContabile" />
+							<xs:element minOccurs="0" name="numeroNota" type="xs:int" />
+							<xs:element minOccurs="0" name="stato" type="tns:statoProcesso" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="comitatoDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="dataComitato" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+							<xs:element minOccurs="0" name="id" type="xs:integer" />
+							<xs:element minOccurs="0" name="numeroComitato" type="xs:int" />
+							<xs:element minOccurs="0" name="stato" type="tns:statoComitato" />
+							<xs:element minOccurs="0" name="tipologia" type="tns:tipologiaComitato" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="settoreAttivitaDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="id" type="xs:int" />
+							<xs:element minOccurs="0" name="ragioneSociale" type="xs:string" />
+							<xs:element minOccurs="0" name="statoAntimafia" type="tns:statoAntimafia" />
+							<xs:element minOccurs="0" name="unbundling" type="tns:unbundling" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiornaFideiussione">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:aggiornaFideiussioneInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiornaFideiussioneInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:aggiornaFideiussioneDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiornaFideiussioneDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="codicePratica" type="xs:string" />
+							<xs:element minOccurs="0" name="fideiussione"
+								type="tns:fideiussionePratica" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiornaFideiussioneResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:aggiornaFideiussioneOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiornaFideiussioneOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:praticaErogazioneDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiornaSemaforiAnagrafica">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:aggiornaSemaforiAnagraficaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiornaSemaforiAnagraficaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:settoreAttivitaDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiornaSemaforiAnagraficaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:aggiornaSemaforiAnagraficaOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiornaSemaforiAnagraficaOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:praticaErogazioneDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="autorizzazioneComitato">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="DONT_CARE" />
+					<xs:enumeration value="AUTORIZZATO" />
+					<xs:enumeration value="NON_AUTORIZZATO" />
+					<xs:enumeration value="IN_LAVORAZIONE" />
+					<xs:enumeration value="RINVIATA" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="autorizzazioneContabile">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="DONT_CARE" />
+					<xs:enumeration value="AUTORIZZATO" />
+					<xs:enumeration value="NON_AUTORIZZATO" />
+					<xs:enumeration value="IN_LAVORAZIONE" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="fideiussionePratica">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="PRESENTE" />
+					<xs:enumeration value="ASSENTE" />
+					<xs:enumeration value="DONT_CARE" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="autorizzazioneLegale">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="AUTORIZZATO" />
+					<xs:enumeration value="DONT_CARE" />
+					<xs:enumeration value="DEROGA_SOGLIA" />
+					<xs:enumeration value="DEROGA_CAM" />
+					<xs:enumeration value="DEROGA_123" />
+					<xs:enumeration value="NON_AUTORIZZATO" />
+					<xs:enumeration value="DI_UFFICIO" />
+					<xs:enumeration value="CAM_SCADUTA" />
+					<xs:enumeration value="IN_LAVORAZIONE" />
+					<xs:enumeration value="TEMPORANEA" />
+					<xs:enumeration value="ISTRUTTORIA_COMPLESSA" />
+					<xs:enumeration value="CESSATA_ATTIVITA" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoPratica">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="IN_INSERIMENTO" />
+					<xs:enumeration value="ASSEGNATO" />
+					<xs:enumeration value="LAVORABILE" />
+					<xs:enumeration value="LAVORATO" />
+					<xs:enumeration value="IN_SOSPESO" />
+					<xs:enumeration value="IN_EROGAZIONE" />
+					<xs:enumeration value="RISCONTRATO" />
+					<xs:enumeration value="ANNULLATO" />
+					<xs:enumeration value="DONT_CARE" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="unbundlingPratica">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="AUTORIZZATO" />
+					<xs:enumeration value="NON_AUTORIZZATO" />
+					<xs:enumeration value="DONT_CARE" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="direction">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ASC" />
+					<xs:enumeration value="DESC" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoComitato">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="APERTO" />
+					<xs:enumeration value="CHIUSO" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="tipologiaComitato">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ORDINARIO" />
+					<xs:enumeration value="STRAORDINARIO" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoLavorazioneContabile">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="IN_INSERIMENTO" />
+					<xs:enumeration value="LAVORABILE" />
+					<xs:enumeration value="LAVORATO" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoProcesso">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="APERTO" />
+					<xs:enumeration value="CHIUSO" />
+					<xs:enumeration value="TEMPORANEO" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoAntimafia">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ATTESA_DOCUMENTAZIONE" />
+					<xs:enumeration value="ATTESA_45_GIORNI" />
+					<xs:enumeration value="CERTIFICATO_NON_VALIDO" />
+					<xs:enumeration value="ATTESA_CERTIFICATO" />
+					<xs:enumeration value="CERTIFICATO_VALIDO" />
+					<xs:enumeration value="MUNICIPALIZZATA" />
+					<xs:enumeration value="PAGAMENTO_SOTTO_CONDIZIONE" />
+					<xs:enumeration value="SOTTOSOGLIA" />
+					<xs:enumeration value="ISTRUTTORIA_COMPLESSA" />
+					<xs:enumeration value="CESSATA_ATTIVITA" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="unbundling">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BLOCCATA" />
+					<xs:enumeration value="SBLOCCATA" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="esito">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SUCCESS" />
+					<xs:enumeration value="APPLICATION_ERROR" />
+					<xs:enumeration value="GENERIC_EXCEPTION" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="searchPratiche">
+		<wsdl:part element="tns:searchPratiche" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiornaSemaforiAnagraficaResponse">
+		<wsdl:part element="tns:aggiornaSemaforiAnagraficaResponse"
+			name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiornaFideiussioneResponse">
+		<wsdl:part element="tns:aggiornaFideiussioneResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiornaSemaforiAnagrafica">
+		<wsdl:part element="tns:aggiornaSemaforiAnagrafica" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="searchPraticheResponse">
+		<wsdl:part element="tns:searchPraticheResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiornaFideiussione">
+		<wsdl:part element="tns:aggiornaFideiussione" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="UsciteWS">
+		<wsdl:operation name="searchPratiche">
+			<wsdl:input message="tns:searchPratiche" name="searchPratiche"></wsdl:input>
+			<wsdl:output message="tns:searchPraticheResponse" name="searchPraticheResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiornaFideiussione">
+			<wsdl:input message="tns:aggiornaFideiussione" name="aggiornaFideiussione"></wsdl:input>
+			<wsdl:output message="tns:aggiornaFideiussioneResponse"
+				name="aggiornaFideiussioneResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiornaSemaforiAnagrafica">
+			<wsdl:input message="tns:aggiornaSemaforiAnagrafica" name="aggiornaSemaforiAnagrafica"></wsdl:input>
+			<wsdl:output message="tns:aggiornaSemaforiAnagraficaResponse"
+				name="aggiornaSemaforiAnagraficaResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="UsciteWSSoapBinding" type="tns:UsciteWS">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="searchPratiche">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="searchPratiche">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="searchPraticheResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiornaFideiussione">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="aggiornaFideiussione">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="aggiornaFideiussioneResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiornaSemaforiAnagrafica">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="aggiornaSemaforiAnagrafica">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="aggiornaSemaforiAnagraficaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="UsciteWS">
+		<wsdl:port binding="tns:UsciteWSSoapBinding" name="UsciteWSFacadeImplPort">
+			<soap:address location="http://localhost:8080/uscite-ws/services/usciteWS" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

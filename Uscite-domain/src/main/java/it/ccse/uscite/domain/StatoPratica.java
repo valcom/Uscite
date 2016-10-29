@@ -3,8 +3,6 @@
  */
 package it.ccse.uscite.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -17,7 +15,7 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 @Cacheable
-public abstract class StatoPratica<V extends Enum<?>> extends DomainEntity<Integer> implements Serializable{
+public abstract class StatoPratica<V extends Enum<?>> extends DomainEntity<Integer>{
 
 
 	/**

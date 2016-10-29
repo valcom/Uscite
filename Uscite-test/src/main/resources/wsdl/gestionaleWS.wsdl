@@ -1,0 +1,1537 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="it.ccse.uscite"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="GestionaleWS" targetNamespace="it.ccse.uscite">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="it.ccse.uscite" elementFormDefault="unqualified"
+			targetNamespace="it.ccse.uscite" version="1.0">
+			<xs:element name="aggiornaComitato" type="tns:aggiornaComitato" />
+			<xs:element name="aggiornaComitatoResponse" type="tns:aggiornaComitatoResponse" />
+			<xs:element name="aggiornaNota" type="tns:aggiornaNota" />
+			<xs:element name="aggiornaNotaResponse" type="tns:aggiornaNotaResponse" />
+			<xs:element name="aggiungiComitato" type="tns:aggiungiComitato" />
+			<xs:element name="aggiungiComitatoResponse" type="tns:aggiungiComitatoResponse" />
+			<xs:element name="aggiungiNota" type="tns:aggiungiNota" />
+			<xs:element name="aggiungiNotaResponse" type="tns:aggiungiNotaResponse" />
+			<xs:element name="apriComitato" type="tns:apriComitato" />
+			<xs:element name="apriComitatoResponse" type="tns:apriComitatoResponse" />
+			<xs:element name="apriNota" type="tns:apriNota" />
+			<xs:element name="apriNotaResponse" type="tns:apriNotaResponse" />
+			<xs:element name="associaPraticheANota" type="tns:associaPraticheANota" />
+			<xs:element name="associaPraticheANotaResponse" type="tns:associaPraticheANotaResponse" />
+			<xs:element name="autorizzaComitato" type="tns:autorizzaComitato" />
+			<xs:element name="autorizzaComitatoResponse" type="tns:autorizzaComitatoResponse" />
+			<xs:element name="chiudiComitato" type="tns:chiudiComitato" />
+			<xs:element name="chiudiComitatoResponse" type="tns:chiudiComitatoResponse" />
+			<xs:element name="chiudiNota" type="tns:chiudiNota" />
+			<xs:element name="chiudiNotaResponse" type="tns:chiudiNotaResponse" />
+			<xs:element name="deleteComitato" type="tns:deleteComitato" />
+			<xs:element name="deleteComitatoResponse" type="tns:deleteComitatoResponse" />
+			<xs:element name="dissociaPraticheDaNota" type="tns:dissociaPraticheDaNota" />
+			<xs:element name="dissociaPraticheDaNotaResponse" type="tns:dissociaPraticheDaNotaResponse" />
+			<xs:element name="eliminaNota" type="tns:eliminaNota" />
+			<xs:element name="eliminaNotaResponse" type="tns:eliminaNotaResponse" />
+			<xs:element name="getStatiLegali" type="tns:getStatiLegali" />
+			<xs:element name="getStatiLegaliOutDTO" type="tns:getStatiLegaliOutDTO" />
+			<xs:element name="getStatiLegaliResponse" type="tns:getStatiLegaliResponse" />
+			<xs:element name="getTipiPeriodo" type="tns:getTipiPeriodo" />
+			<xs:element name="getTipiPeriodoOutDTO" type="tns:getTipiPeriodoOutDTO" />
+			<xs:element name="getTipiPeriodoResponse" type="tns:getTipiPeriodoResponse" />
+			<xs:element name="lavorazioneContabileNota" type="tns:lavorazioneContabileNota" />
+			<xs:element name="lavorazioneContabileNotaResponse" type="tns:lavorazioneContabileNotaResponse" />
+			<xs:element name="lavorazioneContabilePratiche" type="tns:lavorazioneContabilePratiche" />
+			<xs:element name="lavorazioneContabilePraticheResponse"
+				type="tns:lavorazioneContabilePraticheResponse" />
+			<xs:element name="rifiutaAutorizzazioneComitato" type="tns:rifiutaAutorizzazioneComitato" />
+			<xs:element name="rifiutaAutorizzazioneComitatoResponse"
+				type="tns:rifiutaAutorizzazioneComitatoResponse" />
+			<xs:element name="rinviaNota" type="tns:rinviaNota" />
+			<xs:element name="rinviaNotaResponse" type="tns:rinviaNotaResponse" />
+			<xs:element name="searchComitati" type="tns:searchComitati" />
+			<xs:element name="searchComitatiOutDTO" type="tns:searchComitatiOutDTO" />
+			<xs:element name="searchComitatiResponse" type="tns:searchComitatiResponse" />
+			<xs:element name="searchNote" type="tns:searchNote" />
+			<xs:element name="searchNoteOutDTO" type="tns:searchNoteOutDTO" />
+			<xs:element name="searchNoteResponse" type="tns:searchNoteResponse" />
+			<xs:complexType name="eliminaNota">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:eliminaNotaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="eliminaNotaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="idProcessoErogazione"
+								type="xs:integer" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="baseInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="username" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="baseDTO">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="eliminaNotaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:eliminaNotaOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="eliminaNotaOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence />
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="baseOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="errorCode" type="xs:string" />
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="errorParams" nillable="true" type="xs:string" />
+							<xs:element minOccurs="0" name="esito" type="tns:esito" />
+							<xs:element minOccurs="0" name="message" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="chiudiNota">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:chiudiNotaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="chiudiNotaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="idProcessoErogazione"
+								type="xs:integer" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="chiudiNotaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:chiudiNotaOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="chiudiNotaOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content"
+								type="tns:notaPagamentoFullDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="notaPagamentoFullDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:dettaglioNotaPagamentoDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="praticheErogazione" nillable="true" type="tns:praticaErogazioneDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="dettaglioNotaPagamentoDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:notaPagamentoDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="numeroPratiche" type="xs:int" />
+							<xs:element minOccurs="0" name="ordineDelGiorno" type="tns:comitatoDTO" />
+							<xs:element minOccurs="0" name="owner" type="xs:string" />
+							<xs:element minOccurs="0" name="totaleImporto" type="xs:decimal" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="notaPagamentoDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="causale" type="xs:string" />
+							<xs:element minOccurs="0" name="id" type="xs:integer" />
+							<xs:element minOccurs="0" name="lavorazioneContabile"
+								type="tns:statoLavorazioneContabile" />
+							<xs:element minOccurs="0" name="numeroNota" type="xs:int" />
+							<xs:element minOccurs="0" name="stato" type="tns:statoProcesso" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="domainDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="username" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="praticaErogazioneDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="anno" type="xs:int" />
+							<xs:element minOccurs="0" name="autorizzazioneAutorizzante"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="autorizzazioneComitato"
+								type="tns:autorizzazioneComitato" />
+							<xs:element minOccurs="0" name="autorizzazioneContabile"
+								type="tns:autorizzazioneContabile" />
+							<xs:element minOccurs="0" name="autorizzazioneLegale"
+								type="tns:autorizzazioneLegale" />
+							<xs:element minOccurs="0" name="bimestre" type="xs:string" />
+							<xs:element minOccurs="0" name="bloccoComitato" type="xs:boolean" />
+							<xs:element minOccurs="0" name="bloccoContabile" type="xs:boolean" />
+							<xs:element minOccurs="0" name="bloccoFideiussione"
+								type="xs:boolean" />
+							<xs:element minOccurs="0" name="bloccoLegale" type="xs:boolean" />
+							<xs:element minOccurs="0" name="bloccoUnbundling"
+								type="xs:boolean" />
+							<xs:element minOccurs="0" name="codicePosizioneFinanziaria"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="codicePratica" type="xs:string" />
+							<xs:element minOccurs="0" name="dataAutorizzazioneComitato"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataAutorizzazioneContabile"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataAutorizzazioneLegale"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataCompetenzaEconomica"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataContabilizzazione"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataErogabilita" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataErogazione" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataFideiussione"
+								type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataInteressi" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataLavorazione" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataScadenza" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataUnbundling" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+							<xs:element minOccurs="0" name="erogabile" type="xs:boolean" />
+							<xs:element minOccurs="0" name="fideiussione"
+								type="tns:fideiussionePratica" />
+							<xs:element minOccurs="0" name="id" type="xs:integer" />
+							<xs:element minOccurs="0" name="idArticoloAc" type="xs:integer" />
+							<xs:element minOccurs="0" name="idAutorizzante" type="xs:string" />
+							<xs:element minOccurs="0" name="idCapitoloAc" type="xs:integer" />
+							<xs:element minOccurs="0" name="idCentroCosto" type="xs:string" />
+							<xs:element minOccurs="0" name="idCentroResponsabilita"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="idComponenteTariffariaAc"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="idContoCorrenteAc"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="idContoGestioneAc"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="idLavorante" type="xs:string" />
+							<xs:element minOccurs="0" name="idPosizioneFinanziariaAc"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="idPraticaErogazioneDifferenza"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="idPraticaErogazioneOriginale"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="idPraticaErogazioneRettifica"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="idProponente" type="xs:string" />
+							<xs:element minOccurs="0" name="idSettoreAttivita"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="idSoggetto" type="xs:int" />
+							<xs:element minOccurs="0" name="impegno" type="xs:decimal" />
+							<xs:element minOccurs="0" name="lavorazioneContabile"
+								type="tns:statoPratica" />
+							<xs:element minOccurs="0" name="mandato" type="xs:decimal" />
+							<xs:element minOccurs="0" name="numeroRettifica" type="xs:int" />
+							<xs:element minOccurs="0" name="owner" type="xs:string" />
+							<xs:element minOccurs="0" name="periodo" type="xs:int" />
+							<xs:element minOccurs="0" name="statoPraticaGestionale"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="statoRiepilogativo"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="tipoPeriodo" type="tns:tipoPeriodoDTO" />
+							<xs:element minOccurs="0" name="tipologia" type="xs:string" />
+							<xs:element minOccurs="0" name="unbundling" type="tns:unbundlingPratica" />
+							<xs:element minOccurs="0" name="vistoConformita" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="tipoPeriodoDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+							<xs:element minOccurs="0" name="id" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="comitatoDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="dataComitato" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+							<xs:element minOccurs="0" name="id" type="xs:integer" />
+							<xs:element minOccurs="0" name="numeroComitato" type="xs:int" />
+							<xs:element minOccurs="0" name="stato" type="tns:statoComitato" />
+							<xs:element minOccurs="0" name="tipologia" type="tns:tipologiaComitato" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="searchComitati">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:searchComitatiInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="searchComitatiInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:pageableDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="dataComitatoA" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="dataComitatoDa" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="idComitato" type="xs:integer" />
+							<xs:element minOccurs="0" name="stato" type="tns:statoComitato" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="pageableDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="orderDirection" type="tns:direction" />
+							<xs:element minOccurs="0" name="orderProperty" type="xs:string" />
+							<xs:element minOccurs="0" name="pageNumber" type="xs:int" />
+							<xs:element minOccurs="0" name="pageSize" type="xs:int" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="searchComitatiResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:searchComitatiOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="searchComitatiOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:pageDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="comitati">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" minOccurs="0"
+											name="comitato" type="tns:dettaglioComitatoDTO" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType abstract="true" name="pageDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="number" type="xs:int" />
+							<xs:element minOccurs="0" name="numberOfElements"
+								type="xs:int" />
+							<xs:element minOccurs="0" name="size" type="xs:int" />
+							<xs:element minOccurs="0" name="totalElements" type="xs:long" />
+							<xs:element minOccurs="0" name="totalPages" type="xs:int" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="dettaglioComitatoDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:comitatoDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="totaleImporto" type="xs:decimal" />
+							<xs:element minOccurs="0" name="totaleNote" type="xs:int" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="rifiutaAutorizzazioneComitato">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:rifiutaAutorizzazioneComitatoInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="rifiutaAutorizzazioneComitatoInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:praticaErogazioneDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="rifiutaAutorizzazioneComitatoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:rifiutaAutorizzazioneComitatoOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="rifiutaAutorizzazioneComitatoOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence />
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="searchNote">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:searchNoteInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="searchNoteInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:pageableDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="idComitato" type="xs:integer" />
+							<xs:element minOccurs="0" name="idNota" type="xs:integer" />
+							<xs:element minOccurs="0" name="numeroNota" type="xs:int" />
+							<xs:element minOccurs="0" name="owner" type="xs:string" />
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="stati"
+								nillable="true" type="tns:statoProcesso" />
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="statiLavorazioneContabile" nillable="true"
+								type="tns:statoLavorazioneContabile" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="searchNoteResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:searchNoteOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="searchNoteOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:pageDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="note">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" minOccurs="0"
+											name="nota" type="tns:dettaglioNotaPagamentoDTO" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="lavorazioneContabilePratiche">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:lavorazioneContabilePraticaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="lavorazioneContabilePraticaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:praticaErogazioneDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="lavorazioneContabilePraticheResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:lavorazioneContabileOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="lavorazioneContabileOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="praticheInErogazione" nillable="true" type="tns:praticaErogazioneDTO" />
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="praticheInSospeso" nillable="true" type="tns:praticaErogazioneDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="deleteComitato">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:eliminaComitatoInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="eliminaComitatoInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="idOrdineDelGiorno"
+								type="xs:integer" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="deleteComitatoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:eliminaComitatoOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="eliminaComitatoOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence />
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="lavorazioneContabileNota">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:lavorazioneContabileNotaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="lavorazioneContabileNotaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="idNota" type="xs:integer" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="lavorazioneContabileNotaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:lavorazioneContabileOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="apriComitato">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:apriComitatoInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="apriComitatoInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="idOrdineDelGiorno"
+								type="xs:integer" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="apriComitatoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:apriComitatoOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="apriComitatoOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content" type="tns:comitatoFullDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="comitatoFullDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:dettaglioComitatoDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="note"
+								nillable="true" type="tns:notaPagamentoFullDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="apriNota">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:apriNotaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="apriNotaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="idProcessoErogazione"
+								type="xs:int" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="apriNotaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:apriNotaOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="apriNotaOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content"
+								type="tns:notaPagamentoFullDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="autorizzaComitato">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:autorizzaComitatoInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="autorizzaComitatoInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:praticaErogazioneDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="autorizzaComitatoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:autorizzaComitatoOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="autorizzaComitatoOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence />
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiungiComitato">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:aggiungiComitatoInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiungiComitatoInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="dataComitato" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+							<xs:element minOccurs="0" name="numeroComitato" type="xs:int" />
+							<xs:element minOccurs="0" name="tipologia" type="tns:tipologiaComitato" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiungiComitatoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:aggiungiComitatoOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiungiComitatoOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content" type="tns:comitatoDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiungiNota">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:aggiungiNotaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiungiNotaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="causale" type="xs:string" />
+							<xs:element minOccurs="0" name="numeroNota" type="xs:int" />
+							<xs:element minOccurs="0" name="ordineDelGiorno" type="tns:comitatoDTO" />
+							<xs:element minOccurs="0" name="owner" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiungiNotaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:aggiungiNotaOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiungiNotaOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content"
+								type="tns:dettaglioNotaPagamentoDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="rinviaNota">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:rinviaNotaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="rinviaNotaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="idComitato" type="xs:integer" />
+							<xs:element minOccurs="0" name="idNota" type="xs:integer" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="rinviaNotaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:rinviaNotaOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="rinviaNotaOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content"
+								type="tns:notaPagamentoFullDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiornaComitato">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:aggiornaComitatoInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiornaComitatoInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="dataComitato" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+							<xs:element minOccurs="0" name="idOrdineDelGiorno"
+								type="xs:integer" />
+							<xs:element minOccurs="0" name="numeroComitato" type="xs:int" />
+							<xs:element minOccurs="0" name="tipologia" type="tns:tipologiaComitato" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiornaComitatoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:aggiornaComitatoOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiornaComitatoOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content" type="tns:comitatoFullDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="dissociaPraticheDaNota">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:dissociaPraticheDaNotaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="dissociaPraticheDaNotaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:dettaglioPraticaErogazioneDTO" />
+							<xs:element minOccurs="0" name="idNota" type="xs:integer" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="dettaglioPraticaErogazioneDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:praticaErogazioneDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="nota"
+								type="tns:dettaglioNotaPagamentoDTO" />
+							<xs:element minOccurs="0" name="settoreAttivita"
+								type="tns:settoreAttivitaDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="settoreAttivitaDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="id" type="xs:int" />
+							<xs:element minOccurs="0" name="ragioneSociale" type="xs:string" />
+							<xs:element minOccurs="0" name="statoAntimafia" type="tns:statoAntimafia" />
+							<xs:element minOccurs="0" name="unbundling" type="tns:unbundling" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="dissociaPraticheDaNotaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:dissociaPraticheDaNotaOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="dissociaPraticheDaNotaOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence />
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getTipiPeriodo">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:getTipiPeriodoInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTipiPeriodoInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence />
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getTipiPeriodoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:getTipiPeriodoOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTipiPeriodoOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="tipiPeriodo">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" minOccurs="0"
+											name="tipoPeriodo" type="tns:tipoPeriodoDTO" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="associaPraticheANota">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0"
+						type="tns:associaPraticheANotaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="associaPraticheANotaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0" name="content"
+								nillable="true" type="tns:dettaglioPraticaErogazioneDTO" />
+							<xs:element minOccurs="0" name="idNota" type="xs:integer" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="associaPraticheANotaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:associaPraticheANotaOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="associaPraticheANotaOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content"
+								type="tns:notaPagamentoFullDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getStatiLegali">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:getStatiLegaliInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getStatiLegaliInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence />
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getStatiLegaliResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:getStatiLegaliOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getStatiLegaliOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="statiLegale">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element maxOccurs="unbounded" minOccurs="0"
+											name="statoLegale" type="tns:statoLegaleDTO" />
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="statoLegaleDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:domainDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="autorizzazioneLegale"
+								type="tns:autorizzazioneLegale" />
+							<xs:element minOccurs="0" name="bloccante" type="xs:boolean" />
+							<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="chiudiComitato">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:chiudiComitatoInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="chiudiComitatoInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="idOrdineDelGiorno"
+								type="xs:integer" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="chiudiComitatoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:chiudiComitatoOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="chiudiComitatoOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content" type="tns:comitatoFullDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiornaNota">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="arg0" type="tns:aggiornaNotaInDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiornaNotaInDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseInDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="causale" type="xs:string" />
+							<xs:element minOccurs="0" name="idNota" type="xs:int" />
+							<xs:element minOccurs="0" name="numeroNota" type="xs:int" />
+							<xs:element minOccurs="0" name="owner" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="aggiornaNotaResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:aggiornaNotaOutDTO" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="aggiornaNotaOutDTO">
+				<xs:complexContent>
+					<xs:extension base="tns:baseOutDTO">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="content"
+								type="tns:notaPagamentoFullDTO" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:simpleType name="esito">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SUCCESS" />
+					<xs:enumeration value="APPLICATION_ERROR" />
+					<xs:enumeration value="GENERIC_EXCEPTION" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="autorizzazioneComitato">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="DONT_CARE" />
+					<xs:enumeration value="AUTORIZZATO" />
+					<xs:enumeration value="NON_AUTORIZZATO" />
+					<xs:enumeration value="IN_LAVORAZIONE" />
+					<xs:enumeration value="RINVIATA" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="autorizzazioneContabile">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="DONT_CARE" />
+					<xs:enumeration value="AUTORIZZATO" />
+					<xs:enumeration value="NON_AUTORIZZATO" />
+					<xs:enumeration value="IN_LAVORAZIONE" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="autorizzazioneLegale">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="AUTORIZZATO" />
+					<xs:enumeration value="DONT_CARE" />
+					<xs:enumeration value="DEROGA_SOGLIA" />
+					<xs:enumeration value="DEROGA_CAM" />
+					<xs:enumeration value="DEROGA_123" />
+					<xs:enumeration value="NON_AUTORIZZATO" />
+					<xs:enumeration value="DI_UFFICIO" />
+					<xs:enumeration value="CAM_SCADUTA" />
+					<xs:enumeration value="IN_LAVORAZIONE" />
+					<xs:enumeration value="TEMPORANEA" />
+					<xs:enumeration value="ISTRUTTORIA_COMPLESSA" />
+					<xs:enumeration value="CESSATA_ATTIVITA" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="fideiussionePratica">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="PRESENTE" />
+					<xs:enumeration value="ASSENTE" />
+					<xs:enumeration value="DONT_CARE" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoPratica">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="IN_INSERIMENTO" />
+					<xs:enumeration value="ASSEGNATO" />
+					<xs:enumeration value="LAVORABILE" />
+					<xs:enumeration value="LAVORATO" />
+					<xs:enumeration value="IN_SOSPESO" />
+					<xs:enumeration value="IN_EROGAZIONE" />
+					<xs:enumeration value="RISCONTRATO" />
+					<xs:enumeration value="ANNULLATO" />
+					<xs:enumeration value="DONT_CARE" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="unbundlingPratica">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="AUTORIZZATO" />
+					<xs:enumeration value="NON_AUTORIZZATO" />
+					<xs:enumeration value="DONT_CARE" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoComitato">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="APERTO" />
+					<xs:enumeration value="CHIUSO" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="tipologiaComitato">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ORDINARIO" />
+					<xs:enumeration value="STRAORDINARIO" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoLavorazioneContabile">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="UNDEFINED" />
+					<xs:enumeration value="IN_INSERIMENTO" />
+					<xs:enumeration value="LAVORABILE" />
+					<xs:enumeration value="LAVORATO" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoProcesso">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="APERTO" />
+					<xs:enumeration value="CHIUSO" />
+					<xs:enumeration value="TEMPORANEO" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="direction">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ASC" />
+					<xs:enumeration value="DESC" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="statoAntimafia">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ATTESA_DOCUMENTAZIONE" />
+					<xs:enumeration value="ATTESA_45_GIORNI" />
+					<xs:enumeration value="CERTIFICATO_NON_VALIDO" />
+					<xs:enumeration value="ATTESA_CERTIFICATO" />
+					<xs:enumeration value="CERTIFICATO_VALIDO" />
+					<xs:enumeration value="MUNICIPALIZZATA" />
+					<xs:enumeration value="PAGAMENTO_SOTTO_CONDIZIONE" />
+					<xs:enumeration value="SOTTOSOGLIA" />
+					<xs:enumeration value="ISTRUTTORIA_COMPLESSA" />
+					<xs:enumeration value="CESSATA_ATTIVITA" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="unbundling">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BLOCCATA" />
+					<xs:enumeration value="SBLOCCATA" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="aggiornaComitatoResponse">
+		<wsdl:part element="tns:aggiornaComitatoResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="autorizzaComitatoResponse">
+		<wsdl:part element="tns:autorizzaComitatoResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="searchComitati">
+		<wsdl:part element="tns:searchComitati" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="searchNote">
+		<wsdl:part element="tns:searchNote" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="apriComitato">
+		<wsdl:part element="tns:apriComitato" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="associaPraticheANotaResponse">
+		<wsdl:part element="tns:associaPraticheANotaResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTipiPeriodoResponse">
+		<wsdl:part element="tns:getTipiPeriodoResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiungiComitato">
+		<wsdl:part element="tns:aggiungiComitato" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiungiNotaResponse">
+		<wsdl:part element="tns:aggiungiNotaResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiornaComitato">
+		<wsdl:part element="tns:aggiornaComitato" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="dissociaPraticheDaNota">
+		<wsdl:part element="tns:dissociaPraticheDaNota" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="dissociaPraticheDaNotaResponse">
+		<wsdl:part element="tns:dissociaPraticheDaNotaResponse"
+			name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="apriNotaResponse">
+		<wsdl:part element="tns:apriNotaResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="chiudiComitato">
+		<wsdl:part element="tns:chiudiComitato" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="searchComitatiResponse">
+		<wsdl:part element="tns:searchComitatiResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteComitatoResponse">
+		<wsdl:part element="tns:deleteComitatoResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiornaNotaResponse">
+		<wsdl:part element="tns:aggiornaNotaResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="eliminaNota">
+		<wsdl:part element="tns:eliminaNota" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="chiudiNota">
+		<wsdl:part element="tns:chiudiNota" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiungiComitatoResponse">
+		<wsdl:part element="tns:aggiungiComitatoResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="chiudiNotaResponse">
+		<wsdl:part element="tns:chiudiNotaResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="rifiutaAutorizzazioneComitato">
+		<wsdl:part element="tns:rifiutaAutorizzazioneComitato" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="lavorazioneContabilePratiche">
+		<wsdl:part element="tns:lavorazioneContabilePratiche" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="apriComitatoResponse">
+		<wsdl:part element="tns:apriComitatoResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteComitato">
+		<wsdl:part element="tns:deleteComitato" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="lavorazioneContabileNota">
+		<wsdl:part element="tns:lavorazioneContabileNota" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="searchNoteResponse">
+		<wsdl:part element="tns:searchNoteResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="apriNota">
+		<wsdl:part element="tns:apriNota" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="autorizzaComitato">
+		<wsdl:part element="tns:autorizzaComitato" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiungiNota">
+		<wsdl:part element="tns:aggiungiNota" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="rinviaNota">
+		<wsdl:part element="tns:rinviaNota" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="eliminaNotaResponse">
+		<wsdl:part element="tns:eliminaNotaResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTipiPeriodo">
+		<wsdl:part element="tns:getTipiPeriodo" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="chiudiComitatoResponse">
+		<wsdl:part element="tns:chiudiComitatoResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="associaPraticheANota">
+		<wsdl:part element="tns:associaPraticheANota" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="lavorazioneContabilePraticheResponse">
+		<wsdl:part element="tns:lavorazioneContabilePraticheResponse"
+			name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getStatiLegali">
+		<wsdl:part element="tns:getStatiLegali" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getStatiLegaliResponse">
+		<wsdl:part element="tns:getStatiLegaliResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="rifiutaAutorizzazioneComitatoResponse">
+		<wsdl:part element="tns:rifiutaAutorizzazioneComitatoResponse"
+			name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="lavorazioneContabileNotaResponse">
+		<wsdl:part element="tns:lavorazioneContabileNotaResponse"
+			name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="aggiornaNota">
+		<wsdl:part element="tns:aggiornaNota" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="rinviaNotaResponse">
+		<wsdl:part element="tns:rinviaNotaResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="GestionaleWSFacade">
+		<wsdl:operation name="eliminaNota">
+			<wsdl:input message="tns:eliminaNota" name="eliminaNota"></wsdl:input>
+			<wsdl:output message="tns:eliminaNotaResponse" name="eliminaNotaResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="chiudiNota">
+			<wsdl:input message="tns:chiudiNota" name="chiudiNota"></wsdl:input>
+			<wsdl:output message="tns:chiudiNotaResponse" name="chiudiNotaResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchComitati">
+			<wsdl:input message="tns:searchComitati" name="searchComitati"></wsdl:input>
+			<wsdl:output message="tns:searchComitatiResponse" name="searchComitatiResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="rifiutaAutorizzazioneComitato">
+			<wsdl:input message="tns:rifiutaAutorizzazioneComitato"
+				name="rifiutaAutorizzazioneComitato"></wsdl:input>
+			<wsdl:output message="tns:rifiutaAutorizzazioneComitatoResponse"
+				name="rifiutaAutorizzazioneComitatoResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchNote">
+			<wsdl:input message="tns:searchNote" name="searchNote"></wsdl:input>
+			<wsdl:output message="tns:searchNoteResponse" name="searchNoteResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="lavorazioneContabilePratiche">
+			<wsdl:input message="tns:lavorazioneContabilePratiche"
+				name="lavorazioneContabilePratiche"></wsdl:input>
+			<wsdl:output message="tns:lavorazioneContabilePraticheResponse"
+				name="lavorazioneContabilePraticheResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteComitato">
+			<wsdl:input message="tns:deleteComitato" name="deleteComitato"></wsdl:input>
+			<wsdl:output message="tns:deleteComitatoResponse" name="deleteComitatoResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="lavorazioneContabileNota">
+			<wsdl:input message="tns:lavorazioneContabileNota" name="lavorazioneContabileNota"></wsdl:input>
+			<wsdl:output message="tns:lavorazioneContabileNotaResponse"
+				name="lavorazioneContabileNotaResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="apriComitato">
+			<wsdl:input message="tns:apriComitato" name="apriComitato"></wsdl:input>
+			<wsdl:output message="tns:apriComitatoResponse" name="apriComitatoResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="apriNota">
+			<wsdl:input message="tns:apriNota" name="apriNota"></wsdl:input>
+			<wsdl:output message="tns:apriNotaResponse" name="apriNotaResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="autorizzaComitato">
+			<wsdl:input message="tns:autorizzaComitato" name="autorizzaComitato"></wsdl:input>
+			<wsdl:output message="tns:autorizzaComitatoResponse"
+				name="autorizzaComitatoResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiungiComitato">
+			<wsdl:input message="tns:aggiungiComitato" name="aggiungiComitato"></wsdl:input>
+			<wsdl:output message="tns:aggiungiComitatoResponse" name="aggiungiComitatoResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiungiNota">
+			<wsdl:input message="tns:aggiungiNota" name="aggiungiNota"></wsdl:input>
+			<wsdl:output message="tns:aggiungiNotaResponse" name="aggiungiNotaResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="rinviaNota">
+			<wsdl:input message="tns:rinviaNota" name="rinviaNota"></wsdl:input>
+			<wsdl:output message="tns:rinviaNotaResponse" name="rinviaNotaResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiornaComitato">
+			<wsdl:input message="tns:aggiornaComitato" name="aggiornaComitato"></wsdl:input>
+			<wsdl:output message="tns:aggiornaComitatoResponse" name="aggiornaComitatoResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="dissociaPraticheDaNota">
+			<wsdl:input message="tns:dissociaPraticheDaNota" name="dissociaPraticheDaNota"></wsdl:input>
+			<wsdl:output message="tns:dissociaPraticheDaNotaResponse"
+				name="dissociaPraticheDaNotaResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTipiPeriodo">
+			<wsdl:input message="tns:getTipiPeriodo" name="getTipiPeriodo"></wsdl:input>
+			<wsdl:output message="tns:getTipiPeriodoResponse" name="getTipiPeriodoResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="associaPraticheANota">
+			<wsdl:input message="tns:associaPraticheANota" name="associaPraticheANota"></wsdl:input>
+			<wsdl:output message="tns:associaPraticheANotaResponse"
+				name="associaPraticheANotaResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getStatiLegali">
+			<wsdl:input message="tns:getStatiLegali" name="getStatiLegali"></wsdl:input>
+			<wsdl:output message="tns:getStatiLegaliResponse" name="getStatiLegaliResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="chiudiComitato">
+			<wsdl:input message="tns:chiudiComitato" name="chiudiComitato"></wsdl:input>
+			<wsdl:output message="tns:chiudiComitatoResponse" name="chiudiComitatoResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiornaNota">
+			<wsdl:input message="tns:aggiornaNota" name="aggiornaNota"></wsdl:input>
+			<wsdl:output message="tns:aggiornaNotaResponse" name="aggiornaNotaResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="GestionaleWSSoapBinding" type="tns:GestionaleWSFacade">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="eliminaNota">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="eliminaNota">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="eliminaNotaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="chiudiNota">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="chiudiNota">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="chiudiNotaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchComitati">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="searchComitati">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="searchComitatiResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="rifiutaAutorizzazioneComitato">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="rifiutaAutorizzazioneComitato">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="rifiutaAutorizzazioneComitatoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchNote">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="searchNote">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="searchNoteResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="lavorazioneContabilePratiche">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="lavorazioneContabilePratiche">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="lavorazioneContabilePraticheResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteComitato">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="deleteComitato">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="deleteComitatoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="lavorazioneContabileNota">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="lavorazioneContabileNota">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="lavorazioneContabileNotaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="apriComitato">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="apriComitato">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="apriComitatoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="apriNota">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="apriNota">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="apriNotaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="autorizzaComitato">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="autorizzaComitato">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="autorizzaComitatoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiungiComitato">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="aggiungiComitato">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="aggiungiComitatoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiungiNota">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="aggiungiNota">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="aggiungiNotaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="rinviaNota">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="rinviaNota">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="rinviaNotaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiornaComitato">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="aggiornaComitato">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="aggiornaComitatoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="dissociaPraticheDaNota">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="dissociaPraticheDaNota">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="dissociaPraticheDaNotaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTipiPeriodo">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getTipiPeriodo">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getTipiPeriodoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="associaPraticheANota">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="associaPraticheANota">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="associaPraticheANotaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getStatiLegali">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getStatiLegali">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getStatiLegaliResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="chiudiComitato">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="chiudiComitato">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="chiudiComitatoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="aggiornaNota">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="aggiornaNota">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="aggiornaNotaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="GestionaleWS">
+		<wsdl:port binding="tns:GestionaleWSSoapBinding" name="GestionaleWSFacadeImplPort">
+			<soap:address location="http://localhost:8080/uscite-ws/services/gestionaleWS" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

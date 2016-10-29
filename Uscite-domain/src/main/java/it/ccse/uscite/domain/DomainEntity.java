@@ -3,6 +3,8 @@
  */
 package it.ccse.uscite.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Cacheable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,8 +24,14 @@ import org.springframework.web.context.request.RequestContextHolder;
 @MappedSuperclass
 @Cacheable
 @Audited
-public abstract class DomainEntity<ID> extends DomainObject{
+public abstract class DomainEntity<ID> extends DomainObject implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7055133741165574328L;
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private ID id;

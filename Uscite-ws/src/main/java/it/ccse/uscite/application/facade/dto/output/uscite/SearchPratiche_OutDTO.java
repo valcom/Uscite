@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import it.ccse.uscite.application.facade.dto.DettaglioPraticaErogazioneDTO;
@@ -27,8 +25,7 @@ public class SearchPratiche_OutDTO extends PageDTO<DettaglioPraticaErogazioneDTO
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@XmlElementWrapper(name="pratiche")
-	@XmlElement(name="pratica")
+	
 	private List<DettaglioPraticaErogazioneDTO> content;
 	
 	@Override

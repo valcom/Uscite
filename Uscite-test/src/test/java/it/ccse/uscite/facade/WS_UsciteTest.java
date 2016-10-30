@@ -3,6 +3,7 @@
  */
 package it.ccse.uscite.facade;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -51,6 +52,8 @@ public class WS_UsciteTest {
 		searchPratiche_InDTO.setAnnoDa(annoDa);
 		searchPratiche_InDTO.setAnnoA(annoA);
 		searchPratiche_InDTO.setErogabile(true);
+		BigDecimal importoA = new BigDecimal(500);
+
 		GregorianCalendar gc = new GregorianCalendar(2014,3,22);
 		Date dataComitatoA = gc.getTime();
 		searchPratiche_InDTO.setDataComitatoA(DatatypeFactory.newInstance().newXMLGregorianCalendar(gc));
@@ -60,6 +63,7 @@ public class WS_UsciteTest {
 //		listaIdSettoreAttivita.add(1401);
 		searchPratiche_InDTO.setPageSize(100);
 		searchPratiche_InDTO.setPageNumber(5);
+		searchPratiche_InDTO.setImportoA(importoA);
 		//searchPratiche_InDTO.setListaIdSettoreAttivita(listaIdSettoreAttivita );;
 		
 		SearchPraticheOutDTO output = usciteWS.searchPratiche(searchPratiche_InDTO);
@@ -69,6 +73,7 @@ public class WS_UsciteTest {
 		Assert.assertFalse(output.getContent().stream().filter(p->!p.getAnno().equals(annoA)).findAny().isPresent());
 		Assert.assertFalse(output.getContent().stream().filter(p->!p.isErogabile().equals(erogabile)).findAny().isPresent());
 		Assert.assertFalse(output.getContent().stream().filter(p->p.getNota().getOrdineDelGiorno().getDataComitato().toGregorianCalendar().getTime().after(dataComitatoA)).findAny().isPresent());
+		Assert.assertFalse(output.getContent().stream().filter(p->p.getImpegno().compareTo(importoA)>0).findAny().isPresent());
 
 	}
 	

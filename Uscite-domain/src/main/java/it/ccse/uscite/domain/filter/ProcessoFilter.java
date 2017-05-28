@@ -17,8 +17,8 @@ import it.ccse.uscite.domain.OrdineDelGiorno;
 import it.ccse.uscite.domain.ProcessoErogazione;
 import it.ccse.uscite.domain.ProcessoErogazione.StatoLavorazioneContabile;
 import it.ccse.uscite.domain.ProcessoErogazione.StatoProcesso;
+import it.ccse.uscite.domain.ProcessoErogazione_;
 import it.ccse.uscite.domain.QProcessoErogazione;
-import it.ccse.uscite.domain.specification.ProcessoSpecifications;
 
 /**
  * @author vcompagnone
@@ -52,12 +52,18 @@ public class ProcessoFilter extends PageableFilter<ProcessoErogazione> {
 
 	@Override
 	public Specification<ProcessoErogazione> getSpecification() {
-		return Specifications.where(ProcessoSpecifications.hasId(getIdNota())).
-				and(ProcessoSpecifications.hasNumeroNota(getNumeroNota())).
-				and(ProcessoSpecifications.hasOrdineDelGiorno(getOrdineDelGiorno())).
-				and(ProcessoSpecifications.hasOwner(getOwner())).
-				and(ProcessoSpecifications.hasStato(getStati())).
-				and(ProcessoSpecifications.hasStatoLavorazioneContabile(getStatiLavorazioneContabile()));
+		Specification<ProcessoErogazione> hasId = (root,cq,cb)-> idNota !=null ? cb.equal(root.get(ProcessoErogazione_.id),idNota):null;
+		Specification<ProcessoErogazione> hasNumeroNota = (root,cq,cb)->  numeroNota !=null ? cb.equal(root.get(ProcessoErogazione_.numeroNota),numeroNota):null;
+		Specification<ProcessoErogazione> hasOrdineDelGiorno = (root,cq,cb)->  ordineDelGiorno !=null ? cb.equal(root.get(ProcessoErogazione_.ordineDelGiorno),ordineDelGiorno):null;
+		Specification<ProcessoErogazione> hasOwner = (root,cq,cb)-> owner !=null ? cb.equal(root.get(ProcessoErogazione_.owner),owner):null;
+		Specification<ProcessoErogazione> hasStato = (root,cq,cb)->  stati !=null ? root.get(ProcessoErogazione_.stato).in(stati):null;
+		Specification<ProcessoErogazione> hasStatoLavorazioneContabile =  (root,cq,cb)-> statiLavorazioneContabile !=null ? root.get(ProcessoErogazione_.lavorazioneContabile).in(statiLavorazioneContabile):null;
+		return Specifications.where(hasId).
+				and(hasNumeroNota).
+				and(hasOrdineDelGiorno).
+				and(hasOwner).
+				and(hasStato).
+				and(hasStatoLavorazioneContabile);
 	}
 
 	/**

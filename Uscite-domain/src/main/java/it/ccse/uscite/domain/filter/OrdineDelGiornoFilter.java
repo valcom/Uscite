@@ -15,8 +15,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 import it.ccse.uscite.domain.OrdineDelGiorno;
 import it.ccse.uscite.domain.OrdineDelGiorno.StatoComitato;
+import it.ccse.uscite.domain.OrdineDelGiorno_;
 import it.ccse.uscite.domain.QOrdineDelGiorno;
-import it.ccse.uscite.domain.specification.OrdineDelGiornoSpecifications;
 
 /**
  * @author vcompagnone
@@ -42,10 +42,14 @@ public class OrdineDelGiornoFilter extends PageableFilter<OrdineDelGiorno> {
 
 	@Override
 	public Specification<OrdineDelGiorno> getSpecification() {
-		return Specifications.where(OrdineDelGiornoSpecifications.hasDataComitatoA(getDataComitatoA())).
-				and(OrdineDelGiornoSpecifications.hasDataComitatoDa(getDataComitatoDa())).
-				and(OrdineDelGiornoSpecifications.hasId(getIdComitato())).
-				and(OrdineDelGiornoSpecifications.hasStato(getStato()));
+		Specification<OrdineDelGiorno> hasDataComitatoA = (root,cq,cb)-> dataComitatoA !=null ?  cb.lessThanOrEqualTo(root.get(OrdineDelGiorno_.dataComitato),dataComitatoA):null;
+		Specification<OrdineDelGiorno> hasDataComitatoDa = (root,cq,cb)->dataComitatoDa !=null ?  cb.greaterThanOrEqualTo(root.get(OrdineDelGiorno_.dataComitato),dataComitatoDa):null;
+		Specification<OrdineDelGiorno> hasId = (root,cq,cb)->idComitato !=null ?  cb.equal(root.get(OrdineDelGiorno_.id),idComitato):null;
+		Specification<OrdineDelGiorno> hasStato = (root,cq,cb)->stato !=null ? cb.equal(root.get(OrdineDelGiorno_.stato),stato):null;
+		return Specifications.where(hasDataComitatoA).
+				and(hasDataComitatoDa).
+				and(hasId).
+				and(hasStato);
 	}
 
 	/**

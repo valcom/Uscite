@@ -16,16 +16,24 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
+import it.ccse.uscite.domain.OrdineDelGiorno_;
 import it.ccse.uscite.domain.PraticaErogazione;
 import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
+import it.ccse.uscite.domain.PraticaErogazione_;
+import it.ccse.uscite.domain.ProcessoErogazione_;
 import it.ccse.uscite.domain.QPraticaErogazione;
+import it.ccse.uscite.domain.SettoreAttivita_;
 import it.ccse.uscite.domain.StatoComitato.AutorizzazioneComitato;
+import it.ccse.uscite.domain.StatoComitato_;
 import it.ccse.uscite.domain.StatoContabile.AutorizzazioneContabile;
+import it.ccse.uscite.domain.StatoContabile_;
 import it.ccse.uscite.domain.StatoFideiussione.FideiussionePratica;
+import it.ccse.uscite.domain.StatoFideiussione_;
 import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
+import it.ccse.uscite.domain.StatoLegale_;
 import it.ccse.uscite.domain.StatoUnbundling.UnbundlingPratica;
+import it.ccse.uscite.domain.StatoUnbundling_;
 import it.ccse.uscite.domain.TipoPeriodo;
-import it.ccse.uscite.domain.specification.PraticaSpecifications;
 
 /**
  * @author vcompagnone
@@ -339,33 +347,60 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 
 	@Override
 	public Specification<PraticaErogazione> getSpecification() {
+		Specification<PraticaErogazione> hasAnnoA =  (root,cq,cb)->  annoA !=null ? cb.le(root.get(PraticaErogazione_.anno),annoA):null;
+		Specification<PraticaErogazione> hasAnnoDa = (root,cq,cb) ->  annoDa!=null ? cb.ge(root.get(PraticaErogazione_.anno),annoDa):null;
+		Specification<PraticaErogazione> hasAutorizzazioneComitato = (root,cq,cb)-> autorizzazioneComitato !=null ? cb.equal(root.get(PraticaErogazione_.statoComitato).get(StatoComitato_.valore),autorizzazioneComitato):null;
+		Specification<PraticaErogazione> hasAutorizzazioneContabile =  (root,cq,cb)-> autorizzazioneContabile !=null ? cb.equal(root.get(PraticaErogazione_.statoContabile).get(StatoContabile_.valore),autorizzazioneContabile):null;
+		Specification<PraticaErogazione> hasAutorizzazioneLegale = (root,cq,cb)-> !CollectionUtils.isEmpty(listaValoriAutorizzazioneLegale) ? root.get(PraticaErogazione_.statoLegale).get(StatoLegale_.valore).in(listaValoriAutorizzazioneLegale):null;
+		Specification<PraticaErogazione> hasCodicePratica = (root,cq,cb)->  !CollectionUtils.isEmpty(codiciPratica) ? root.get(PraticaErogazione_.codicePratica).in(codiciPratica):null;
+		Specification<PraticaErogazione> hasComponenteTariffaria = (root,cq,cb)-> idComponenteTariffaria !=null ? cb.equal(root.get(PraticaErogazione_.idComponenteTariffariaAc),idComponenteTariffaria):null;
+		Specification<PraticaErogazione> hasDataComitatoA = (root,cq,cb)-> dataComitatoA!=null ? cb.lessThanOrEqualTo(root.get(PraticaErogazione_.processoErogazione).get(ProcessoErogazione_.ordineDelGiorno).get(OrdineDelGiorno_.dataComitato),dataComitatoA):null;
+		Specification<PraticaErogazione> hasDataFideiussioneA = (root,cq,cb)->  dataFideiussioneA!=null ? cb.lessThanOrEqualTo(root.get(PraticaErogazione_.dataInteressi),dataFideiussioneA):null;
+		Specification<PraticaErogazione> hasDataComitatoDa = (root,cq,cb)-> dataComitatoDa!=null ? cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.processoErogazione).get(ProcessoErogazione_.ordineDelGiorno).get(OrdineDelGiorno_.dataComitato),dataComitatoDa):null;	
+		Specification<PraticaErogazione> hasDataFideiussioneDa = (root,cq,cb)->  dataFideiussioneDa!=null ? cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataFideiussione),dataFideiussioneDa):null;
+		Specification<PraticaErogazione> hasDataInteressiA = (root,cq,cb)->  dataInteressiA!=null ? cb.lessThanOrEqualTo(root.get(PraticaErogazione_.dataInteressi),dataInteressiA):null;
+		Specification<PraticaErogazione> hasDataInteressiDa = (root,cq,cb)->  dataInteressiDa!=null ? cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataInteressi),dataInteressiDa):null;
+		Specification<PraticaErogazione> hasDataScadenzaA = (root,cq,cb)-> dataScadenzaA!=null ? cb.lessThanOrEqualTo(root.get(PraticaErogazione_.dataScadenza),dataScadenzaA):null;
+		Specification<PraticaErogazione> hasDataScadenzaDa = (root,cq,cb)-> dataScadenzaDa!=null ? cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataScadenza),dataScadenzaDa):null;
+		Specification<PraticaErogazione> hasFideiussione = (root,cq,cb)-> fideiussione !=null ? cb.equal(root.get(PraticaErogazione_.statoFideiussione).get(StatoFideiussione_.valore),fideiussione):null;
+		Specification<PraticaErogazione> hasImportoA = (root,cq,cb)-> importoA !=null ? cb.le(root.get(PraticaErogazione_.impegno),importoA):null;
+		Specification<PraticaErogazione> hasImportoDa = (root,cq,cb)-> importoDa!=null ? cb.ge(root.get(PraticaErogazione_.impegno),importoDa):null;
+		Specification<PraticaErogazione> hasNumeroNota = (root,cq,cb)-> numeroNota !=null ? cb.equal(root.get(PraticaErogazione_.processoErogazione).get(ProcessoErogazione_.numeroNota),numeroNota):null;
+		Specification<PraticaErogazione> hasPeriodo =  (root,cq,cb)->  periodo !=null ? cb.equal(root.get(PraticaErogazione_.periodo),periodo):null;
+		Specification<PraticaErogazione> hasPosizioneFinanziaria =  (root,cq,cb)-> idPosizioneFinanziaria !=null ? cb.equal(root.get(PraticaErogazione_.idPosizioneFinanziariaAc),idPosizioneFinanziaria):null;
+		Specification<PraticaErogazione> hasProcessoErogazione = (root,cq,cb)->  idProcessoErogazione !=null ? cb.equal(root.get(PraticaErogazione_.processoErogazione).get(ProcessoErogazione_.id),idProcessoErogazione):null;
+		Specification<PraticaErogazione> hasSettoreAttivita = (root,cq,cb)->!CollectionUtils.isEmpty(listaIdSettoriAttivita) ? root.get(PraticaErogazione_.settoreAttivita).get(SettoreAttivita_.id).in(listaIdSettoriAttivita):null;
+		Specification<PraticaErogazione> hasStatoPratica = (root,cq,cb)->  !CollectionUtils.isEmpty(statiPratica) ? root.get(PraticaErogazione_.lavorazioneContabile).in(statiPratica):null;
+		Specification<PraticaErogazione> hasTipoPeriodo = (root,cq,cb)->  tipoPeriodo !=null ? cb.equal(root.get(PraticaErogazione_.tipoPeriodo),tipoPeriodo):null;
+		Specification<PraticaErogazione> hasUnbundling = (root,cq,cb)->  unbundling !=null ? cb.equal(root.get(PraticaErogazione_.statoUnbundling).get(StatoUnbundling_.valore),unbundling):null;
+	
 		
-		return Specifications.where(PraticaSpecifications.hasAnnoA(getAnnoA()))
-				.and(PraticaSpecifications.hasAnnoDa(getAnnoDa()))
-				.and(PraticaSpecifications.hasAutorizzazioneComitato(getAutorizzazioneComitato()))
-				.and(PraticaSpecifications.hasAutorizzazioneContabile(getAutorizzazioneContabile()))
-				.and(PraticaSpecifications.hasAutorizzazioneLegale(getListaValoriAutorizzazioneLegale()))
-				.and(PraticaSpecifications.hasCodicePratica(getCodiciPratica()))
-				.and(PraticaSpecifications.hasComponenteTariffaria(getIdComponenteTariffaria()))
-				.and(PraticaSpecifications.hasDataComitatoA(getDataComitatoA()))
-				.and(PraticaSpecifications.hasDataComitatoDa(getDataComitatoDa()))
-				.and(PraticaSpecifications.hasDataFideiussioneA(getDataFideiussioneA()))
-				.and(PraticaSpecifications.hasDataFideiussioneDa(getDataFideiussioneDa()))
-				.and(PraticaSpecifications.hasDataInteressiA(getDataInteressiA()))
-				.and(PraticaSpecifications.hasDataInteressiDa(getDataInteressiDa()))
-				.and(PraticaSpecifications.hasDataScadenzaA(getDataScadenzaA()))
-				.and(PraticaSpecifications.hasDataScadenzaDa(getDataScadenzaDa()))
-				.and(PraticaSpecifications.hasFideiussione(getFideiussione()))
-				.and(PraticaSpecifications.hasImportoA(getImportoA()))
-				.and(PraticaSpecifications.hasImportoDa(getImportoDa()))
-				.and(PraticaSpecifications.hasNumeroNota(getNumeroNota()))
-				.and(PraticaSpecifications.hasPeriodo(getPeriodo()))
-				.and(PraticaSpecifications.hasPosizioneFinanziaria(getIdPosizioneFinanziaria()))
-				.and(PraticaSpecifications.hasProcessoErogazione(getIdProcessoErogazione()))
-				.and(PraticaSpecifications.hasSettoreAttivita(getListaIdSettoriAttivita()))
-				.and(PraticaSpecifications.hasStatoPratica(getStatiPratica()))
-				.and(PraticaSpecifications.hasTipoPeriodo(getTipoPeriodo()))
-				.and(PraticaSpecifications.hasUnbundling(getUnbundling()));
+		return Specifications.where(hasAnnoA)
+				.and(hasAnnoDa)
+				.and(hasAutorizzazioneComitato)
+				.and(hasAutorizzazioneContabile)
+				.and(hasAutorizzazioneLegale)
+				.and(hasCodicePratica)
+				.and(hasComponenteTariffaria)
+				.and(hasDataComitatoA)
+				.and(hasDataComitatoDa)
+				.and(hasDataFideiussioneA)
+				.and(hasDataFideiussioneDa)
+				.and(hasDataInteressiA)
+				.and(hasDataInteressiDa)
+				.and(hasDataScadenzaA)
+				.and(hasDataScadenzaDa)
+				.and(hasFideiussione)
+				.and(hasImportoA)
+				.and(hasImportoDa)
+				.and(hasNumeroNota)
+				.and(hasPeriodo)
+				.and(hasPosizioneFinanziaria)
+				.and(hasProcessoErogazione)
+				.and(hasSettoreAttivita)
+				.and(hasStatoPratica)
+				.and(hasTipoPeriodo)
+				.and(hasUnbundling);
 	}
 
 	

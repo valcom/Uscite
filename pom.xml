@@ -33,6 +33,7 @@
 	<modules>
 		<module>Uscite-domain</module>
 		<module>Uscite-application</module>
+		<module>Uscite-infrastructure</module>
 		<module>Uscite-ws</module>
 	</modules>
 

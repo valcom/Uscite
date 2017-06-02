@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+						http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security-4.1.xsd">
+
+	<authentication-manager >
+		<authentication-provider >
+			<user-service >
+				<user name="gestionale" password="ccse2014" authorities="ROLE_GESTIONALE" />
+				<user name="serviceBus" password="ccse2014" authorities="ROLE_ESB" />
+				<user name="restUser" password="ccse2014" authorities="ROLE_REST_USER" />
+				<user name="admin" password="ccse2014" authorities="ROLE_ESB,ROLE_GESTIONALE,ROLE_REST_USER" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+	
+	<http request-matcher="regex" security="none" pattern="\/services\/.*\?(wsdl|_wadl)" />
+
+	<http>
+		<intercept-url pattern="/services/gestionaleWS/**" access="hasRole('GESTIONALE')"  />
+		<intercept-url pattern="/services/usciteWS/**" access="hasRole('ESB')" />
+		<intercept-url pattern="/services/usciteRestWS/**" access="hasRole('ROLE_REST_USER')" />	
+		<http-basic/>
+  		<logout/>
+  		<csrf disabled="true"/>
+	</http>
+		
+</beans:beans>
+
+

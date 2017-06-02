@@ -39,10 +39,10 @@ import it.ccse.uscite.domain.StatoLegale;
 import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
 import it.ccse.uscite.domain.StatoUnbundling;
 import it.ccse.uscite.domain.StatoUnbundling.UnbundlingPratica;
+import it.ccse.uscite.domain.exception.ApplicationException;
 import it.ccse.uscite.domain.filter.PraticaFilter;
 import it.ccse.uscite.domain.repository.PraticaErogazioneRepository;
 import it.ccse.uscite.domain.repository.ProcessoErogazioneRepository;
-import it.ccse.uscite.exception.ApplicationException;
 
 
 /**

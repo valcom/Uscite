@@ -132,7 +132,6 @@
 		<dependency>
 			<groupId>it.ccse.uscite</groupId>
 			<artifactId>uscite-application</artifactId>
-			<version>0.1</version>
 		</dependency>
 
 		<dependency>

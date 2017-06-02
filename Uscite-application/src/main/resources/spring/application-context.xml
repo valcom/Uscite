@@ -18,10 +18,6 @@
 	
 	<context:property-placeholder location="classpath:properties/mail.properties" />
 	
-	<bean id="loggingAspect" class="it.ccse.uscite.infrastructure.aop.LoggingAspect" />
-	
-	<aop:aspectj-autoproxy />
-	
 	<tx:annotation-driven transaction-manager="transactionManager" order="3" />
 	
 

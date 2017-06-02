@@ -10,10 +10,10 @@ import it.ccse.uscite.domain.OrdineDelGiorno;
 import it.ccse.uscite.domain.PraticaErogazione;
 import it.ccse.uscite.domain.ProcessoErogazione;
 import it.ccse.uscite.domain.ProcessoErogazione.StatoLavorazioneContabile;
+import it.ccse.uscite.domain.exception.ApplicationException;
 import it.ccse.uscite.domain.filter.ProcessoFilter;
 import it.ccse.uscite.domain.repository.OrdineDelGiornoRepository;
 import it.ccse.uscite.domain.repository.ProcessoErogazioneRepository;
-import it.ccse.uscite.exception.ApplicationException;
 
 import java.math.BigInteger;
 import java.util.List;

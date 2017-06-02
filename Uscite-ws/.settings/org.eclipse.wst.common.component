@@ -11,6 +11,9 @@
         <dependent-module archiveName="uscite-domain-0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Uscite-domain/Uscite-domain">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="uscite-infrastructure-0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Uscite-infrastructure/Uscite-infrastructure">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/Uscite-ws/target/classes"/>
         <property name="context-root" value="uscite-ws"/>
     </wb-module>

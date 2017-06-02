@@ -1,4 +1,4 @@
-package it.ccse.uscite.exception;
+package it.ccse.uscite.domain.exception;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;

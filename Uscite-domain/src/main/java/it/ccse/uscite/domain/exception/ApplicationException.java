@@ -1,4 +1,4 @@
-package it.ccse.uscite.exception;
+package it.ccse.uscite.domain.exception;
 
 public class ApplicationException  extends MessageException{
 

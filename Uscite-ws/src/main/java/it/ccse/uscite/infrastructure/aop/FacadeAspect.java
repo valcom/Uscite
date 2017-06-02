@@ -14,7 +14,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import it.ccse.uscite.application.facade.dto.input.Base_InDTO;
 import it.ccse.uscite.application.facade.dto.output.Base_OutDTO;
 import it.ccse.uscite.application.facade.dto.output.Base_OutDTO.Esito;
-import it.ccse.uscite.exception.ApplicationException;
+import it.ccse.uscite.domain.exception.ApplicationException;
 
 /**
  * @author vcompagnone

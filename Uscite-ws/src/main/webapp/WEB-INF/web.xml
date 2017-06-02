@@ -11,6 +11,7 @@
 			classpath:/spring/web-application-context.xml
 			classpath:/spring/ws-context.xml
 			classpath:/spring/security-context.xml
+			classpath:/spring/infrastructure-context.xml
 		</param-value>
 	</context-param>
 	

@@ -33,7 +33,7 @@ import it.ccse.uscite.domain.StatoContabile.AutorizzazioneContabile;
 import it.ccse.uscite.domain.StatoFideiussione.FideiussionePratica;
 import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
 import it.ccse.uscite.domain.StatoUnbundling.UnbundlingPratica;
-import it.ccse.uscite.exception.ApplicationException;
+import it.ccse.uscite.domain.exception.ApplicationException;
 
 
 /**

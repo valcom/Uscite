@@ -27,7 +27,7 @@ import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
 import it.ccse.uscite.domain.ProcessoErogazione.StatoLavorazioneContabile;
 import it.ccse.uscite.domain.ProcessoErogazione.StatoProcesso;
 import it.ccse.uscite.domain.StatoComitato.AutorizzazioneComitato;
-import it.ccse.uscite.exception.ApplicationException;
+import it.ccse.uscite.domain.exception.ApplicationException;
 
 /**
  * The persistent class for the ordine_del_giorno database table.}

@@ -77,7 +77,7 @@ import it.ccse.uscite.domain.SettoreAttivita.Unbundling;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations =  {"classpath:/spring/web-application-context.xml"} )
+@ContextConfiguration(locations =  {"classpath:/spring/web-application-context.xml","classpath:/spring/infrastructure-context.xml"} )
 @Transactional
 public class WS_UsciteTest {
 	

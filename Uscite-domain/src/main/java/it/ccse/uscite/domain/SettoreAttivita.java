@@ -4,12 +4,15 @@
 package it.ccse.uscite.domain;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
 import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
+import it.ccse.uscite.domain.StatoUnbundling.UnbundlingPratica;
 
 /**
  * @author vcompagnone
@@ -17,6 +20,8 @@ import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
  */
 @Embeddable
 public class SettoreAttivita extends ValueObject {
+	public static final List<Integer> LISTA_COMPONENTI_TARIFFARIE_SOGGETTE_BLOCCO_UNBUNDLING = Arrays.asList(1,6,8,9,12,13,15,19,24,26,27,28,29,31,35,36,37,39,40,45,49,58,59,60,61,62,63,64,65);
+	
 	private BigInteger id;
 	@Transient
 	private String ragioneSociale;
@@ -120,7 +125,29 @@ public class SettoreAttivita extends ValueObject {
 	}
 	
 	public static enum Unbundling{
-		BLOCCATA, SBLOCCATA
+		BLOCCATA, SBLOCCATA;
+		
+		
+		
+		public UnbundlingPratica getUnbundlingPratica(BigInteger idComponenteTariffaria) {
+			UnbundlingPratica unbundlingPratica = null;
+				if(LISTA_COMPONENTI_TARIFFARIE_SOGGETTE_BLOCCO_UNBUNDLING.contains(idComponenteTariffaria.intValue())){
+					switch(this){
+					case BLOCCATA:
+						unbundlingPratica = UnbundlingPratica.NON_AUTORIZZATO;
+						break;
+					case SBLOCCATA:
+						unbundlingPratica = UnbundlingPratica.AUTORIZZATO;
+						break;
+					default:
+						break;
+					}
+				}else{
+					unbundlingPratica = UnbundlingPratica.DONT_CARE;
+				}
+			
+			return unbundlingPratica;
+		}		
 	}
 	
 

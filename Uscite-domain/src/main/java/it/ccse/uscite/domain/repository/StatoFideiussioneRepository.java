@@ -3,15 +3,14 @@
  */
 package it.ccse.uscite.domain.repository;
 
-import it.ccse.uscite.domain.StatoFideiussione;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+
+import it.ccse.uscite.domain.StatoFideiussione;
 
 /**
  * @author vcompagnone
  *
  */
-public interface StatoFideiussioneRepository  extends JpaRepository<StatoFideiussione, String>,QueryDslPredicateExecutor<StatoFideiussione>{
+public interface StatoFideiussioneRepository  extends JpaRepository<StatoFideiussione, String>{
 
 }

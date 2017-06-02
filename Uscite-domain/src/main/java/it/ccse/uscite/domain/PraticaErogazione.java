@@ -33,7 +33,6 @@ import it.ccse.uscite.domain.StatoContabile.AutorizzazioneContabile;
 import it.ccse.uscite.domain.StatoFideiussione.FideiussionePratica;
 import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
 import it.ccse.uscite.domain.StatoUnbundling.UnbundlingPratica;
-import it.ccse.uscite.domain.util.UsciteProperties;
 import it.ccse.uscite.exception.ApplicationException;
 
 
@@ -58,6 +57,8 @@ import it.ccse.uscite.exception.ApplicationException;
 @Audited
 public class PraticaErogazione extends DomainEntity<BigInteger> {
 	private static final long serialVersionUID = 1L;
+	
+	private final static int SOGLIA_GIORNI_SBLOCCO_DATA_REGOLAZIONE = 5;
 
 	private Integer anno;
 
@@ -120,7 +121,7 @@ public class PraticaErogazione extends DomainEntity<BigInteger> {
 	private String descrizione;
 
 	@Column(name="id_articolo_ac")
-	private BigInteger idArticoloAc;
+	private Integer idArticoloAc;
 
 	@Column(name="id_autorizzante")
 	private String idAutorizzante;
@@ -449,14 +450,14 @@ public class PraticaErogazione extends DomainEntity<BigInteger> {
 	/**
 	 * @return
 	 */
-	public BigInteger getIdArticoloAc() {
+	public Integer getIdArticoloAc() {
 		return this.idArticoloAc;
 	}
 
 	/**
 	 * @param idArticoloAc
 	 */
-	public void setIdArticoloAc(BigInteger idArticoloAc) {
+	public void setIdArticoloAc(Integer idArticoloAc) {
 		this.idArticoloAc = idArticoloAc;
 	}
 
@@ -1139,7 +1140,7 @@ public class PraticaErogazione extends DomainEntity<BigInteger> {
 	 */
 	public Boolean hasBloccoDataScadenza(){
 		Date dataRif = dataScadenza!=null ? dataScadenza : dataInteressi;
-		return dataRif !=null && dataRif.after(DateUtils.addDays(new Date(), UsciteProperties.SOGLIA_GIORNI_SBLOCCO_DATA_REGOLAZIONE));
+		return dataRif !=null && dataRif.after(DateUtils.addDays(new Date(), SOGLIA_GIORNI_SBLOCCO_DATA_REGOLAZIONE));
 	}
 	
 	/**
@@ -1199,7 +1200,7 @@ public class PraticaErogazione extends DomainEntity<BigInteger> {
 			}
 			Date dataRif = dataScadenza!=null ? dataScadenza : dataInteressi;
 			if(dataRif!=null){
-				dateSblocco.add(DateUtils.addDays(dataRif, -UsciteProperties.SOGLIA_GIORNI_SBLOCCO_DATA_REGOLAZIONE));
+				dateSblocco.add(DateUtils.addDays(dataRif, -SOGLIA_GIORNI_SBLOCCO_DATA_REGOLAZIONE));
 			}
 			if(!dateSblocco.isEmpty()){
 				dataErogabilita = Collections.max(dateSblocco);

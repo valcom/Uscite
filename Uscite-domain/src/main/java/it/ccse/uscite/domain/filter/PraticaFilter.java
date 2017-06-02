@@ -12,16 +12,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.util.CollectionUtils;
 
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
-
 import it.ccse.uscite.domain.OrdineDelGiorno_;
 import it.ccse.uscite.domain.PraticaErogazione;
 import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
 import it.ccse.uscite.domain.PraticaErogazione_;
 import it.ccse.uscite.domain.ProcessoErogazione_;
-import it.ccse.uscite.domain.QPraticaErogazione;
 import it.ccse.uscite.domain.SettoreAttivita_;
 import it.ccse.uscite.domain.StatoComitato.AutorizzazioneComitato;
 import it.ccse.uscite.domain.StatoComitato_;
@@ -96,52 +91,7 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	private Date dataFideiussioneA;
 
 	
-	public Predicate getPredicate() {
-
-		QPraticaErogazione pratica = QPraticaErogazione.praticaErogazione;
-		BooleanExpression hasAnnoDa = getAnnoDa() !=null ? pratica.anno.goe(getAnnoDa()):null; 
-		BooleanExpression hasAnnoA = getAnnoA()!=null ? pratica.anno.loe(getAnnoA()):null;
-		BooleanExpression hasAutorizzazioneComitato = getAutorizzazioneComitato()!=null ? pratica.statoComitato.valore.eq(getAutorizzazioneComitato()):null;
-		BooleanExpression hasAutorizzazioneContabile = getAutorizzazioneContabile()!=null ? pratica.statoContabile.valore.eq(getAutorizzazioneContabile()):null;
-		BooleanExpression hasAutorizzazioniLegale = !CollectionUtils.isEmpty(getListaValoriAutorizzazioneLegale()) ? pratica.statoLegale.valore.in(getListaValoriAutorizzazioneLegale()):null;
-		BooleanExpression hasDatacomitatoA = getDataComitatoA()!=null ? pratica.processoErogazione.ordineDelGiorno.dataComitato.loe(getDataComitatoA()):null;
-		BooleanExpression hasDatacomitatoDa = getDataComitatoDa()!=null ? pratica.processoErogazione.ordineDelGiorno.dataComitato.goe(getDataComitatoDa()):null;
-
-		BooleanExpression hasDataInteressiA = getDataInteressiA()!=null ? pratica.dataInteressi.loe(getDataInteressiA()):null;
-		BooleanExpression hasDataInteressiDa = getDataInteressiDa()!=null ? pratica.dataInteressi.goe(getDataInteressiDa()):null;	
-		BooleanExpression hasDataScadenzaA = getDataScadenzaA()!=null ? pratica.dataScadenza.loe(getDataScadenzaA()):null;
-		BooleanExpression hasDataScadenzaDa = getDataScadenzaDa()!=null ? pratica.dataScadenza.goe(getDataScadenzaDa()):null;
-		BooleanExpression hasDataFideiussioneA = getDataFideiussioneA()!=null ? pratica.dataFideiussione.loe(getDataFideiussioneA()):null;
-		BooleanExpression hasDataFideiussioneDa = getDataFideiussioneDa()!=null ? pratica.dataFideiussione.goe(getDataFideiussioneDa()):null;
-		
-		BooleanExpression hasFideiussione = getFideiussione()!=null ? pratica.statoFideiussione.valore.eq(getFideiussione()):null;
-		BooleanExpression hasIdComponenteTariffaria = getIdComponenteTariffaria()!=null?pratica.idComponenteTariffariaAc.eq(getIdComponenteTariffaria()):null;
-		BooleanExpression hasIdPosizioneFinanziaria = getIdPosizioneFinanziaria()!=null?pratica.idPosizioneFinanziariaAc.eq(getIdPosizioneFinanziaria()):null;
-		BooleanExpression hasImportoA = getImportoA()!=null?pratica.impegno.loe(getImportoA()):null;
-		BooleanExpression hasImportoDa = getImportoDa()!=null?pratica.impegno.goe(getImportoDa()):null; 
-		BooleanExpression hasIdSettoreAttivita = !CollectionUtils.isEmpty(getListaIdSettoriAttivita())?pratica.settoreAttivita.id.in(getListaIdSettoriAttivita()):null;
-		BooleanExpression hasNumeroNota = getNumeroNota()!=null?pratica.processoErogazione.numeroNota.eq(getNumeroNota()):null;
-		BooleanExpression hasIdNota = getIdProcessoErogazione()!=null ? pratica.processoErogazione.id.eq(getIdProcessoErogazione()):null;
-		BooleanExpression hasPeriodo = getPeriodo()!=null?pratica.periodo.eq(getPeriodo()):null;
-		BooleanExpression hasStato = !CollectionUtils.isEmpty(getStatiPratica())?pratica.lavorazioneContabile.in(getStatiPratica()):null; 			
-		BooleanExpression hasTipoPeriodo = getTipoPeriodo()!=null?pratica.tipoPeriodo.eq(getTipoPeriodo()):null;
-		BooleanExpression hasUnbundling = getUnbundling()!=null?pratica.statoUnbundling.valore.eq(getUnbundling()):null;
-		BooleanExpression hasProcessoErogazione = getIdProcessoErogazione()!=null?pratica.processoErogazione.id.eq(getIdProcessoErogazione()):null;
-		BooleanExpression hasCodicePratica = !CollectionUtils.isEmpty(getCodiciPratica())?pratica.codicePratica.in(getCodiciPratica()):null;
-		
-		return new BooleanBuilder().orAllOf(hasAnnoA, hasAnnoDa,
-				hasAutorizzazioneComitato, hasAutorizzazioneContabile,
-				hasDatacomitatoA, hasDatacomitatoDa, hasDataInteressiA,
-				hasDataInteressiDa, hasDataScadenzaA, hasDataScadenzaDa,
-				hasIdComponenteTariffaria, hasIdPosizioneFinanziaria,
-				hasImportoA, hasImportoDa, hasIdSettoreAttivita, hasNumeroNota,
-				hasIdNota, hasPeriodo, hasStato, hasTipoPeriodo,
-				hasAutorizzazioniLegale, hasFideiussione, hasUnbundling,
-				hasProcessoErogazione, hasCodicePratica, hasDataFideiussioneA,
-				hasDataFideiussioneDa);
-
-	}
-
+	
 	/**
 	 * @return the dataComitatoDa
 	 */

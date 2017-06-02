@@ -50,20 +50,6 @@
 
 		</dependency>
 
-		<dependency>
-			<groupId>com.querydsl</groupId>
-			<artifactId>querydsl-apt</artifactId>
-			<version>${querydsl.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.querydsl</groupId>
-			<artifactId>querydsl-jpa</artifactId>
-			<version>${querydsl.version}</version>
-		</dependency>
-
-
-
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -110,30 +96,6 @@
 		</resources>
 		<outputDirectory>target/classes</outputDirectory>
 		<plugins>
-
-			<plugin>
-				<groupId>com.mysema.maven</groupId>
-				<artifactId>apt-maven-plugin</artifactId>
-				<version>${apt-maven-plugin.version}</version>
-
-				<executions>
-					<execution>
-						<id>generate-sources</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<configuration>
-							<includes>
-								<include>it.ccse.uscite.domain</include>
-							</includes>
-							<outputDirectory>${project.build.directory}/generated-sources/querydsl</outputDirectory>
-							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
-							<logOnlyOnError>true</logOnlyOnError>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 
 			<plugin>
 				<groupId>org.bsc.maven</groupId>
@@ -185,7 +147,6 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>${project.build.directory}/generated-sources/querydsl</source>
 								<source>${project.build.directory}/generated-sources/metamodel</source>
 							</sources>
 						</configuration>
@@ -214,7 +175,7 @@
 					<target>SCRIPT</target>
 					<dialect>org.hibernate.dialect.MySQLDialect</dialect>
 					<export>false</export>
-					<skip>true</skip>
+					<skip>false</skip>
 				</configuration>
 			</plugin>
 

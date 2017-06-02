@@ -4,11 +4,11 @@
 package it.ccse.uscite.domain;
 
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import it.ccse.uscite.domain.util.UsciteProperties;
 
 /**
  * @author vcompagnone
@@ -22,6 +22,7 @@ public class StatoFideiussione extends StatoPratica<StatoFideiussione.Fideiussio
 	 * 
 	 */
 	private static final long serialVersionUID = -1804279633895682240L;
+	public static final List<Integer> LISTA_COMPONENTI_TARIFFARIE_FIDEIUSSIONE = Arrays.asList(73);
 	
 	public static enum FideiussionePratica{
 		UNDEFINED, PRESENTE, ASSENTE, DONT_CARE;
@@ -33,7 +34,7 @@ public class StatoFideiussione extends StatoPratica<StatoFideiussione.Fideiussio
 		 */
 		public FideiussionePratica getFideiussionePraticaByCT(BigInteger idComponenteTariffaria) {
 			FideiussionePratica fideiussione = null;
-			if(UsciteProperties.LISTA_COMPONENTI_TARIFFARIE_FIDEIUSSIONE.contains(idComponenteTariffaria.toString())){
+			if(LISTA_COMPONENTI_TARIFFARIE_FIDEIUSSIONE.contains(idComponenteTariffaria)){
 				switch(this){
 				case ASSENTE:
 					fideiussione = FideiussionePratica.ASSENTE;

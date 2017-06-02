@@ -9,14 +9,9 @@ import java.util.Date;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
-
 import it.ccse.uscite.domain.OrdineDelGiorno;
 import it.ccse.uscite.domain.OrdineDelGiorno.StatoComitato;
 import it.ccse.uscite.domain.OrdineDelGiorno_;
-import it.ccse.uscite.domain.QOrdineDelGiorno;
 
 /**
  * @author vcompagnone
@@ -30,15 +25,6 @@ public class OrdineDelGiornoFilter extends PageableFilter<OrdineDelGiorno> {
 	private StatoComitato stato;
 
 	
-	@Override
-	public Predicate getPredicate() {
-		QOrdineDelGiorno odg = QOrdineDelGiorno.ordineDelGiorno;
-		BooleanExpression hasId = idComitato != null ? odg.id.eq(idComitato):null;
-		BooleanExpression hasDataComitatoDa = dataComitatoDa!=null ? odg.dataComitato.goe(dataComitatoDa):null;
-		BooleanExpression hasDataComitatoA = dataComitatoA!=null ? odg.dataComitato.loe(dataComitatoA):null;
-		BooleanExpression hasStato = stato != null ? odg.stato.eq(stato):null;
-		return new BooleanBuilder().orAllOf(hasId,hasDataComitatoDa,hasDataComitatoA,hasStato);
-	}
 
 	@Override
 	public Specification<OrdineDelGiorno> getSpecification() {

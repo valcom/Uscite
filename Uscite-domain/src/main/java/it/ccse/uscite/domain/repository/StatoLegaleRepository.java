@@ -3,14 +3,13 @@
  */
 package it.ccse.uscite.domain.repository;
 
-import it.ccse.uscite.domain.StatoLegale;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+
+import it.ccse.uscite.domain.StatoLegale;
 
 /**
  * @author vcompagnone
  *
  */
-public interface StatoLegaleRepository  extends JpaRepository<StatoLegale, String>,QueryDslPredicateExecutor<StatoLegale>{
+public interface StatoLegaleRepository  extends JpaRepository<StatoLegale, String>{
 }

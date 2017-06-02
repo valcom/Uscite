@@ -3,33 +3,6 @@
  */
 package it.ccse.uscite.application.service.impl;
 
-import it.ccse.uscite.application.service.MailService;
-import it.ccse.uscite.application.service.PraticaErogazioneService;
-import it.ccse.uscite.application.service.StatoComitatoService;
-import it.ccse.uscite.application.service.StatoContabileService;
-import it.ccse.uscite.application.service.StatoFideiussioneService;
-import it.ccse.uscite.application.service.StatoLegaleService;
-import it.ccse.uscite.application.service.StatoUnbundlingService;
-import it.ccse.uscite.domain.LavorazioneContabile;
-import it.ccse.uscite.domain.PraticaErogazione;
-import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
-import it.ccse.uscite.domain.ProcessoErogazione;
-import it.ccse.uscite.domain.SettoreAttivita;
-import it.ccse.uscite.domain.SettoreAttivita.Unbundling;
-import it.ccse.uscite.domain.StatoComitato;
-import it.ccse.uscite.domain.StatoContabile;
-import it.ccse.uscite.domain.StatoFideiussione;
-import it.ccse.uscite.domain.StatoFideiussione.FideiussionePratica;
-import it.ccse.uscite.domain.StatoLegale;
-import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
-import it.ccse.uscite.domain.StatoUnbundling;
-import it.ccse.uscite.domain.StatoUnbundling.UnbundlingPratica;
-import it.ccse.uscite.domain.filter.PraticaFilter;
-import it.ccse.uscite.domain.repository.PraticaErogazioneRepository;
-import it.ccse.uscite.domain.repository.ProcessoErogazioneRepository;
-import it.ccse.uscite.domain.util.UsciteProperties;
-import it.ccse.uscite.exception.ApplicationException;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +18,31 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import it.ccse.uscite.application.service.MailService;
+import it.ccse.uscite.application.service.PraticaErogazioneService;
+import it.ccse.uscite.application.service.StatoComitatoService;
+import it.ccse.uscite.application.service.StatoContabileService;
+import it.ccse.uscite.application.service.StatoFideiussioneService;
+import it.ccse.uscite.application.service.StatoLegaleService;
+import it.ccse.uscite.application.service.StatoUnbundlingService;
+import it.ccse.uscite.domain.LavorazioneContabile;
+import it.ccse.uscite.domain.PraticaErogazione;
+import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
+import it.ccse.uscite.domain.ProcessoErogazione;
+import it.ccse.uscite.domain.SettoreAttivita;
+import it.ccse.uscite.domain.StatoComitato;
+import it.ccse.uscite.domain.StatoContabile;
+import it.ccse.uscite.domain.StatoFideiussione;
+import it.ccse.uscite.domain.StatoFideiussione.FideiussionePratica;
+import it.ccse.uscite.domain.StatoLegale;
+import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
+import it.ccse.uscite.domain.StatoUnbundling;
+import it.ccse.uscite.domain.StatoUnbundling.UnbundlingPratica;
+import it.ccse.uscite.domain.filter.PraticaFilter;
+import it.ccse.uscite.domain.repository.PraticaErogazioneRepository;
+import it.ccse.uscite.domain.repository.ProcessoErogazioneRepository;
+import it.ccse.uscite.exception.ApplicationException;
 
 
 /**
@@ -108,7 +106,7 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 		Page<PraticaErogazione> pratiche = null;
 		Pageable pageable = filter.getPageable();
 		if(filter.getErogabile()==null){
-			pratiche = praticaErogazioneRepository.findAll(filter.getPredicate(),pageable);
+			pratiche = praticaErogazioneRepository.findAll(filter.getSpecification(),pageable);
 		}else{
 			List<PraticaErogazione> listaPraticheErogabili = praticaErogazioneRepository.findAll(filter.getSpecification()).stream().filter(p->p.isErogabile().equals(filter.getErogabile())).collect(Collectors.toList());
 			pratiche = new PageImpl<PraticaErogazione>(listaPraticheErogabili,pageable,listaPraticheErogabili.size());
@@ -181,7 +179,7 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 			List<StatoFideiussione> statiFideiussione = statoFideiussioneService.getStatiFideiussione();
 			for(PraticaErogazione pratica:pratiche){
 				StatoLegale statoLegale = statiLegale.stream().filter(sl->sl.getAutorizzazioneLegale().equals(pratica.getSettoreAttivita().getStatoAntimafia().getAutorizzazioneLegale())).findFirst().orElseThrow(()->new RuntimeException("stato legale non valido per la pratica "+pratica.getCodicePratica()));
-				StatoUnbundling statoUnbundling = statiUnbundling.stream().filter(su->su.getUnbundling().equals(calcolaUnbundlingPratica(pratica.getSettoreAttivita().getUnbundling(),pratica.getIdComponenteTariffariaAc()))).findFirst().orElseThrow(()->new RuntimeException("stato unbundling non valido per la pratica "+pratica.getCodicePratica()));
+				StatoUnbundling statoUnbundling = statiUnbundling.stream().filter(su->su.getUnbundling().equals(pratica.getSettoreAttivita().getUnbundling().getUnbundlingPratica(pratica.getIdComponenteTariffariaAc()))).findFirst().orElseThrow(()->new RuntimeException("stato unbundling non valido per la pratica "+pratica.getCodicePratica()));
 				pratica.setStatoFideiussione(statiFideiussione.stream().filter(sf->sf.equals(statoFideiussioneIniziale.getFideiussione().getFideiussionePraticaByCT(pratica.getIdComponenteTariffariaAc()))).findFirst().orElseThrow(()->new RuntimeException("stato fideiussione non valido per la pratica "+pratica.getCodicePratica())));
 				pratica.setStatoLegale(statoLegale);
 				pratica.setStatoUnbundling(statoUnbundling);
@@ -242,7 +240,7 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 	@Override
 	public List<PraticaErogazione> aggiornaSemaforiAnagrafica(Collection<SettoreAttivita> settoriAttivita) {
 		
-		List<PraticaErogazione> pratiche = new ArrayList<PraticaErogazione>();
+		List<PraticaErogazione> praticheDaAggiornare = new ArrayList<PraticaErogazione>();
 		List<StatoLegale> statiLegale = statoLegaleService.getStatiLegali();
 		List<StatoUnbundling> statiUnbundling = statoUnbundlingService.getStatiUnbundling();
 
@@ -255,52 +253,29 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 				List<PraticaErogazione> praticheBySettore = pagePratiche.getContent();
 				for(PraticaErogazione pratica:praticheBySettore){
 					pratica.setSettoreAttivita(settoreAttivita);
-					AutorizzazioneLegale autorizzazioneLegale = pratica.getAutorizzazioneLegale();
-					UnbundlingPratica unbundlingPratica = pratica.getUnbundling();
-					StatoLegale statoLegale = statiLegale.stream().filter(sl->sl.getAutorizzazioneLegale().equals(settoreAttivita.getStatoAntimafia().getAutorizzazioneLegale())).findFirst().orElse(null);
-					StatoUnbundling statoUnbundling = statiUnbundling.stream().filter(sb->sb.getUnbundling().equals(calcolaUnbundlingPratica(settoreAttivita.getUnbundling(),pratica.getIdComponenteTariffariaAc()))).findFirst().orElse(null); 
-					if(statoLegale!=null){
-						pratica.setStatoLegale(statoLegale);
-					}
-					if(statoUnbundling!=null){
-						pratica.setStatoUnbundling(statoUnbundling);
-					}
-					AutorizzazioneLegale nuovaAntimafia = pratica.getAutorizzazioneLegale();
-					UnbundlingPratica nuovoUnbundling = pratica.getUnbundling();
-					if(autorizzazioneLegale != nuovaAntimafia  || unbundlingPratica != nuovoUnbundling){
-						pratiche.add(pratica);
+					AutorizzazioneLegale autorizzazioneLegaleAttuale = pratica.getAutorizzazioneLegale();
+					UnbundlingPratica unbundlingPraticaAttuale = pratica.getUnbundling();
+					StatoLegale nuovoStatoLegale = statiLegale.stream().filter(sl->sl.getAutorizzazioneLegale().equals(settoreAttivita.getStatoAntimafia().getAutorizzazioneLegale())).findFirst().orElse(null);
+					StatoUnbundling nuovoStatoUnbundling = statiUnbundling.stream().filter(sb->sb.getUnbundling().equals(settoreAttivita.getUnbundling().getUnbundlingPratica(pratica.getIdComponenteTariffariaAc()))).findFirst().orElse(null); 
+					AutorizzazioneLegale nuovaAntimafia = nuovoStatoLegale.getAutorizzazioneLegale();
+					UnbundlingPratica nuovoUnbundling = nuovoStatoUnbundling.getUnbundling();
+					pratica.setStatoLegale(nuovoStatoLegale);
+					pratica.setStatoUnbundling(nuovoStatoUnbundling);
+					if(autorizzazioneLegaleAttuale != nuovaAntimafia  || unbundlingPraticaAttuale != nuovoUnbundling){
+						praticheDaAggiornare.add(pratica);
 					}
 				}
 			}
 		}
 
-		List<PraticaErogazione> praticheErogabili = pratiche.stream().filter(PraticaErogazione::isErogabile).collect(Collectors.toList());
+		List<PraticaErogazione> praticheErogabili = praticheDaAggiornare.stream().filter(PraticaErogazione::isErogabile).collect(Collectors.toList());
 		if(!praticheErogabili.isEmpty()){
 			mailService.sendMailSbloccoAnagraficaPratiche(praticheErogabili);
 		}
-		return praticaErogazioneRepository.save(pratiche);
+		return praticaErogazioneRepository.save(praticheDaAggiornare);
 	}
 	
-	private static UnbundlingPratica calcolaUnbundlingPratica(Unbundling unbundlingSettoreAttivita,BigInteger idComponenteTariffaria) {
-			UnbundlingPratica unbundlingPratica = null;
-			if(unbundlingSettoreAttivita!=null){
-				if(UsciteProperties.LISTA_COMPONENTI_TARIFFARIE_SOGGETTE_BLOCCO_UNBUNDLING.contains(idComponenteTariffaria.toString())){
-					switch(unbundlingSettoreAttivita){
-					case BLOCCATA:
-						unbundlingPratica = UnbundlingPratica.NON_AUTORIZZATO;
-						break;
-					case SBLOCCATA:
-						unbundlingPratica = UnbundlingPratica.AUTORIZZATO;
-						break;
-					default:
-						break;
-					}
-				}else{
-					unbundlingPratica = UnbundlingPratica.DONT_CARE;
-				}
-			}
-			return unbundlingPratica;
-		}		
+	
 	
 
 	

@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import it.ccse.uscite.domain.OrdineDelGiorno;
 import it.ccse.uscite.domain.OrdineDelGiorno.StatoComitato;
@@ -19,7 +19,7 @@ import it.ccse.uscite.domain.OrdineDelGiorno.StatoComitato;
  * @author vcompagnone
  *
  */
-public interface OrdineDelGiornoRepository extends JpaRepository<OrdineDelGiorno, BigInteger>,QueryDslPredicateExecutor<OrdineDelGiorno>{
+public interface OrdineDelGiornoRepository extends JpaRepository<OrdineDelGiorno, BigInteger>,JpaSpecificationExecutor<OrdineDelGiorno>{
 	
 	public OrdineDelGiorno findByDataComitato(Date dataComitato);
 

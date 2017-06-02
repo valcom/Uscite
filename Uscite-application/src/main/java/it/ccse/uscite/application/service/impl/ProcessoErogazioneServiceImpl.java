@@ -137,7 +137,7 @@ public class ProcessoErogazioneServiceImpl implements ProcessoErogazioneService{
 	@Override
 	@Transactional(readOnly=true)
 	public Page<ProcessoErogazione> searchProcessiErogazione(ProcessoFilter req) {
-		return 	processoErogazioneRepository.findAll(req.getPredicate(),req.getPageable());
+		return 	processoErogazioneRepository.findAll(req.getSpecification(),req.getPageable());
 	}
 
 	

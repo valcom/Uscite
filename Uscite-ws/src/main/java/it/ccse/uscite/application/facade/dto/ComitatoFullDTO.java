@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import it.ccse.uscite.infrastructure.xml_adapter.ComitatoFullDTOAdapter;
+import it.ccse.uscite.application.facade.xml_adapter.ComitatoFullDTOAdapter;
 
 /**
  * @author vcompagnone

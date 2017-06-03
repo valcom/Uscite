@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,7 @@ import it.ccse.uscite.domain.filter.PraticaFilter;
 public class UsciteWSFacadeImpl implements UsciteWSFacade {
 
 	@Autowired
+	@Qualifier("assemblerSearchPraticheDozer")
 	private AssemblerSearchPratiche assemblerSearchPratiche;
 	
 	@Autowired

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.ccse.uscite.infrastructure.xml_adapter;
+package it.ccse.uscite.application.facade.xml_adapter;
 
 import it.ccse.uscite.application.facade.dto.ComitatoFullDTO;
 import javax.xml.bind.annotation.adapters.XmlAdapter;

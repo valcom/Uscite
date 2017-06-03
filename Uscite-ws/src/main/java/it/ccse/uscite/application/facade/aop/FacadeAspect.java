@@ -1,13 +1,14 @@
 /**
  * 
  */
-package it.ccse.uscite.infrastructure.aop;
+package it.ccse.uscite.application.facade.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -20,6 +21,7 @@ import it.ccse.uscite.domain.exception.ApplicationException;
  * @author vcompagnone
  *
  */
+@Component
 @Aspect
 @Order(1)
 public class FacadeAspect {

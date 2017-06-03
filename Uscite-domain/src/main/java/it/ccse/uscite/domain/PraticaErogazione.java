@@ -1554,6 +1554,11 @@ public class PraticaErogazione extends DomainEntity<BigInteger> {
 		setLavorazioneContabile(StatoPratica.LAVORABILE);
 	}    
 	
-	
+	/**
+	 * @return
+	 */
+	public Boolean getErogabile(){
+		return isErogabile();
+	}
 
 }

@@ -4,7 +4,7 @@
 package it.ccse.uscite.application.facade.assembler.uscite.impl.modelmapper;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +21,8 @@ import it.ccse.uscite.domain.filter.PraticaFilter;
 @Component
 public class AssemblerSearchPraticheModelMapper implements AssemblerSearchPratiche {
 
-	private static ModelMapper modelMapper = new ModelMapper();
-	
-	static{
-		modelMapper.getConfiguration()
-		  .setMatchingStrategy(MatchingStrategies.STRICT);
-	}
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	/* (non-Javadoc)
 	 * @see it.ccse.uscite.application.facade.assembler.uscite.AssemblerSearchPratiche#assemble(org.springframework.data.domain.Page)

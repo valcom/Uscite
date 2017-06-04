@@ -44,9 +44,11 @@ public class UsciteWSFacadeImpl implements UsciteWSFacade {
 	private AssemblerSearchPratiche assemblerSearchPratiche;
 	
 	@Autowired
+	@Qualifier("assemblerAggiornaSemaforiAnagraficaModelMapper")
 	private AssemblerAggiornaSemaforiAnagrafica assemblerAggiornaSemaforiAnagrafica;
 	
 	@Autowired
+	@Qualifier("assemblerAggiornaFideiussioneModelMapper")
 	private AssemblerAggiornaFideiussione assemblerAggiornaFideiussione;
 	
 	@Autowired

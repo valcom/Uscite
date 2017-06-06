@@ -40,7 +40,7 @@ import it.ccse.uscite.domain.filter.PraticaFilter;
 public class UsciteWSFacadeImpl implements UsciteWSFacade {
 
 	@Autowired
-	@Qualifier("assemblerSearchPraticheModelMapper")
+	@Qualifier("assemblerSearchPraticheOrika")
 	private AssemblerSearchPratiche assemblerSearchPratiche;
 	
 	@Autowired

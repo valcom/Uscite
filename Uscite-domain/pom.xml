@@ -26,7 +26,7 @@
 		<hibernate-maven-plugin.version>2.0.0</hibernate-maven-plugin.version>
 	</properties>
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -42,7 +42,7 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${spring-data-jpa.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -84,11 +84,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
+
 	</dependencies>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
-		
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -154,30 +155,6 @@
 				</executions>
 			</plugin>
 
-			<plugin>
-				<groupId>de.juplo</groupId>
-				<artifactId>hibernate-maven-plugin</artifactId>
-				<version>${hibernate-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>drop</goal>
-							<goal>create</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<envers>true</envers>
-					<format>true</format>
-					<delimiter>;</delimiter>
-					<force>true</force>
-					<type>CREATE</type>
-					<target>SCRIPT</target>
-					<dialect>org.hibernate.dialect.MySQLDialect</dialect>
-					<export>false</export>
-					<skip>false</skip>
-				</configuration>
-			</plugin>
 
 
 		</plugins>

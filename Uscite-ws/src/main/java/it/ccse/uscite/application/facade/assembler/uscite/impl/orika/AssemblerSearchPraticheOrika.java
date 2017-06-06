@@ -19,8 +19,6 @@ public class AssemblerSearchPraticheOrika implements AssemblerSearchPratiche {
 	@Autowired
 	private MapperFacade mapper;
 	
-	
-	
 	@Override
 	public SearchPratiche_OutDTO assemble(Page<PraticaErogazione> pratiche) {
 		return mapper.map(pratiche, SearchPratiche_OutDTO.class);

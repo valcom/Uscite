@@ -1,23 +1,25 @@
 package it.ccse.uscite.application.facade.assembler.gestionale;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-import it.ccse.uscite.application.facade.assembler.AssemblerComitatoFullDTO;
+import it.ccse.uscite.application.facade.assembler.Assembler;
 import it.ccse.uscite.application.facade.assembler.util.Container;
 import it.ccse.uscite.application.facade.dto.input.gestionale.AggiornaComitato_InDTO;
 import it.ccse.uscite.application.facade.dto.output.gestionale.AggiornaComitato_OutDTO;
 import it.ccse.uscite.domain.OrdineDelGiorno;
 
 
-@Mapper(uses=AssemblerComitatoFullDTO.class)
-public abstract class AssemblerAggiornaComitato {
-	public abstract OrdineDelGiorno assemble(AggiornaComitato_InDTO aggiornaComitato_InDTO);
+@Component 
+public class AssemblerAggiornaComitato extends Assembler{
+	public  OrdineDelGiorno assemble(AggiornaComitato_InDTO aggiornaComitato_InDTO){
+		
+		return getMapper().map(aggiornaComitato_InDTO, OrdineDelGiorno.class);
+	}
 	public AggiornaComitato_OutDTO assemble(OrdineDelGiorno ordineDelGiorno){
 		
-		return map(new Container<OrdineDelGiorno>(ordineDelGiorno));
+		return getMapper().map(new Container<OrdineDelGiorno>(ordineDelGiorno),AggiornaComitato_OutDTO.class);
 		
 	}
 	
-	protected abstract AggiornaComitato_OutDTO map(Container<OrdineDelGiorno> ordineDelGiorno);
 
 }

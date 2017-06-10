@@ -32,5 +32,8 @@
 	<logger name="it.ccse.uscite" level="info"/>
 	
 <!--     <logger name="org.hibernate.SQL" level="debug"/> -->
+
+	<logger name="ma.glasnost.orika" level="debug" />
+
 	
 </configuration>

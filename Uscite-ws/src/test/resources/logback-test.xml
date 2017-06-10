@@ -27,9 +27,10 @@
 		<appender-ref ref="FILE" />
 	</root>
 	
-	<logger name="it.ccse.uscite" level="debug"/>
+	<logger name="it.ccse.uscite" level="info"/>
 	
-	<logger name="org.hibernate.SQL" level="info"/>
+<logger name="org.hibernate.SQL" level="info"/>
 		
+	<logger name="ma.glasnost.orika" level="debug" />
 	
 </configuration>

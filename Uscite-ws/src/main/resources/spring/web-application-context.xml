@@ -20,13 +20,4 @@
 		order="3" />
 
 
-	<bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
-		<property name="mappingFiles">
-			<list>
-				<value>dozerMapping.xml</value>
-			</list>
-		</property>
-	</bean>
-
-
 </beans>

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
+import ma.glasnost.orika.impl.ConfigurableMapper;
 
 /**
  * @author Valerio
@@ -20,8 +20,11 @@ public class MapperConfig {
 	
 	@Bean
 	public MapperFacade getMapperFacade(){
-		MapperFactory mapperFactory =  new DefaultMapperFactory.Builder().build();
-		return mapperFactory.getMapperFacade();
+		return new ConfigurableMapper(){
+			@Override
+			protected void configure(MapperFactory factory) {
+				super.configure(factory);
+			}};
 	}
 	
 }

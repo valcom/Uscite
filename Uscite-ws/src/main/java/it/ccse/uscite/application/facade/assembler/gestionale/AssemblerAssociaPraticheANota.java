@@ -13,8 +13,6 @@ import it.ccse.uscite.application.facade.dto.input.gestionale.AssociaPraticheANo
 import it.ccse.uscite.application.facade.dto.output.gestionale.AssociaPraticheANota_OutDTO;
 import it.ccse.uscite.domain.PraticaErogazione;
 import it.ccse.uscite.domain.ProcessoErogazione;
-import ma.glasnost.orika.metadata.Type;
-import ma.glasnost.orika.metadata.TypeBuilder;
 
 /**
  * @author Valerio
@@ -28,9 +26,7 @@ public class AssemblerAssociaPraticheANota extends Assembler{
 	}
 
 	public List<PraticaErogazione> assembleListaPratiche(AssociaPraticheANota_InDTO associaPraticheANota_InDTO){
-		Type<Container<List<PraticaErogazione>>> targetType   = new TypeBuilder<Container<List<PraticaErogazione>>>(){}.build();
-		Type<AssociaPraticheANota_InDTO> sourceType  = new TypeBuilder<AssociaPraticheANota_InDTO>(){}.build();
-		return getMapper().map(associaPraticheANota_InDTO,sourceType,targetType).getContent();
+		return getMapper().mapAsList(associaPraticheANota_InDTO.getContent(), PraticaErogazione.class);
 	}
 
 	

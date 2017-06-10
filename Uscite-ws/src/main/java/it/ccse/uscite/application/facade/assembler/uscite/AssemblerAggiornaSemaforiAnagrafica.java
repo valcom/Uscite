@@ -1,6 +1,5 @@
 package it.ccse.uscite.application.facade.assembler.uscite;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.stereotype.Component;
@@ -17,9 +16,7 @@ public class AssemblerAggiornaSemaforiAnagrafica extends Assembler{
 	
 	
 	public Collection<SettoreAttivita> assemble(AggiornaSemaforiAnagrafica_InDTO inDTO) {
-		Collection<SettoreAttivita> list = new ArrayList<SettoreAttivita>();
-		getMapper().map(inDTO.getContent(), list);
-		return list;
+		return 	getMapper().mapAsList(inDTO.getContent(), SettoreAttivita.class);
 	}
 
 	

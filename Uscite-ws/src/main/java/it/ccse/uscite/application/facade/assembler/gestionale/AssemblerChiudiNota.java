@@ -3,9 +3,9 @@
  */
 package it.ccse.uscite.application.facade.assembler.gestionale;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-import it.ccse.uscite.application.facade.assembler.AssemblerNotaPagamentoFullDTO;
+import it.ccse.uscite.application.facade.assembler.Assembler;
 import it.ccse.uscite.application.facade.assembler.util.Container;
 import it.ccse.uscite.application.facade.dto.input.gestionale.ChiudiNota_InDTO;
 import it.ccse.uscite.application.facade.dto.output.gestionale.ChiudiNota_OutDTO;
@@ -15,16 +15,17 @@ import it.ccse.uscite.domain.ProcessoErogazione;
  * @author Valerio
  *
  */
-@Mapper(uses=AssemblerNotaPagamentoFullDTO.class)
-public abstract class AssemblerChiudiNota {
+@Component
+public class AssemblerChiudiNota extends Assembler{
 
-	public abstract ProcessoErogazione assemble(ChiudiNota_InDTO chiudiNota_InDTO);
+	public ProcessoErogazione assemble(ChiudiNota_InDTO chiudiNota_InDTO){
+		return getMapper().map(chiudiNota_InDTO,ProcessoErogazione.class);
+	}
 	
 	
 	public ChiudiNota_OutDTO assemble(ProcessoErogazione processoErogazione){
-		return mapToChiudiNota_OutDTO(new Container<ProcessoErogazione>(processoErogazione));
+		return getMapper().map(new Container<ProcessoErogazione>(processoErogazione),ChiudiNota_OutDTO.class);
 	}
 
 	
-	protected abstract ChiudiNota_OutDTO mapToChiudiNota_OutDTO(Container<ProcessoErogazione> container);
 }

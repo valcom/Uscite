@@ -22,7 +22,6 @@
 
 		<jackson-jaxrs.version>2.8.4</jackson-jaxrs.version>
 
-		<org.mapstruct.version>1.1.0.Final</org.mapstruct.version>
 		<orika.version>1.5.1</orika.version>
 
 		<maven-war-plugin.version>2.4</maven-war-plugin.version>
@@ -110,13 +109,6 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 
-
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>${org.mapstruct.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>ma.glasnost.orika</groupId>
 			<artifactId>orika-core</artifactId>
@@ -165,60 +157,7 @@
 			</testResource>
 		</testResources>
 		<plugins>
-			<plugin>
-				<groupId>org.bsc.maven</groupId>
-				<artifactId>maven-processor-plugin</artifactId>
-				<version>${maven-processor-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>process-mapper</id>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<phase>generate-sources</phase>
-						<configuration>
-							<processors>
-								<processor>org.mapstruct.ap.MappingProcessor</processor>
-							</processors>
-							<addCompileSourceRoots>true</addCompileSourceRoots>
-							<options>
-								<mapstruct.defaultComponentModel>spring</mapstruct.defaultComponentModel>
-								<mapstruct.unmappedTargetPolicy>IGNORE</mapstruct.unmappedTargetPolicy>
-							</options>
-							<outputDirectory>${project.build.directory}/generated-sources/mapper</outputDirectory>
-						</configuration>
-
-					</execution>
-
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.mapstruct</groupId>
-						<artifactId>mapstruct-processor</artifactId>
-						<version>${org.mapstruct.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>${build-helper-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${project.build.directory}/generated-sources/mapper</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
+			
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${maven-war-plugin.version}</version>

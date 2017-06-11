@@ -3,12 +3,10 @@
  */
 package it.ccse.uscite.application.facade.assembler.gestionale;
 
-import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
-import it.ccse.uscite.application.facade.assembler.AssemblerDettaglioNotaPagamentoDTO;
-import it.ccse.uscite.application.facade.assembler.AssemblerDirection;
-import it.ccse.uscite.application.facade.assembler.util.PageWrapper;
+import it.ccse.uscite.application.facade.assembler.Assembler;
 import it.ccse.uscite.application.facade.dto.input.gestionale.SearchNote_InDTO;
 import it.ccse.uscite.application.facade.dto.output.gestionale.SearchNote_OutDTO;
 import it.ccse.uscite.domain.ProcessoErogazione;
@@ -18,14 +16,15 @@ import it.ccse.uscite.domain.filter.ProcessoFilter;
  * @author Valerio
  *
  */
-@Mapper(uses={AssemblerDirection.class,AssemblerDettaglioNotaPagamentoDTO.class})
-public abstract class AssemblerSearchNote {
-	public abstract ProcessoFilter assemble(SearchNote_InDTO searchNote_InDTO);
-	
-	public SearchNote_OutDTO assemble(Page<ProcessoErogazione> pageProcessiErogazione){
-		return mapToSearchNote_OutDTO(new PageWrapper<ProcessoErogazione>(pageProcessiErogazione));
+@Component
+public class AssemblerSearchNote extends Assembler{
+	public ProcessoFilter assemble(SearchNote_InDTO searchNote_InDTO){
+		return getMapper().map(searchNote_InDTO,ProcessoFilter.class);
 	}
 	
-	protected abstract SearchNote_OutDTO mapToSearchNote_OutDTO(PageWrapper<ProcessoErogazione> container);
+	public SearchNote_OutDTO assemble(Page<ProcessoErogazione> pageProcessiErogazione){
+		return getMapper().map(pageProcessiErogazione,SearchNote_OutDTO.class);
+	}
+	
 	
 }

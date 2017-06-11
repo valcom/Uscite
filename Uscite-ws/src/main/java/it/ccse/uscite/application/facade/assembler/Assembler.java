@@ -13,7 +13,7 @@ import ma.glasnost.orika.MapperFacade;
  *
  */
 @Component
-public class Assembler {
+public abstract class Assembler {
 	@Autowired
 	private MapperFacade mapper;
 

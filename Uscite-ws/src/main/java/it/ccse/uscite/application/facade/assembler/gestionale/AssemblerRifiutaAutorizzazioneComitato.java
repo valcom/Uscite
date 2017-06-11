@@ -5,10 +5,9 @@ package it.ccse.uscite.application.facade.assembler.gestionale;
 
 import java.util.List;
 
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-import it.ccse.uscite.application.facade.assembler.AssemblerPraticaErogazioneDTO;
-import it.ccse.uscite.application.facade.assembler.util.Container;
+import it.ccse.uscite.application.facade.assembler.Assembler;
 import it.ccse.uscite.application.facade.dto.input.gestionale.RifiutaAutorizzazioneComitato_InDTO;
 import it.ccse.uscite.domain.PraticaErogazione;
 
@@ -16,15 +15,14 @@ import it.ccse.uscite.domain.PraticaErogazione;
  * @author Valerio
  *
  */
-@Mapper(uses = AssemblerPraticaErogazioneDTO.class)
-public abstract class AssemblerRifiutaAutorizzazioneComitato {
+@Component
+public class AssemblerRifiutaAutorizzazioneComitato extends Assembler{
 	
 	public List<PraticaErogazione> assemble(RifiutaAutorizzazioneComitato_InDTO rifiutaAutorizzazioneComitato_InDTO){
-		Container<List<PraticaErogazione>> container = map(rifiutaAutorizzazioneComitato_InDTO);
-		return container!=null ? container.getContent():null;
+		
+		return getMapper().mapAsList(rifiutaAutorizzazioneComitato_InDTO.getContent(), PraticaErogazione.class);
 		
 	}
 	
-	protected abstract Container<List<PraticaErogazione>> map(RifiutaAutorizzazioneComitato_InDTO rifiutaAutorizzazioneComitato_InDTO);
 
 }

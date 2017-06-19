@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,13 +36,14 @@ public class MailServiceImpl implements MailService {
 
 	
 
-
+	@Async
 	@Override
 	public void sendMailAutorizzazioneComitato(List<PraticaErogazione> pratiche) {
 		SimpleMailMessage newMailMessage = creaMail(pratiche,msgAutorizzazioneComitato);
 		mailSender.send(newMailMessage);
 	}
 
+	@Async
 	@Override
 	public void sendMailSbloccoAnagraficaPratiche(List<PraticaErogazione> pratiche) {
 		SimpleMailMessage newMailMessage = creaMail(pratiche,msgSbloccoPratiche);		

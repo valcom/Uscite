@@ -326,7 +326,7 @@ public class WS_UsciteTest {
 		SettoreAttivitaDTO settore1 = new SettoreAttivitaDTO();
 		settore1.setId(1074);
 		settore1.setStatoAntimafia(StatoAntimafia.CERTIFICATO_VALIDO );
-		settore1.setUnbundling(Unbundling.BLOCCATA);
+		settore1.setUnbundling(Unbundling.SBLOCCATA);
 		content.add(settore1);
 		SettoreAttivitaDTO settore2 = new SettoreAttivitaDTO();
 		settore2.setId(173);

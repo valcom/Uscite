@@ -10,8 +10,13 @@
 						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 	
-	<bean id="loggingAspect" class="it.ccse.uscite.infrastructure.aop.LoggingAspect" />
 	
 	<aop:aspectj-autoproxy />
+	
+	<context:component-scan base-package="it.ccse.uscite.infrastructure" />
+
+	<context:annotation-config />
+	
+	<context:property-placeholder location="classpath:properties/applicationConfig.properties" order="2" ignore-unresolvable="true"/>
 
 </beans>

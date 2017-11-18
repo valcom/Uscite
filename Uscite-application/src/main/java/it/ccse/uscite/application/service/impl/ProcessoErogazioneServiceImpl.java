@@ -44,10 +44,8 @@ public class ProcessoErogazioneServiceImpl implements ProcessoErogazioneService{
 	@Override
 	public ProcessoErogazione createProcessoErogazione(
 			ProcessoErogazione processo) {
-		processo.checkInserimento();
-		processo.init();
 		OrdineDelGiorno ordineDelGiorno = ordineDelGiornoRepository.findOne(processo.getOrdineDelGiorno().getId());
-		processo.setOrdineDelGiorno(ordineDelGiorno);
+		ordineDelGiorno.aggiungiProcessoErogazione(processo);
 		return processoErogazioneRepository.save(processo);
 	}
 

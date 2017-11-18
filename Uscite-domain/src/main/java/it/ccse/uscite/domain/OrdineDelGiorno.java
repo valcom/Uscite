@@ -87,7 +87,7 @@ public class OrdineDelGiorno extends DomainEntity<BigInteger> {
 		numeroComitato = 1;
 	}
 
-	public ProcessoErogazione addProcessiErogazione(ProcessoErogazione processiErogazione) {
+	private ProcessoErogazione addProcessiErogazione(ProcessoErogazione processiErogazione) {
 		getProcessiErogazione().add(processiErogazione);
 		processiErogazione.setOrdineDelGiorno(this);
 
@@ -283,6 +283,12 @@ public class OrdineDelGiorno extends DomainEntity<BigInteger> {
 	
 	public Set<ProcessoErogazione> getNote(){
 		return this.processiErogazione;
+	}
+	
+	public void aggiungiProcessoErogazione(ProcessoErogazione processo){
+		processo.checkInserimento();
+		processo.init();
+		addProcessiErogazione(processo);
 	}
 	
 	/* (non-Javadoc)

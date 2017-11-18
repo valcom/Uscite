@@ -4,6 +4,7 @@
 package it.ccse.uscite.domain.repository;
 
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -22,5 +23,5 @@ public interface PraticaErogazioneRepository extends JpaRepository<PraticaErogaz
 	public List<PraticaErogazione> findByProcessoErogazione(ProcessoErogazione processoErogazione);
 	@EntityGraph("praticaErogazione")
 	public PraticaErogazione findByCodicePratica(String codicePratica);
-	public List<PraticaErogazione> findByCodicePraticaIn(List<String> codiciPratica);
+	public List<PraticaErogazione> findByCodicePraticaIn(Collection<String> codiciPratica);
 }

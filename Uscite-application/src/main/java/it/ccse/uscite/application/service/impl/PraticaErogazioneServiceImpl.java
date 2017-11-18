@@ -147,15 +147,24 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 			throw new ApplicationException("error.nota.notFound.associazionePraticaNota");
 		}
 		if(pratiche!=null&&!pratiche.isEmpty()){
-			List<PraticaErogazione> praticheNuove = pratiche;
-			List<String> codiciPratica = pratiche.stream().map(PraticaErogazione::getCodicePratica).collect(Collectors.toList());
+			Collection<String> codiciPratica = pratiche.stream().map(PraticaErogazione::getCodicePratica).collect(Collectors.toList());
 			List<PraticaErogazione> praticheEsistenti = praticaErogazioneRepository.findByCodicePraticaIn(codiciPratica);
-			praticheEsistenti.stream().forEach(PraticaErogazione::checkModificabilita);
-			if(praticheEsistenti!=null&&!praticheEsistenti.isEmpty()){
-				List<String> codiciPraticaEsistenti = praticheEsistenti.stream().map(PraticaErogazione::getCodicePratica).collect(Collectors.toList());
-				praticheNuove = pratiche.stream().filter(p->!codiciPraticaEsistenti.contains(p.getCodicePratica())).collect(Collectors.toList());
-				for(PraticaErogazione praticaEsistente:praticheEsistenti){
-					PraticaErogazione pratica = pratiche.stream().filter(p->p.getCodicePratica().equals(praticaEsistente.getCodicePratica())).findFirst().get();
+			Map<String,PraticaErogazione> mappaCodiciPraticaEsistenti = praticheEsistenti.stream().collect(Collectors.toMap(PraticaErogazione::getCodicePratica, p->p));
+
+			for(PraticaErogazione pratica:pratiche){
+				PraticaErogazione praticaEsistente = mappaCodiciPraticaEsistenti.get(pratica.getCodicePratica());
+
+				if(praticaEsistente==null){
+					//pratica nuova
+					StatoLegale statoLegaleIniziale = statoLegaleService.getStatoLegaleIniziale();
+					StatoContabile statoContabile = statoContabileService.getStatoContabileIniziale();
+					StatoComitato statoComitato = statoComitatoService.getStatoComitatoIniziale();
+					StatoUnbundling statoUnbundlingIniziale = statoUnbundlingService.getStatoUnbundlingIniziale();
+					StatoFideiussione statoFideiussioneIniziale = statoFideiussioneService.getStatoFideiussioneIniziale();
+					pratica.init(statoLegaleIniziale,statoContabile, statoComitato, statoUnbundlingIniziale, statoFideiussioneIniziale);
+				}else{
+					//pratica esistente
+					pratica.checkModificabilita();
 					pratica.setId(praticaEsistente.getId());
 					pratica.setLavorazioneContabile(praticaEsistente.getLavorazioneContabile());
 					pratica.setStatoComitato(praticaEsistente.getStatoComitato());
@@ -163,27 +172,7 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 					pratica.setStatoContabile(praticaEsistente.getStatoContabile());
 					pratica.setStatoUnbundling(praticaEsistente.getStatoUnbundling());
 					pratica.setStatoLegale(praticaEsistente.getStatoLegale());
-				}
-			}
-			StatoLegale statoLegaleIniziale = statoLegaleService.getStatoLegaleIniziale();
-			StatoContabile statoContabile = statoContabileService.getStatoContabileIniziale();
-			StatoComitato statoComitato = statoComitatoService.getStatoComitatoIniziale();
-			StatoUnbundling statoUnbundlingIniziale = statoUnbundlingService.getStatoUnbundlingIniziale();
-			StatoFideiussione statoFideiussioneIniziale = statoFideiussioneService.getStatoFideiussioneIniziale();
-			if(praticheNuove!=null){
-				praticheNuove.stream().forEach(p->{p.checkInit();p.init(statoLegaleIniziale,statoContabile, statoComitato, statoUnbundlingIniziale, statoFideiussioneIniziale);});
-			}
-			
-			List<StatoLegale> statiLegale = statoLegaleService.getStatiLegali();
-			List<StatoUnbundling> statiUnbundling = statoUnbundlingService.getStatiUnbundling();
-			List<StatoFideiussione> statiFideiussione = statoFideiussioneService.getStatiFideiussione();
-			for(PraticaErogazione pratica:pratiche){
-				StatoLegale statoLegale = statiLegale.stream().filter(sl->sl.getAutorizzazioneLegale().equals(pratica.getSettoreAttivita().getStatoAntimafia().getAutorizzazioneLegale())).findFirst().orElseThrow(()->new RuntimeException("stato legale non valido per la pratica "+pratica.getCodicePratica()));
-				StatoUnbundling statoUnbundling = statiUnbundling.stream().filter(su->su.getUnbundling().equals(pratica.getSettoreAttivita().getUnbundling().getUnbundlingPratica(pratica.getIdComponenteTariffariaAc()))).findFirst().orElseThrow(()->new RuntimeException("stato unbundling non valido per la pratica "+pratica.getCodicePratica()));
-				pratica.setStatoFideiussione(statiFideiussione.stream().filter(sf->sf.equals(statoFideiussioneIniziale.getFideiussione().getFideiussionePraticaByCT(pratica.getIdComponenteTariffariaAc()))).findFirst().orElseThrow(()->new RuntimeException("stato fideiussione non valido per la pratica "+pratica.getCodicePratica())));
-				pratica.setStatoLegale(statoLegale);
-				pratica.setStatoUnbundling(statoUnbundling);
-				pratica.associaANota(processo);
+				}	
 			}
 			
 			praticaErogazioneRepository.save(pratiche);

@@ -1000,6 +1000,8 @@ public class PraticaErogazione extends DomainEntity<BigInteger> {
 	 * @param statoFideiussioneIniziale
 	 */
 	public void init(StatoLegale statoLegaleIniziale, StatoContabile statoContabileIniziale,StatoComitato statoComitatoIniziale,StatoUnbundling statoUnbundlingIniziale,StatoFideiussione statoFideiussioneIniziale) {
+		checkInit();
+
 		setId(null);
 		lavorazioneContabile = StatoPratica.IN_INSERIMENTO;
 		

@@ -329,4 +329,5 @@ public class ProcessoErogazione extends DomainEntity<BigInteger> {
 		return this.stato==StatoProcesso.TEMPORANEO;
 	}
 	
+	
 }

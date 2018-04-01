@@ -1563,4 +1563,7 @@ public class PraticaErogazione extends DomainEntity<BigInteger> {
 		return isErogabile();
 	}
 
+	public Boolean isLavorabile(){
+		return IS_LAVORABILE.test(this);
+	}
 }

@@ -10,13 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class VersionLogApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
 
-	private static final Logger log =  LoggerFactory.getLogger(VersionLogApplicationListener.class);
+	private static final Logger log = LoggerFactory.getLogger(VersionLogApplicationListener.class);
 
 	@Value("${app.name}")
 	private String appName;
-
-
-
 
 	@Value("${app.version}")
 	private String appVersion;
@@ -24,12 +21,10 @@ public class VersionLogApplicationListener implements ApplicationListener<Contex
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		log.info("***************************************");
-		log.info("INIZIALIZZAZIONE APPLICAZIONE "+appName+ " COMPLETATA");
-		log.info("VERSIONE "+appVersion);
+		log.info("INIZIALIZZAZIONE APPLICAZIONE " + appName + " COMPLETATA");
+		log.info("VERSIONE " + appVersion);
 		log.info("***************************************");
 
 	}
-
-
 
 }

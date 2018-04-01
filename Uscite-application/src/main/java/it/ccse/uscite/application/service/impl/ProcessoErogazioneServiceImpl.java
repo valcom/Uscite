@@ -3,26 +3,24 @@
  */
 package it.ccse.uscite.application.service.impl;
 
-import it.ccse.uscite.application.service.PraticaErogazioneService;
-import it.ccse.uscite.application.service.ProcessoErogazioneService;
-import it.ccse.uscite.domain.LavorazioneContabile;
-import it.ccse.uscite.domain.OrdineDelGiorno;
-import it.ccse.uscite.domain.PraticaErogazione;
-import it.ccse.uscite.domain.ProcessoErogazione;
-import it.ccse.uscite.domain.ProcessoErogazione.StatoLavorazioneContabile;
-import it.ccse.uscite.domain.exception.ApplicationException;
-import it.ccse.uscite.domain.filter.ProcessoFilter;
-import it.ccse.uscite.domain.repository.OrdineDelGiornoRepository;
-import it.ccse.uscite.domain.repository.ProcessoErogazioneRepository;
-
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import it.ccse.uscite.application.service.ProcessoErogazioneService;
+import it.ccse.uscite.domain.LavorazioneContabile;
+import it.ccse.uscite.domain.OrdineDelGiorno;
+import it.ccse.uscite.domain.ProcessoErogazione;
+import it.ccse.uscite.domain.ProcessoErogazione.StatoLavorazioneContabile;
+import it.ccse.uscite.domain.exception.ApplicationException;
+import it.ccse.uscite.domain.filter.ProcessoFilter;
+import it.ccse.uscite.domain.repository.OrdineDelGiornoRepository;
+import it.ccse.uscite.domain.repository.PraticaErogazioneRepository;
+import it.ccse.uscite.domain.repository.ProcessoErogazioneRepository;
 
 /**
  * @author vcompagnone
@@ -39,7 +37,7 @@ public class ProcessoErogazioneServiceImpl implements ProcessoErogazioneService{
 	private OrdineDelGiornoRepository ordineDelGiornoRepository;
 	
 	@Autowired
-	private PraticaErogazioneService praticaErogazioneService;
+	private PraticaErogazioneRepository praticaErogazioneRepository;
 	
 	@Override
 	public ProcessoErogazione createProcessoErogazione(
@@ -63,15 +61,6 @@ public class ProcessoErogazioneServiceImpl implements ProcessoErogazioneService{
 		String causale = processo.getCausale();
 		String owner = processo.getOwner();
 		processo = processoErogazioneRepository.findOne(idProcesso);
-		OrdineDelGiorno ordine = processo.getOrdineDelGiorno();
-		
-		if(numeroNota!=null){
-			ProcessoErogazione processoEsistente = processoErogazioneRepository.findByOrdineDelGiornoAndNumeroNota(ordine,numeroNota); 
-			if(processoEsistente!= null && !processoEsistente.equals(processo)){
-				throw new ApplicationException("error.nota.numero.duplicate.aggiornamento");
-			}
-		}
-		
 		processo.aggiorna(numeroNota,causale,owner);
 		return processoErogazioneRepository.save(processo);
 	}
@@ -138,13 +127,14 @@ public class ProcessoErogazioneServiceImpl implements ProcessoErogazioneService{
 		return 	processoErogazioneRepository.findAll(req.getSpecification(),req.getPageable());
 	}
 
-	
-
 	@Override
 	public LavorazioneContabile lavorazioneContabile(ProcessoErogazione processo) {
 		processo = processoErogazioneRepository.findOne(processo.getId());
-		List<PraticaErogazione> pratiche = praticaErogazioneService.getPraticheLavorabili(processo);
-		return (pratiche !=null && !pratiche.isEmpty()) ? praticaErogazioneService.lavorazioneContabile(pratiche):new LavorazioneContabile();
+		LavorazioneContabile lavorazioneContabile = new LavorazioneContabile();
+		lavorazioneContabile.eseguiLavorazione(processo);
+		praticaErogazioneRepository.save(lavorazioneContabile.getPraticheLavorate());
+		processoErogazioneRepository.save(lavorazioneContabile.getProcessiLavorati());
+		return lavorazioneContabile;
 	}
 
 }

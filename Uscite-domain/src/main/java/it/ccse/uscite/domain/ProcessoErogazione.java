@@ -2,7 +2,9 @@ package it.ccse.uscite.domain;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -19,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
+import org.springframework.util.CollectionUtils;
 
 import it.ccse.uscite.domain.StatoComitato.AutorizzazioneComitato;
 import it.ccse.uscite.domain.exception.ApplicationException;
@@ -203,6 +206,15 @@ public class ProcessoErogazione extends DomainEntity<BigInteger> {
 	}
 
 	public void aggiorna(Integer numeroNota, String causale, String owner) {
+		OrdineDelGiorno ordine = getOrdineDelGiorno();
+		
+		if(numeroNota!=null){
+			ProcessoErogazione processoEsistente = ordine.getProcessiErogazione().stream().filter(p->numeroNota.equals(p.numeroNota)).findFirst().orElse(null);
+			if(processoEsistente!= null && !processoEsistente.equals(this)){
+				throw new ApplicationException("error.nota.numero.duplicate.aggiornamento");
+			}
+		}
+		
 		checkModificabilita();
 		if(numeroNota==null){
 			stato = StatoProcesso.TEMPORANEO;
@@ -329,5 +341,12 @@ public class ProcessoErogazione extends DomainEntity<BigInteger> {
 		return this.stato==StatoProcesso.TEMPORANEO;
 	}
 	
+	public List<PraticaErogazione> getPraticheLavorabili(){
+		List<PraticaErogazione> praticheLavorabili = null;
+		if(!CollectionUtils.isEmpty(this.getPraticheErogazione())){
+			praticheLavorabili = getPraticheErogazione().stream().filter(p->p.isLavorabile()).collect(Collectors.toList());
+		}
+		return praticheLavorabili;
+	}
 	
 }

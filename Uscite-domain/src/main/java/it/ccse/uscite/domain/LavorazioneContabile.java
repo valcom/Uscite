@@ -5,6 +5,10 @@ package it.ccse.uscite.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.util.CollectionUtils;
 
 /**
  * @author vcompagnone
@@ -12,52 +16,43 @@ import java.util.List;
  */
 public class LavorazioneContabile extends DomainObject {
 	
-	private List<PraticaErogazione> praticheInSospeso = new ArrayList<PraticaErogazione>();
+	private List<PraticaErogazione> praticheLavorate = new ArrayList<PraticaErogazione>();
 	
-	private List<PraticaErogazione> praticheInErogazione = new ArrayList<PraticaErogazione>();
+	private List<ProcessoErogazione> processiLavorati = new ArrayList<ProcessoErogazione>();
 
 	/**
 	 * @return the praticheInSospeso
 	 */
 	public List<PraticaErogazione> getPraticheInSospeso() {
-		return praticheInSospeso;
-	}
-
-	/**
-	 * @param praticheInSospeso the praticheInSospeso to set
-	 */
-	public void setPraticheInSospeso(List<PraticaErogazione> praticheInSospeso) {
-		this.praticheInSospeso = praticheInSospeso;
+		return praticheLavorate.stream().filter(PraticaErogazione.IS_IN_SOSPESO).collect(Collectors.toList());
 	}
 
 	/**
 	 * @return the praticheInErogazione
 	 */
 	public List<PraticaErogazione> getPraticheInErogazione() {
-		return praticheInErogazione;
+		return praticheLavorate.stream().filter(PraticaErogazione.IS_IN_EROGAZIONE).collect(Collectors.toList());
 	}
 
-	/**
-	 * @param praticheInErogazione the praticheInErogazione to set
-	 */
-	public void setPraticheInErogazione(List<PraticaErogazione> praticheInErogazione) {
-		this.praticheInErogazione = praticheInErogazione;
-	}
-	
-	public void addSospesi(PraticaErogazione pratica){
-		praticheInSospeso.add(pratica);
-	}
-	
-	public void addErogazioni(List<PraticaErogazione> pratiche){
-		praticheInErogazione.addAll(pratiche);
-	}
-	
-	public void addSospesi(List<PraticaErogazione> pratiche){
-		praticheInSospeso.addAll(pratiche);
-	}
-	
-	public void addErogazioni(PraticaErogazione pratica){
-		praticheInErogazione.add(pratica);
+	public List<PraticaErogazione> getPraticheLavorate() {
+		return praticheLavorate;
 	}
 
+	public void eseguiLavorazione(List<PraticaErogazione> pratiche){
+		if(!CollectionUtils.isEmpty(pratiche)){
+			pratiche.stream().forEach(PraticaErogazione::lavorazioneContabile);
+			Set<ProcessoErogazione> processi = pratiche.stream().map(p->p.getProcessoErogazione()).collect(Collectors.toSet());
+			processi.stream().forEach(ProcessoErogazione::lavorazioneContabile);
+			processiLavorati.addAll(processi);
+		}
+	}
+
+	public List<ProcessoErogazione> getProcessiLavorati() {
+		return processiLavorati;
+	}
+
+	public void eseguiLavorazione(ProcessoErogazione processo) {
+		eseguiLavorazione(processo.getPraticheLavorabili());
+	}
+	
 }

@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -211,18 +210,10 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 	@Override
 	public LavorazioneContabile lavorazioneContabile(List<PraticaErogazione> pratiche) {
 		LavorazioneContabile lavorazioneContabile = new LavorazioneContabile();
-		
 		List<BigInteger> ids = pratiche.stream().map(PraticaErogazione::getIdPraticaErogazione).collect(Collectors.toList());
 		pratiche = praticaErogazioneRepository.findAll(ids);
-		pratiche.stream().forEach(PraticaErogazione::lavorazioneContabile);
-		lavorazioneContabile.addErogazioni(pratiche.stream().filter(PraticaErogazione.IS_IN_EROGAZIONE).collect(Collectors.toList()));
-		lavorazioneContabile.addSospesi(pratiche.stream().filter(PraticaErogazione.IS_IN_SOSPESO).collect(Collectors.toList()));
-
-		Set<ProcessoErogazione> processi = pratiche.stream().map(p->p.getProcessoErogazione()).collect(Collectors.toSet());
-		processi.stream().forEach(ProcessoErogazione::lavorazioneContabile);
-
 		praticaErogazioneRepository.save(pratiche);
-		processoErogazioneRepository.save(processi);
+		processoErogazioneRepository.save(lavorazioneContabile.getProcessiLavorati());
 		return lavorazioneContabile;
 	}
 

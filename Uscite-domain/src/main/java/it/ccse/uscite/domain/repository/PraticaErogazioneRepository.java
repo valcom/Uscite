@@ -12,16 +12,24 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import it.ccse.uscite.domain.PraticaErogazione;
+import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
 import it.ccse.uscite.domain.ProcessoErogazione;
+import it.ccse.uscite.domain.SettoreAttivita;
 
 /**
  * @author vcompagnone
  *
  */
-public interface PraticaErogazioneRepository extends JpaRepository<PraticaErogazione, BigInteger>,JpaSpecificationExecutor<PraticaErogazione>{
+public interface PraticaErogazioneRepository
+		extends JpaRepository<PraticaErogazione, BigInteger>, JpaSpecificationExecutor<PraticaErogazione> {
 	@EntityGraph("praticaErogazione")
 	public List<PraticaErogazione> findByProcessoErogazione(ProcessoErogazione processoErogazione);
+
 	@EntityGraph("praticaErogazione")
 	public PraticaErogazione findByCodicePratica(String codicePratica);
+
 	public List<PraticaErogazione> findByCodicePraticaIn(Collection<String> codiciPratica);
+
+	public List<PraticaErogazione> findBySettoreAttivitaAndLavorazioneContabileIn(SettoreAttivita sa,
+			List<StatoPratica> stati);
 }

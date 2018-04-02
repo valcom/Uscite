@@ -16,14 +16,13 @@ import it.ccse.uscite.domain.OrdineDelGiorno;
  *
  */
 @Component
-public class AssemblerApriComitato extends Assembler{
-	public OrdineDelGiorno assemble(ApriComitato_InDTO apriComitato_InDTO){
-		return getMapper().map(apriComitato_InDTO,OrdineDelGiorno.class);
-		
+public class AssemblerApriComitato extends Assembler {
+	public OrdineDelGiorno assemble(ApriComitato_InDTO apriComitato_InDTO) {
+		return getMapper().map(apriComitato_InDTO, OrdineDelGiorno.class);
 	}
-	
-	public ApriComitato_OutDTO assemble(OrdineDelGiorno OrdineDelGiorno){
-		return getMapper().map(new Container<OrdineDelGiorno>(OrdineDelGiorno),ApriComitato_OutDTO.class);
+
+	public ApriComitato_OutDTO assemble(OrdineDelGiorno OrdineDelGiorno) {
+		return getMapper().map(new Container<OrdineDelGiorno>(OrdineDelGiorno) {
+		}, ApriComitato_OutDTO.class);
 	}
-	
 }

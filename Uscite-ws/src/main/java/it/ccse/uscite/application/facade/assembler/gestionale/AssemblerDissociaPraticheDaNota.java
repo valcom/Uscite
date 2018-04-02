@@ -3,8 +3,11 @@
  */
 package it.ccse.uscite.application.facade.assembler.gestionale;
 
+import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Component;
 
 import it.ccse.uscite.application.facade.assembler.Assembler;
@@ -17,14 +20,14 @@ import it.ccse.uscite.domain.ProcessoErogazione;
  *
  */
 @Component
-public class AssemblerDissociaPraticheDaNota extends Assembler{
+public class AssemblerDissociaPraticheDaNota extends Assembler {
+	public List<PraticaErogazione> assembleListaPratiche(DissociaPraticheDaNota_InDTO dissociaPraticheDaNota_InDTO) {
+		Type type = new TypeToken<Collection<PraticaErogazione>>() {
+		}.getType();
+		return getMapper().map(dissociaPraticheDaNota_InDTO.getContent(), type);
+	}
 
-	public List<PraticaErogazione> assembleListaPratiche(DissociaPraticheDaNota_InDTO dissociaPraticheDaNota_InDTO){	
-		return getMapper().mapAsList(dissociaPraticheDaNota_InDTO.getContent(), PraticaErogazione.class);
+	public ProcessoErogazione assembleProcessoErogazione(DissociaPraticheDaNota_InDTO dissociaPraticheDaNota_InDTO) {
+		return getMapper().map(dissociaPraticheDaNota_InDTO, ProcessoErogazione.class);
 	}
-	
-	public ProcessoErogazione assembleProcessoErogazione(DissociaPraticheDaNota_InDTO dissociaPraticheDaNota_InDTO){
-		return getMapper().map(dissociaPraticheDaNota_InDTO,ProcessoErogazione.class);
-	}
-	
 }

@@ -16,15 +16,13 @@ import it.ccse.uscite.domain.ProcessoErogazione;
  *
  */
 @Component
-public class AssemblerAggiornaNota extends Assembler{
-	public ProcessoErogazione assemble(AggiornaNota_InDTO aggiornaNota_InDTO){
+public class AssemblerAggiornaNota extends Assembler {
+	public ProcessoErogazione assemble(AggiornaNota_InDTO aggiornaNota_InDTO) {
 		return getMapper().map(aggiornaNota_InDTO, ProcessoErogazione.class);
 	}
 
-	public AggiornaNota_OutDTO assemble(ProcessoErogazione processo){
-		return getMapper().map(new Container<ProcessoErogazione>(processo),AggiornaNota_OutDTO.class);
+	public AggiornaNota_OutDTO assemble(ProcessoErogazione processo) {
+		return getMapper().map(new Container<ProcessoErogazione>(processo) {
+		}, AggiornaNota_OutDTO.class);
 	}
-	
-	
-	
 }

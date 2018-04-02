@@ -8,18 +8,14 @@ import it.ccse.uscite.application.facade.dto.input.gestionale.AggiornaComitato_I
 import it.ccse.uscite.application.facade.dto.output.gestionale.AggiornaComitato_OutDTO;
 import it.ccse.uscite.domain.OrdineDelGiorno;
 
-
-@Component 
-public class AssemblerAggiornaComitato extends Assembler{
-	public  OrdineDelGiorno assemble(AggiornaComitato_InDTO aggiornaComitato_InDTO){
-		
+@Component
+public class AssemblerAggiornaComitato extends Assembler {
+	public OrdineDelGiorno assemble(AggiornaComitato_InDTO aggiornaComitato_InDTO) {
 		return getMapper().map(aggiornaComitato_InDTO, OrdineDelGiorno.class);
 	}
-	public AggiornaComitato_OutDTO assemble(OrdineDelGiorno ordineDelGiorno){
-		
-		return getMapper().map(new Container<OrdineDelGiorno>(ordineDelGiorno),AggiornaComitato_OutDTO.class);
-		
-	}
-	
 
+	public AggiornaComitato_OutDTO assemble(OrdineDelGiorno ordineDelGiorno) {
+		return getMapper().map(new Container<OrdineDelGiorno>(ordineDelGiorno) {
+		}, AggiornaComitato_OutDTO.class);
+	}
 }

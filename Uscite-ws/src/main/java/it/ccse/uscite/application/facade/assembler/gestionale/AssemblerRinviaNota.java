@@ -17,16 +17,17 @@ import it.ccse.uscite.domain.ProcessoErogazione;
  *
  */
 @Component
-public class  AssemblerRinviaNota extends Assembler{
-	public OrdineDelGiorno assembleOrdineDelGiorno(RinviaNota_InDTO rinviaNota_InDTO){
-		return getMapper().map(rinviaNota_InDTO,OrdineDelGiorno.class);
+public class AssemblerRinviaNota extends Assembler {
+	public OrdineDelGiorno assembleOrdineDelGiorno(RinviaNota_InDTO rinviaNota_InDTO) {
+		return getMapper().map(rinviaNota_InDTO, OrdineDelGiorno.class);
 	}
-	public ProcessoErogazione assembleProcessoErogazione(RinviaNota_InDTO rinviaNota_InDTO){
-		return getMapper().map(rinviaNota_InDTO,ProcessoErogazione.class);
+
+	public ProcessoErogazione assembleProcessoErogazione(RinviaNota_InDTO rinviaNota_InDTO) {
+		return getMapper().map(rinviaNota_InDTO, ProcessoErogazione.class);
 	}
-		
-	public RinviaNota_OutDTO assemble(ProcessoErogazione processoErogazione){
-		return getMapper().map(new Container<ProcessoErogazione>(processoErogazione),RinviaNota_OutDTO.class);
+
+	public RinviaNota_OutDTO assemble(ProcessoErogazione processoErogazione) {
+		return getMapper().map(new Container<ProcessoErogazione>(processoErogazione) {
+		}, RinviaNota_OutDTO.class);
 	}
-	
 }

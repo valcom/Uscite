@@ -25,7 +25,7 @@
 				<mail.port>465</mail.port>
 				<mail.protocol>smtps</mail.protocol>
 				<mail.username>asso_mazzo82@yahoo.it</mail.username>
-				<mail.password>qwerty123456</mail.password>
+				<mail.password>valerio82</mail.password>
 				<mail.from>asso_mazzo82@yahoo.it</mail.from>
 				<mail.to>asso_mazzo82@yahoo.it</mail.to>
 				<mail.cc>vcompagnone@inmatica.com</mail.cc>

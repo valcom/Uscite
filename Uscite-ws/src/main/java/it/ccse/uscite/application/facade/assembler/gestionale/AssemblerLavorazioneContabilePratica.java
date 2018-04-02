@@ -3,8 +3,11 @@
  */
 package it.ccse.uscite.application.facade.assembler.gestionale;
 
+import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Component;
 
 import it.ccse.uscite.application.facade.assembler.Assembler;
@@ -18,15 +21,14 @@ import it.ccse.uscite.domain.PraticaErogazione;
  *
  */
 @Component
-public class AssemblerLavorazioneContabilePratica extends Assembler{
-	
-	public List<PraticaErogazione> assemble(LavorazioneContabilePratica_InDTO lavorazioneContabilePratica_InDTO){
-		return getMapper().mapAsList(lavorazioneContabilePratica_InDTO.getContent(), PraticaErogazione.class);
-	}
-	
-
-	public LavorazioneContabile_OutDTO assemble(LavorazioneContabile lavorazioneContabile){
-		return getMapper().map(lavorazioneContabile,LavorazioneContabile_OutDTO.class);
+public class AssemblerLavorazioneContabilePratica extends Assembler {
+	public List<PraticaErogazione> assemble(LavorazioneContabilePratica_InDTO lavorazioneContabilePratica_InDTO) {
+		Type type = new TypeToken<Collection<PraticaErogazione>>() {
+		}.getType();
+		return getMapper().map(lavorazioneContabilePratica_InDTO.getContent(), type);
 	}
 
+	public LavorazioneContabile_OutDTO assemble(LavorazioneContabile lavorazioneContabile) {
+		return getMapper().map(lavorazioneContabile, LavorazioneContabile_OutDTO.class);
+	}
 }

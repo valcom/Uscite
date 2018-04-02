@@ -15,19 +15,17 @@ import it.ccse.uscite.domain.PraticaErogazione;
 import it.ccse.uscite.domain.StatoFideiussione.FideiussionePratica;
 
 @Component
-public class AssemblerAggiornaFideiussione extends Assembler{
-
+public class AssemblerAggiornaFideiussione extends Assembler {
 	public AggiornaFideiussione_OutDTO assemble(Collection<PraticaErogazione> pratiche) {
-		return getMapper().map(new Container<>(pratiche), AggiornaFideiussione_OutDTO.class);
+		return getMapper().map(new Container<Collection<PraticaErogazione>>(pratiche) {
+		}, AggiornaFideiussione_OutDTO.class);
 	}
 
-	
 	public Map<String, FideiussionePratica> assemble(AggiornaFideiussione_InDTO aggiornaFideiussione_InDTO) {
 		Map<String, FideiussionePratica> map = null;
-		if(aggiornaFideiussione_InDTO!=null && aggiornaFideiussione_InDTO.getContent()!=null){
+		if (aggiornaFideiussione_InDTO != null && aggiornaFideiussione_InDTO.getContent() != null) {
 			map = aggiornaFideiussione_InDTO.getContent().stream().collect(Collectors.toMap(AggiornaFideiussioneDTO::getCodicePratica, AggiornaFideiussioneDTO::getFideiussione));
 		}
 		return map;
 	}
-
 }

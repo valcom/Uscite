@@ -15,18 +15,16 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="stato_fideiussione")
-public class StatoFideiussione extends StatoPratica<StatoFideiussione.FideiussionePratica>{
-
+@Table(name = "stato_fideiussione")
+public class StatoFideiussione extends StatoPratica<StatoFideiussione.FideiussionePratica> {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1804279633895682240L;
 	public static final List<Integer> LISTA_COMPONENTI_TARIFFARIE_FIDEIUSSIONE = Arrays.asList(73);
-	
-	public static enum FideiussionePratica{
+
+	public static enum FideiussionePratica {
 		UNDEFINED, PRESENTE, ASSENTE, DONT_CARE;
-		
 		/**
 		 * 
 		 * @param idComponenteTariffaria
@@ -34,29 +32,28 @@ public class StatoFideiussione extends StatoPratica<StatoFideiussione.Fideiussio
 		 */
 		public FideiussionePratica getFideiussionePraticaByCT(BigInteger idComponenteTariffaria) {
 			FideiussionePratica fideiussione = null;
-			if(LISTA_COMPONENTI_TARIFFARIE_FIDEIUSSIONE.contains(idComponenteTariffaria)){
-				switch(this){
-				case ASSENTE:
-					fideiussione = FideiussionePratica.ASSENTE;
-					break;
-				case PRESENTE:
-					fideiussione = FideiussionePratica.PRESENTE;
-					break;
-				case UNDEFINED:
-					fideiussione = FideiussionePratica.UNDEFINED;
-					break;
-				default:
-					break;
+			if (LISTA_COMPONENTI_TARIFFARIE_FIDEIUSSIONE.contains(idComponenteTariffaria.intValue())) {
+				switch (this) {
+					case ASSENTE:
+						fideiussione = FideiussionePratica.ASSENTE;
+						break;
+					case PRESENTE:
+						fideiussione = FideiussionePratica.PRESENTE;
+						break;
+					case UNDEFINED:
+						fideiussione = FideiussionePratica.UNDEFINED;
+						break;
+					default:
+						break;
 				}
-			}else{
+			} else {
 				fideiussione = FideiussionePratica.DONT_CARE;
 			}
-		
-		return fideiussione;
+			return fideiussione;
 		}
 	}
-	
-	public StatoFideiussione(FideiussionePratica aut,Boolean bloccante) {
+
+	public StatoFideiussione(FideiussionePratica aut, Boolean bloccante) {
 		setValore(aut);
 		setBloccante(bloccante);
 	}
@@ -64,14 +61,12 @@ public class StatoFideiussione extends StatoPratica<StatoFideiussione.Fideiussio
 	public StatoFideiussione(FideiussionePratica aut) {
 		setValore(aut);
 	}
-	
-	public StatoFideiussione() {
-		this(FideiussionePratica.UNDEFINED,Boolean.FALSE);
-	}
-	
 
-	public FideiussionePratica getFideiussione(){
+	public StatoFideiussione() {
+		this(FideiussionePratica.UNDEFINED, Boolean.FALSE);
+	}
+
+	public FideiussionePratica getFideiussione() {
 		return getValore();
 	}
-
 }

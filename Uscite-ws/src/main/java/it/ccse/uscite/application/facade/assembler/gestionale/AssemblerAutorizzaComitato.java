@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import it.ccse.uscite.application.facade.assembler.Assembler;
+import it.ccse.uscite.application.facade.assembler.util.Container;
 import it.ccse.uscite.application.facade.dto.input.gestionale.AutorizzaComitato_InDTO;
 import it.ccse.uscite.domain.PraticaErogazione;
 
@@ -16,10 +17,11 @@ import it.ccse.uscite.domain.PraticaErogazione;
  *
  */
 @Component
-public class AssemblerAutorizzaComitato extends Assembler{
-	
-	public List<PraticaErogazione> assemble(AutorizzaComitato_InDTO autorizzaComitato_InDTO){		
-		return getMapper().mapAsList(autorizzaComitato_InDTO.getContent(), PraticaErogazione.class);		
+public class AssemblerAutorizzaComitato extends Assembler {
+	public List<PraticaErogazione> assemble(AutorizzaComitato_InDTO autorizzaComitato_InDTO) {
+		Container<List<PraticaErogazione>> c = new Container<List<PraticaErogazione>>() {
+		};
+		getMapper().map(autorizzaComitato_InDTO.getContent(), c);
+		return c.getContent();
 	}
-	
 }

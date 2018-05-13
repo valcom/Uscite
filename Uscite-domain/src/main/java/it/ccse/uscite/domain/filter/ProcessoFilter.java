@@ -37,6 +37,7 @@ public class ProcessoFilter extends PageableFilter<ProcessoErogazione> {
 	@Override
 	public Predicate toPredicate(Root<ProcessoErogazione> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		List<Predicate> predicates = new ArrayList<Predicate>();
+		root.fetch(ProcessoErogazione_.praticheErogazione);
 		if (idNota != null) {
 			predicates.add(cb.equal(root.get(ProcessoErogazione_.id), idNota));
 		}

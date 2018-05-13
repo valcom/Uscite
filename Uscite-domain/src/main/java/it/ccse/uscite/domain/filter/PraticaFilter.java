@@ -292,14 +292,21 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione> {
 		List<Predicate> predicates = new ArrayList<Predicate>();
 		Join<PraticaErogazione, ProcessoErogazione> joinNota = root.join(PraticaErogazione_.processoErogazione);
 		Join<ProcessoErogazione, OrdineDelGiorno> joinComitato = joinNota.join(ProcessoErogazione_.ordineDelGiorno);
-		root.fetch(PraticaErogazione_.processoErogazione).fetch(ProcessoErogazione_.ordineDelGiorno);
-		root.fetch(PraticaErogazione_.statoComitato);
-		root.fetch(PraticaErogazione_.statoContabile);
-		root.fetch(PraticaErogazione_.statoLegale);
-		root.fetch(PraticaErogazione_.statoFideiussione);
-		root.fetch(PraticaErogazione_.settoreAttivita);
-		root.fetch(PraticaErogazione_.tipoPeriodo);
-		root.fetch(PraticaErogazione_.statoUnbundling);
+		Join<PraticaErogazione, StatoComitato> joinStatoComitato = root.join(PraticaErogazione_.statoComitato);
+		Join<PraticaErogazione, StatoContabile> joinStatoContabile = root.join(PraticaErogazione_.statoContabile);
+		Join<PraticaErogazione, StatoLegale> joinStatoLegale = root.join(PraticaErogazione_.statoLegale);
+		Join<PraticaErogazione, StatoFideiussione> joinStatoFideiussione = root.join(PraticaErogazione_.statoFideiussione);
+		Join<PraticaErogazione, SettoreAttivita> joinSettoreAttivita = root.join(PraticaErogazione_.settoreAttivita);
+		Join<PraticaErogazione, TipoPeriodo> joinTipoPeriodo = root.join(PraticaErogazione_.tipoPeriodo);
+		Join<PraticaErogazione, StatoUnbundling> joinUnbundling = root.join(PraticaErogazione_.statoUnbundling);
+		// root.fetch(PraticaErogazione_.processoErogazione).fetch(ProcessoErogazione_.ordineDelGiorno);
+		// root.fetch(PraticaErogazione_.statoComitato);
+		// root.fetch(PraticaErogazione_.statoContabile);
+		// root.fetch(PraticaErogazione_.statoLegale);
+		// root.fetch(PraticaErogazione_.statoFideiussione);
+		// root.fetch(PraticaErogazione_.settoreAttivita);
+		// root.fetch(PraticaErogazione_.tipoPeriodo);
+		// root.fetch(PraticaErogazione_.statoUnbundling);
 		if (annoA != null) {
 			predicates.add(cb.le(root.get(PraticaErogazione_.anno), annoA));
 		}
@@ -307,15 +314,12 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione> {
 			predicates.add(cb.ge(root.get(PraticaErogazione_.anno), annoDa));
 		}
 		if (autorizzazioneComitato != null) {
-			Join<PraticaErogazione, StatoComitato> joinStatoComitato = root.join(PraticaErogazione_.statoComitato);
 			predicates.add(cb.equal(joinStatoComitato.get(StatoComitato_.valore), autorizzazioneComitato));
 		}
 		if (autorizzazioneContabile != null) {
-			Join<PraticaErogazione, StatoContabile> joinStatoContabile = root.join(PraticaErogazione_.statoContabile);
 			predicates.add(cb.equal(joinStatoContabile.get(StatoContabile_.valore), autorizzazioneContabile));
 		}
 		if (!CollectionUtils.isEmpty(listaValoriAutorizzazioneLegale)) {
-			Join<PraticaErogazione, StatoLegale> joinStatoLegale = root.join(PraticaErogazione_.statoLegale);
 			predicates.add(joinStatoLegale.get(StatoLegale_.valore).in(listaValoriAutorizzazioneLegale));
 		}
 		if (!CollectionUtils.isEmpty(codiciPratica)) {
@@ -349,7 +353,6 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione> {
 			predicates.add(cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataScadenza), dataScadenzaDa));
 		}
 		if (fideiussione != null) {
-			Join<PraticaErogazione, StatoFideiussione> joinStatoFideiussione = root.join(PraticaErogazione_.statoFideiussione);
 			predicates.add(cb.equal(joinStatoFideiussione.get(StatoFideiussione_.valore), fideiussione));
 		}
 		if (importoA != null) {
@@ -368,18 +371,15 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione> {
 			predicates.add(cb.equal(joinNota.get(ProcessoErogazione_.id), idProcessoErogazione));
 		}
 		if (!CollectionUtils.isEmpty(listaIdSettoriAttivita)) {
-			Join<PraticaErogazione, SettoreAttivita> joinSettoreAttivita = root.join(PraticaErogazione_.settoreAttivita);
 			predicates.add(joinSettoreAttivita.get(SettoreAttivita_.id).in(listaIdSettoriAttivita));
 		}
 		if (!CollectionUtils.isEmpty(statiPratica)) {
 			predicates.add(root.get(PraticaErogazione_.lavorazioneContabile).in(statiPratica));
 		}
 		if (tipoPeriodo != null) {
-			Join<PraticaErogazione, TipoPeriodo> joinTipoPeriodo = root.join(PraticaErogazione_.tipoPeriodo);
 			predicates.add(cb.equal(joinTipoPeriodo, tipoPeriodo));
 		}
 		if (unbundling != null) {
-			Join<PraticaErogazione, StatoUnbundling> joinUnbundling = root.join(PraticaErogazione_.statoUnbundling);
 			predicates.add(cb.equal(joinUnbundling.get(StatoUnbundling_.valore), unbundling));
 		}
 		return cb.and(predicates.toArray(new Predicate[predicates.size()]));

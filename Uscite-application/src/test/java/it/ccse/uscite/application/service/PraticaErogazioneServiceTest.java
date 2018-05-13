@@ -28,7 +28,7 @@ import it.ccse.uscite.domain.filter.PraticaFilter;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/spring/application-context.xml", "classpath:/spring/infrastructure-context.xml" })
+@ContextConfiguration(locations = { "classpath:/spring/application-context.xml", "classpath:/spring/infrastructure-context.xml", "classpath:spring/datasource-test.xml" })
 @Transactional
 public class PraticaErogazioneServiceTest {
 	@Autowired
@@ -84,9 +84,11 @@ public class PraticaErogazioneServiceTest {
 	@Test
 	public void testSearchPraticheErogazione() {
 		PraticaFilter filter = new PraticaFilter();
+		filter.setPageNumber(0);
+		filter.setPageSize(10);
 		filter.setAnnoDa(2013);
 		filter.setAnnoA(2014);
-		filter.setErogabile(true);
+		// filter.setErogabile(true);
 		Page<PraticaErogazione> pratiche = praticaErogazioneService.searchPraticheErogazione(filter);
 		assertFalse(CollectionUtils.isEmpty(pratiche.getContent()));
 	}

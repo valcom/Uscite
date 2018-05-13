@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import it.ccse.uscite.domain.OrdineDelGiorno;
 import it.ccse.uscite.domain.OrdineDelGiorno.StatoComitato;
 import it.ccse.uscite.domain.OrdineDelGiorno_;
+import it.ccse.uscite.domain.ProcessoErogazione_;
 
 /**
  * @author vcompagnone
@@ -34,6 +35,7 @@ public class OrdineDelGiornoFilter extends PageableFilter<OrdineDelGiorno> {
 	@Override
 	public Predicate toPredicate(Root<OrdineDelGiorno> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		List<Predicate> predicates = new ArrayList<Predicate>();
+		root.fetch(OrdineDelGiorno_.processiErogazione).fetch(ProcessoErogazione_.praticheErogazione);
 		if (dataComitatoA != null) {
 			predicates.add(cb.lessThanOrEqualTo(root.get(OrdineDelGiorno_.dataComitato), dataComitatoA));
 		}

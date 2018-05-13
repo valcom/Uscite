@@ -22,7 +22,7 @@ import it.ccse.uscite.domain.OrdineDelGiorno;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/spring/application-context.xml", "classpath:/spring/infrastructure-context.xml" })
+@ContextConfiguration(locations = { "classpath:/spring/application-context.xml", "classpath:/spring/infrastructure-context.xml", "classpath:spring/persistence-context-test.xml" })
 @Transactional
 public class OrdineDelGiornoServiceTest {
 	@Autowired

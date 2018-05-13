@@ -3,14 +3,6 @@
  */
 package it.ccse.uscite.application.service.impl;
 
-import it.ccse.uscite.application.service.OrdineDelGiornoService;
-import it.ccse.uscite.domain.OrdineDelGiorno;
-import it.ccse.uscite.domain.OrdineDelGiorno.StatoComitato;
-import it.ccse.uscite.domain.OrdineDelGiorno.TipologiaComitato;
-import it.ccse.uscite.domain.exception.ApplicationException;
-import it.ccse.uscite.domain.filter.OrdineDelGiornoFilter;
-import it.ccse.uscite.domain.repository.OrdineDelGiornoRepository;
-
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,25 +16,32 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.ccse.uscite.application.service.OrdineDelGiornoService;
+import it.ccse.uscite.domain.OrdineDelGiorno;
+import it.ccse.uscite.domain.OrdineDelGiorno.StatoComitato;
+import it.ccse.uscite.domain.OrdineDelGiorno.TipologiaComitato;
+import it.ccse.uscite.domain.exception.ApplicationException;
+import it.ccse.uscite.domain.filter.OrdineDelGiornoFilter;
+import it.ccse.uscite.domain.repository.OrdineDelGiornoRepository;
+
 /**
  * @author vcompagnone
  *
  */
 @Service
-@Transactional(readOnly=false)
-public class OrdineDelGiornoServiceImpl implements OrdineDelGiornoService{
-
+@Transactional(readOnly = false)
+public class OrdineDelGiornoServiceImpl implements OrdineDelGiornoService {
 	@Autowired
 	private OrdineDelGiornoRepository ordineDelGiornoRepository;
-	
+
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Page<OrdineDelGiorno> getOrdiniDelGiorno(Pageable p) {
 		return ordineDelGiornoRepository.findAll(p);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<OrdineDelGiorno> getOrdiniDelGiorno() {
 		return ordineDelGiornoRepository.findAll();
 	}
@@ -51,7 +50,7 @@ public class OrdineDelGiornoServiceImpl implements OrdineDelGiornoService{
 	public OrdineDelGiorno createOrdineDelGiorno(OrdineDelGiorno ordineDelGiorno) {
 		ordineDelGiorno.checkInserimento();
 		Date dataComitato = ordineDelGiorno.getDataComitato();
-		if(ordineDelGiornoRepository.findByDataComitato(dataComitato) != null){
+		if (ordineDelGiornoRepository.findByDataComitato(dataComitato) != null) {
 			throw new ApplicationException("error.comitato.data.duplicate.insert");
 		}
 		return ordineDelGiornoRepository.save(ordineDelGiorno);
@@ -59,17 +58,16 @@ public class OrdineDelGiornoServiceImpl implements OrdineDelGiornoService{
 
 	@Override
 	public OrdineDelGiorno apriOrdineDelGiorno(OrdineDelGiorno ordineDelGiorno) {
-		ordineDelGiorno = ordineDelGiornoRepository.findOne(ordineDelGiorno.getId());
+		ordineDelGiorno = ordineDelGiornoRepository.getOne(ordineDelGiorno.getId());
 		ordineDelGiorno.apri();
 		return ordineDelGiornoRepository.save(ordineDelGiorno);
 	}
 
 	@Override
 	public OrdineDelGiorno chiudiOrdineDelGiorno(OrdineDelGiorno ordineDelGiorno) {
-		ordineDelGiorno = ordineDelGiornoRepository.findOne(ordineDelGiorno.getId());
+		ordineDelGiorno = ordineDelGiornoRepository.getOne(ordineDelGiorno.getId());
 		ordineDelGiorno.chiudi();
 		return ordineDelGiornoRepository.save(ordineDelGiorno);
-		
 	}
 
 	@Override
@@ -79,11 +77,11 @@ public class OrdineDelGiornoServiceImpl implements OrdineDelGiornoService{
 		Integer numeroComitato = ordineDelGiorno.getNumeroComitato();
 		TipologiaComitato tipologia = ordineDelGiorno.getTipologia();
 		BigInteger idComitato = ordineDelGiorno.getId();
-		ordineDelGiorno = ordineDelGiornoRepository.findOne(idComitato);
-		if(ordineDelGiorno==null){
-			throw new RuntimeException("Comitato non trovato id:"+idComitato);
+		ordineDelGiorno = ordineDelGiornoRepository.getOne(idComitato);
+		if (ordineDelGiorno == null) {
+			throw new RuntimeException("Comitato non trovato id:" + idComitato);
 		}
-		ordineDelGiorno.aggiorna(dataComitato,descrizione,numeroComitato,tipologia);
+		ordineDelGiorno.aggiorna(dataComitato, descrizione, numeroComitato, tipologia);
 		return ordineDelGiornoRepository.save(ordineDelGiorno);
 	}
 
@@ -93,21 +91,19 @@ public class OrdineDelGiornoServiceImpl implements OrdineDelGiornoService{
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Set<OrdineDelGiorno> getOrdiniDelGiornoAutorizzabili() {
 		Date today = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
-		return ordineDelGiornoRepository.findByDataComitatoLessThanEqualAndStato(today,StatoComitato.CHIUSO);
+		return ordineDelGiornoRepository.findByDataComitatoLessThanEqualAndStato(today, StatoComitato.CHIUSO);
 	}
 
 	@Override
 	public Page<OrdineDelGiorno> searchComitati(OrdineDelGiornoFilter req) {
-		return ordineDelGiornoRepository.findAll(req.getSpecification(), req.getPageable());
+		return ordineDelGiornoRepository.findAll(req, req.getPageable());
 	}
 
 	@Override
 	public OrdineDelGiorno getOrdineDelGiorno(BigInteger idOrdineDelGiorno) {
-		return ordineDelGiornoRepository.findOne(idOrdineDelGiorno);
+		return ordineDelGiornoRepository.getOne(idOrdineDelGiorno);
 	}
-	
-
 }

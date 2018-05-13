@@ -17,16 +17,17 @@ import it.ccse.uscite.domain.repository.StatoContabileRepository;
  */
 @Service
 public class StatoContabileServiceImpl implements StatoContabileService {
-
 	@Autowired
 	private StatoContabileRepository repository;
-	
-	/* (non-Javadoc)
-	 * @see it.ccse.uscite.application.service.StatoContabileService#getStatoContabileIniziale()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see it.ccse.uscite.application.service.StatoContabileService#
+	 * getStatoContabileIniziale()
 	 */
 	@Override
 	public StatoContabile getStatoContabileIniziale() {
-		return repository.findOne(AutorizzazioneContabile.UNDEFINED.name());
+		return repository.getOne(AutorizzazioneContabile.UNDEFINED.name());
 	}
-
 }

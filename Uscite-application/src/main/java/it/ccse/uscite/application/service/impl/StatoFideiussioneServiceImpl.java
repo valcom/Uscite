@@ -19,23 +19,28 @@ import it.ccse.uscite.domain.repository.StatoFideiussioneRepository;
  */
 @Service
 public class StatoFideiussioneServiceImpl implements StatoFideiussioneService {
-
 	@Autowired
 	private StatoFideiussioneRepository repository;
-	/* (non-Javadoc)
-	 * @see it.ccse.uscite.application.service.StatoFideiussioneService#getStatoFideiussioneIniziale()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see it.ccse.uscite.application.service.StatoFideiussioneService#
+	 * getStatoFideiussioneIniziale()
 	 */
 	@Override
 	public StatoFideiussione getStatoFideiussioneIniziale() {
-		return repository.findOne(FideiussionePratica.ASSENTE.name());
+		return repository.getOne(FideiussionePratica.ASSENTE.name());
 	}
 
-	/* (non-Javadoc)
-	 * @see it.ccse.uscite.application.service.StatoFideiussioneService#getStatiFideiussione()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see it.ccse.uscite.application.service.StatoFideiussioneService#
+	 * getStatiFideiussione()
 	 */
 	@Override
 	public List<StatoFideiussione> getStatiFideiussione() {
 		return repository.findAll();
 	}
-
 }

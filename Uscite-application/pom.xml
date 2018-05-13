@@ -9,7 +9,6 @@
 	<artifactId>uscite-application</artifactId>
 	<properties>
 		<javax.mail.version>1.4.7</javax.mail.version>
-		<spring-data-commons-version>1.12.1.RELEASE</spring-data-commons-version>
 	</properties>
 
 	<profiles>
@@ -48,6 +47,7 @@
 	</profiles>
 
 	<dependencies>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
@@ -79,11 +79,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-commons</artifactId>
-			<version>${spring-data-commons-version}</version>
-		</dependency>
+		
 
 		<!-- Mail -->
 		<dependency>

@@ -77,59 +77,54 @@ import it.ccse.uscite.domain.SettoreAttivita.Unbundling;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations =  {"classpath:/spring/web-application-context.xml","classpath:/spring/infrastructure-context.xml"} )
+@ContextConfiguration(locations = { "classpath:/spring/web-application-context.xml", "classpath:/spring/infrastructure-context.xml" })
 @Transactional
 public class WS_UsciteTest {
-	
 	@Autowired
 	private UsciteWSFacade usciteWS;
-	
 	@Autowired
 	private GestionaleWSFacade gestionaleWS;
-	
+
 	@Test
-	public void testSearchPratiche(){
+	public void testSearchPratiche() {
 		SearchPratiche_InDTO searchPratiche_InDTO = new SearchPratiche_InDTO();
-		Integer annoDa = 2014,annoA =2014;
+		Integer annoDa = 2014, annoA = 2014;
 		Boolean erogabile = true;
 		searchPratiche_InDTO.setAnnoDa(annoDa);
 		searchPratiche_InDTO.setAnnoA(annoA);
 		searchPratiche_InDTO.setErogabile(true);
-		Date dataComitatoA = new GregorianCalendar(2014,3,22).getTime();
-		searchPratiche_InDTO.setDataComitatoA(dataComitatoA );
-//		List<Integer> listaIdSettoreAttivita = new ArrayList<Integer>();
-//		listaIdSettoreAttivita.add(1261);
-//		listaIdSettoreAttivita.add(1264);
-//		listaIdSettoreAttivita.add(1401);
+		Date dataComitatoA = new GregorianCalendar(2014, 3, 22).getTime();
+		searchPratiche_InDTO.setDataComitatoA(dataComitatoA);
+		// List<Integer> listaIdSettoreAttivita = new ArrayList<Integer>();
+		// listaIdSettoreAttivita.add(1261);
+		// listaIdSettoreAttivita.add(1264);
+		// listaIdSettoreAttivita.add(1401);
 		searchPratiche_InDTO.setPageSize(100);
 		searchPratiche_InDTO.setPageNumber(5);
-		//searchPratiche_InDTO.setListaIdSettoreAttivita(listaIdSettoreAttivita );;
-		
+		// searchPratiche_InDTO.setListaIdSettoreAttivita(listaIdSettoreAttivita
+		// );;
 		SearchPratiche_OutDTO output = usciteWS.searchPratiche(searchPratiche_InDTO);
-		
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS);
-		
-		Assert.assertFalse(output.getContent().stream().filter(p->!p.getAnno().equals(annoA)).findAny().isPresent());
-		Assert.assertFalse(output.getContent().stream().filter(p->!p.getErogabile().equals(erogabile)).findAny().isPresent());
-		Assert.assertFalse(output.getContent().stream().filter(p->p.getNota().getOrdineDelGiorno().getDataComitato().after(dataComitatoA)).findAny().isPresent());
-
-		
+		Assert.assertFalse(output.getContent().stream().filter(p -> !p.getAnno().equals(annoA)).findAny().isPresent());
+		Assert.assertFalse(output.getContent().stream().filter(p -> !p.getErogabile().equals(erogabile)).findAny().isPresent());
+		Assert.assertFalse(output.getContent().stream().filter(p -> p.getNota().getOrdineDelGiorno().getDataComitato().after(dataComitatoA)).findAny().isPresent());
 	}
+
 	@Test
-	public void testGetOrdiniDelGiorno(){
+	public void testGetOrdiniDelGiorno() {
 		SearchComitati_InDTO inputDTO = new SearchComitati_InDTO();
-		SearchComitati_OutDTO output = gestionaleWS.searchComitati(inputDTO );
+		SearchComitati_OutDTO output = gestionaleWS.searchComitati(inputDTO);
 		List<DettaglioComitatoDTO> listaComitati = output.getContent();
 		Assert.assertNotNull(listaComitati);
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS);
 	}
-	
+
 	@Test
-	public void testAddOrdineDelGiorno(){
+	public void testAddOrdineDelGiorno() {
 		String descrizione = "prova";
 		Integer numeroComitato = 1;
 		TipologiaComitato tipologia = TipologiaComitato.ORDINARIO;
-		Date dataComitato = DateUtils.truncate(DateUtils.addDays(new Date(),100),Calendar.DAY_OF_MONTH);
+		Date dataComitato = DateUtils.truncate(DateUtils.addDays(new Date(), 100), Calendar.DAY_OF_MONTH);
 		AggiungiComitato_InDTO ordineDelGiorno_InDTO = new AggiungiComitato_InDTO();
 		ordineDelGiorno_InDTO.setDataComitato(dataComitato);
 		ordineDelGiorno_InDTO.setDescrizione(descrizione);
@@ -137,102 +132,97 @@ public class WS_UsciteTest {
 		ordineDelGiorno_InDTO.setTipologia(tipologia);
 		ComitatoDTO ordine = gestionaleWS.aggiungiComitato(ordineDelGiorno_InDTO).getContent();
 		Assert.assertNotNull(ordine);
-		Assert.assertEquals(dataComitato,ordine.getDataComitato());
-		Assert.assertEquals(numeroComitato,ordine.getNumeroComitato());
-		Assert.assertEquals(tipologia,ordine.getTipologia());
-		Assert.assertEquals(descrizione,ordine.getDescrizione());
+		Assert.assertEquals(dataComitato, ordine.getDataComitato());
+		Assert.assertEquals(numeroComitato, ordine.getNumeroComitato());
+		Assert.assertEquals(tipologia, ordine.getTipologia());
+		Assert.assertEquals(descrizione, ordine.getDescrizione());
 	}
-	
+
 	@Test
-	public void testDeleteOrdineDelGiorno(){
+	public void testDeleteOrdineDelGiorno() {
 		EliminaComitato_InDTO deleteOrdineDelGiorno_InDTO = new EliminaComitato_InDTO();
 		SearchComitati_InDTO inputDTO = new SearchComitati_InDTO();
-		List<DettaglioComitatoDTO> listaComitati =  gestionaleWS.searchComitati(inputDTO ).getContent();
+		List<DettaglioComitatoDTO> listaComitati = gestionaleWS.searchComitati(inputDTO).getContent();
 		deleteOrdineDelGiorno_InDTO.setIdOrdineDelGiorno(listaComitati.get(0).getId());
 		EliminaComitato_OutDTO output = gestionaleWS.deleteComitato(deleteOrdineDelGiorno_InDTO);
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS);
 	}
-	
+
 	@Test
-	public void testApriOrdineDelGiorno(){
+	public void testApriOrdineDelGiorno() {
 		ApriComitato_InDTO apriOrdineDelGiorno_InDTO = new ApriComitato_InDTO();
 		SearchComitati_InDTO inputDTO = new SearchComitati_InDTO();
-		List<DettaglioComitatoDTO> listaComitati =  gestionaleWS.searchComitati(inputDTO ).getContent();
+		List<DettaglioComitatoDTO> listaComitati = gestionaleWS.searchComitati(inputDTO).getContent();
 		apriOrdineDelGiorno_InDTO.setIdOrdineDelGiorno(listaComitati.get(0).getId());
 		ApriComitato_OutDTO output = gestionaleWS.apriComitato(apriOrdineDelGiorno_InDTO);
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
+
 	@Test
-	public void testChiudiOrdineDelGiorno(){
+	public void testChiudiOrdineDelGiorno() {
 		ChiudiComitato_InDTO chiudiOrdineDelGiorno_InDTO = new ChiudiComitato_InDTO();
 		SearchComitati_InDTO inputDTO = new SearchComitati_InDTO();
-		List<DettaglioComitatoDTO> listaComitati =  gestionaleWS.searchComitati(inputDTO ).getContent();
+		List<DettaglioComitatoDTO> listaComitati = gestionaleWS.searchComitati(inputDTO).getContent();
 		chiudiOrdineDelGiorno_InDTO.setIdOrdineDelGiorno(listaComitati.get(0).getId());
 		ChiudiComitato_OutDTO output = gestionaleWS.chiudiComitato(chiudiOrdineDelGiorno_InDTO);
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
+
 	@Test
-	public void testUpdateOrdineDelGiorno(){
+	public void testUpdateOrdineDelGiorno() {
 		String descrizione = "pippo";
 		Date dataComitato = DateUtils.addDays(new Date(), 2);
 		AggiornaComitato_InDTO updateOrdineDelGiorno_InDTO = new AggiornaComitato_InDTO();
 		SearchComitati_InDTO inputDTO = new SearchComitati_InDTO();
-		List<DettaglioComitatoDTO> listaComitati =  gestionaleWS.searchComitati(inputDTO ).getContent();
+		List<DettaglioComitatoDTO> listaComitati = gestionaleWS.searchComitati(inputDTO).getContent();
 		updateOrdineDelGiorno_InDTO.setIdOrdineDelGiorno(listaComitati.get(0).getId());
 		updateOrdineDelGiorno_InDTO.setDataComitato(dataComitato);
-		
 		updateOrdineDelGiorno_InDTO.setDescrizione(descrizione);
 		AggiornaComitato_OutDTO output = gestionaleWS.aggiornaComitato(updateOrdineDelGiorno_InDTO);
-		//ComitatoDTO ordine = output.getContent();
-	//	Assert.assertNotNull(ordine);
-		//Assert.assertEquals(descrizione, ordine.getDescrizione());
-		//Assert.assertEquals(dataComitato, ordine.getDataComitato());
+		// ComitatoDTO ordine = output.getContent();
+		// Assert.assertNotNull(ordine);
+		// Assert.assertEquals(descrizione, ordine.getDescrizione());
+		// Assert.assertEquals(dataComitato, ordine.getDataComitato());
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
+
 	@Test
-	public void testAggiungiNota(){
+	public void testAggiungiNota() {
 		String causale = "pippo";
 		Integer numeroNota = 2;
 		BigInteger idOrdine = gestionaleWS.searchComitati(new SearchComitati_InDTO()).getContent().get(0).getId();
 		String idUnita = "PC";
 		String username = "topogigio";
-		ComitatoDTO ordine = new ComitatoDTO(); 
+		ComitatoDTO ordine = new ComitatoDTO();
 		ordine.setId(idOrdine);
-		
 		AggiungiNota_InDTO aggiungiNotaDTO_InDTO = new AggiungiNota_InDTO();
-		
 		aggiungiNotaDTO_InDTO.setCausale(causale);
 		aggiungiNotaDTO_InDTO.setNumeroNota(numeroNota);
 		aggiungiNotaDTO_InDTO.setUsername(username);
 		aggiungiNotaDTO_InDTO.setOwner(idUnita);
-		
 		aggiungiNotaDTO_InDTO.setOrdineDelGiorno(ordine);
 		AggiungiNota_OutDTO output = gestionaleWS.aggiungiNota(aggiungiNotaDTO_InDTO);
 		DettaglioNotaPagamentoDTO nota = output.getContent();
 		Assert.assertNotNull(nota);
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS);
-		Assert.assertEquals(causale,nota.getCausale());
-		Assert.assertEquals(numeroNota,nota.getNumeroNota());
-		Assert.assertEquals(idOrdine,nota.getOrdineDelGiorno().getId());
-		Assert.assertEquals(idUnita,nota.getOwner());
-		Assert.assertEquals(username,RequestContextHolder.currentRequestAttributes().getAttribute("username",RequestAttributes.SCOPE_REQUEST));
+		Assert.assertEquals(causale, nota.getCausale());
+		Assert.assertEquals(numeroNota, nota.getNumeroNota());
+		Assert.assertEquals(idOrdine, nota.getOrdineDelGiorno().getId());
+		Assert.assertEquals(idUnita, nota.getOwner());
+		Assert.assertEquals(username, RequestContextHolder.currentRequestAttributes().getAttribute("username", RequestAttributes.SCOPE_REQUEST));
 	}
 
 	@Test
-	public void testEliminaNota(){
+	public void testEliminaNota() {
 		EliminaNota_InDTO eliminaNota_InDTO = new EliminaNota_InDTO();
 		BigInteger id = BigInteger.valueOf(35);
 		eliminaNota_InDTO.setIdProcessoErogazione(id);
 		EliminaNota_OutDTO output = gestionaleWS.eliminaNota(eliminaNota_InDTO);
-		
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
+
 	@Test
-	public void testAggiornaNota(){
+	public void testAggiornaNota() {
 		String causale = "pippo";
 		Integer numeroNota = 32;
 		Integer id = 414;
@@ -242,31 +232,28 @@ public class WS_UsciteTest {
 		aggiornaNota_InDTO.setNumeroNota(numeroNota);
 		AggiornaNota_OutDTO output = gestionaleWS.aggiornaNota(aggiornaNota_InDTO);
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
-		
 	}
-	
+
 	@Test
-	public void testApriNota(){
+	public void testApriNota() {
 		Integer id = 414;
 		ApriNota_InDTO apriNotaInDTO = new ApriNota_InDTO();
 		apriNotaInDTO.setIdProcessoErogazione(id);
 		ApriNota_OutDTO output = gestionaleWS.apriNota(apriNotaInDTO);
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
-
 	}
-	
+
 	@Test
-	public void testChiudiNota(){
-		BigInteger id = BigInteger.valueOf(414); 
+	public void testChiudiNota() {
+		BigInteger id = BigInteger.valueOf(414);
 		ChiudiNota_InDTO chiudiNotaInDTO = new ChiudiNota_InDTO();
 		chiudiNotaInDTO.setIdProcessoErogazione(id);
 		ChiudiNota_OutDTO output = gestionaleWS.chiudiNota(chiudiNotaInDTO);
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
-
 	}
-	
+
 	@Test
-	public void testRinviaNota(){
+	public void testRinviaNota() {
 		RinviaNota_InDTO rinviaNota_InDTO = new RinviaNota_InDTO();
 		String username = "pippo";
 		BigInteger idComitato = BigInteger.valueOf(49);
@@ -277,23 +264,18 @@ public class WS_UsciteTest {
 		RinviaNota_OutDTO output = gestionaleWS.rinviaNota(rinviaNota_InDTO);
 		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
-	
-	
-	
-	
+
 	@Test
-	public void testLavorazioneContabileNota(){
+	public void testLavorazioneContabileNota() {
 		LavorazioneContabileNota_InDTO lavorazioneContabileNota_InDTO = new LavorazioneContabileNota_InDTO();
 		BigInteger idNota = BigInteger.valueOf(390);
 		lavorazioneContabileNota_InDTO.setIdNota(idNota);
 		LavorazioneContabile_OutDTO output = gestionaleWS.lavorazioneContabileNota(lavorazioneContabileNota_InDTO);
-		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);		
+		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
-	
+
 	@Test
-	public void testLavorazioneContabilePratiche(){
+	public void testLavorazioneContabilePratiche() {
 		LavorazioneContabilePratica_InDTO lavorazioneContabilePratica_InDTO = new LavorazioneContabilePratica_InDTO();
 		List<PraticaErogazioneDTO> content = new ArrayList<PraticaErogazioneDTO>();
 		PraticaErogazioneDTO pratica1 = new PraticaErogazioneDTO();
@@ -305,7 +287,7 @@ public class WS_UsciteTest {
 		PraticaErogazioneDTO pratica4 = new PraticaErogazioneDTO();
 		pratica4.setId(BigInteger.valueOf(4383));
 		PraticaErogazioneDTO pratica5 = new PraticaErogazioneDTO();
-		pratica5.setId(BigInteger.valueOf(12734));	
+		pratica5.setId(BigInteger.valueOf(12734));
 		content.add(pratica1);
 		content.add(pratica2);
 		content.add(pratica3);
@@ -313,73 +295,58 @@ public class WS_UsciteTest {
 		content.add(pratica5);
 		lavorazioneContabilePratica_InDTO.setContent(content);
 		LavorazioneContabile_OutDTO output = gestionaleWS.lavorazioneContabilePratiche(lavorazioneContabilePratica_InDTO);
-		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);		
+		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
+
 	@Test
-	public void testAggiornaSemaforiAnagrafica(){
-		
+	public void testAggiornaSemaforiAnagrafica() {
 		AggiornaSemaforiAnagrafica_InDTO aggiornaSemaforiAnagrafica_InDTO = new AggiornaSemaforiAnagrafica_InDTO();
-		
 		List<SettoreAttivitaDTO> content = new ArrayList<SettoreAttivitaDTO>();
-		
 		SettoreAttivitaDTO settore1 = new SettoreAttivitaDTO();
 		settore1.setId(1074);
-		settore1.setStatoAntimafia(StatoAntimafia.CERTIFICATO_VALIDO );
+		settore1.setStatoAntimafia(StatoAntimafia.CERTIFICATO_VALIDO);
 		settore1.setUnbundling(Unbundling.SBLOCCATA);
 		content.add(settore1);
 		SettoreAttivitaDTO settore2 = new SettoreAttivitaDTO();
 		settore2.setId(173);
-		settore2.setStatoAntimafia(StatoAntimafia.ATTESA_DOCUMENTAZIONE );
-
+		settore2.setStatoAntimafia(StatoAntimafia.ATTESA_DOCUMENTAZIONE);
 		settore2.setUnbundling(Unbundling.SBLOCCATA);
 		content.add(settore2);
-		aggiornaSemaforiAnagrafica_InDTO.setContent(content );
-		
+		aggiornaSemaforiAnagrafica_InDTO.setContent(content);
 		AggiornaSemaforiAnagrafica_OutDTO output = usciteWS.aggiornaSemaforiAnagrafica(aggiornaSemaforiAnagrafica_InDTO);
-		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);		
-
+		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
+
 	@Test
-	public void testAssociaPraticheANota(){
-		
+	public void testAssociaPraticheANota() {
 		AssociaPraticheANota_InDTO inDTO = new AssociaPraticheANota_InDTO();
 		inDTO.setUsername("pippo");
 		inDTO.setIdNota(BigInteger.valueOf(585));
 		List<DettaglioPraticaErogazioneDTO> content = new ArrayList<DettaglioPraticaErogazioneDTO>();
 		DettaglioPraticaErogazioneDTO praticaDTO = new DettaglioPraticaErogazioneDTO();
 		praticaDTO.setAnno(2014);
-		//praticaDTO.set
-		//content.add(praticaDTO );
-		inDTO.setContent(content );
-		
+		// praticaDTO.set
+		// content.add(praticaDTO );
+		inDTO.setContent(content);
 		AssociaPraticheANota_OutDTO output = gestionaleWS.associaPraticheANota(inDTO);
-		
-		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);		
-		
+		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
+
 	@Test
-	public void testDissociaPraticheDaNota(){
-		
+	public void testDissociaPraticheDaNota() {
 	}
-	
+
 	@Test
-	public void testGetTipiPeriodo(){
+	public void testGetTipiPeriodo() {
 		GetTipiPeriodo_InDTO getTipiPeriodo_InDTO = new GetTipiPeriodo_InDTO();
 		GetTipiPeriodo_OutDTO output = gestionaleWS.getTipiPeriodo(getTipiPeriodo_InDTO);
-		
-		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);		
-
+		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
-	
+
 	@Test
-	public void testGetStatiLegali(){
+	public void testGetStatiLegali() {
 		GetStatiLegali_InDTO getStatiLegali_InDTO = new GetStatiLegali_InDTO();
 		GetStatiLegali_OutDTO output = gestionaleWS.getStatiLegali(getStatiLegali_InDTO);
-		
-		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);		
-
+		Assert.assertTrue(output.getEsito() == Esito.SUCCESS || output.getEsito() == Esito.APPLICATION_ERROR);
 	}
 }

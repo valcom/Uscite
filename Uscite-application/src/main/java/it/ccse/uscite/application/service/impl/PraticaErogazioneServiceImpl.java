@@ -75,7 +75,7 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 	@Override
 	@Transactional(readOnly = true)
 	public PraticaErogazione getById(BigInteger id) {
-		return praticaErogazioneRepository.findOne(id);
+		return praticaErogazioneRepository.getOne(id);
 	}
 
 	@Override
@@ -103,9 +103,9 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 		Page<PraticaErogazione> pratiche = null;
 		Pageable pageable = filter.getPageable();
 		if (filter.getErogabile() == null) {
-			pratiche = praticaErogazioneRepository.findAll(filter.getSpecification(), pageable);
+			pratiche = praticaErogazioneRepository.findAll(filter, pageable);
 		} else {
-			List<PraticaErogazione> listaPraticheErogabili = praticaErogazioneRepository.findAll(filter.getSpecification()).stream().filter(p -> p.isErogabile().equals(filter.getErogabile())).collect(Collectors.toList());
+			List<PraticaErogazione> listaPraticheErogabili = praticaErogazioneRepository.findAll(filter).stream().filter(p -> p.isErogabile().equals(filter.getErogabile())).collect(Collectors.toList());
 			pratiche = new PageImpl<PraticaErogazione>(listaPraticheErogabili, pageable, listaPraticheErogabili.size());
 		}
 		return pratiche;
@@ -136,7 +136,7 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 	@Override
 	public ProcessoErogazione associaPraticheANota(List<PraticaErogazione> pratiche, ProcessoErogazione processo) {
 		BigInteger idProcesso = processo.getId();
-		processo = processoErogazioneRepository.findOne(idProcesso);
+		processo = processoErogazioneRepository.getOne(idProcesso);
 		if (processo == null) {
 			throw new ApplicationException("error.nota.notFound.associazionePraticaNota");
 		}
@@ -166,7 +166,7 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 					pratica.setStatoLegale(praticaEsistente.getStatoLegale());
 				}
 			}
-			praticaErogazioneRepository.save(pratiche);
+			praticaErogazioneRepository.saveAll(pratiche);
 		}
 		return processo;
 	}
@@ -175,17 +175,17 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 	public void dissociaPraticheDaNota(List<PraticaErogazione> pratiche) {
 		int nPratiche = pratiche.size();
 		List<BigInteger> ids = pratiche.stream().map(PraticaErogazione::getIdPraticaErogazione).collect(Collectors.toList());
-		pratiche = praticaErogazioneRepository.findAll(ids);
-		if (pratiche == null || pratiche.size() < nPratiche) {
+		List<PraticaErogazione> praticheDaDissociare = praticaErogazioneRepository.findAllById(ids);
+		if (praticheDaDissociare == null || praticheDaDissociare.size() < nPratiche) {
 			throw new ApplicationException("error.pratica.notFound.dissociazionePraticaNota");
 		}
-		pratiche.parallelStream().forEach(PraticaErogazione::dissociaDaNota);
-		delete(pratiche);
+		praticheDaDissociare.forEach(PraticaErogazione::dissociaDaNota);
+		delete(praticheDaDissociare);
 	}
 
 	@Override
-	public void delete(List<PraticaErogazione> pratiche) {
-		praticaErogazioneRepository.delete(pratiche);
+	public void delete(Iterable<PraticaErogazione> pratiche) {
+		praticaErogazioneRepository.deleteAll(pratiche);
 	}
 
 	@Override
@@ -202,9 +202,10 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 	public LavorazioneContabile lavorazioneContabile(List<PraticaErogazione> pratiche) {
 		LavorazioneContabile lavorazioneContabile = new LavorazioneContabile();
 		List<BigInteger> ids = pratiche.stream().map(PraticaErogazione::getIdPraticaErogazione).collect(Collectors.toList());
-		pratiche = praticaErogazioneRepository.findAll(ids);
-		praticaErogazioneRepository.save(pratiche);
-		processoErogazioneRepository.save(lavorazioneContabile.getProcessiLavorati());
+		List<PraticaErogazione> praticheDaLavorare = praticaErogazioneRepository.findAllById(ids);
+		lavorazioneContabile.eseguiLavorazione(praticheDaLavorare);
+		praticaErogazioneRepository.saveAll(praticheDaLavorare);
+		processoErogazioneRepository.saveAll(lavorazioneContabile.getProcessiLavorati());
 		return lavorazioneContabile;
 	}
 
@@ -222,7 +223,7 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 		if (!praticheErogabili.isEmpty()) {
 			mailService.sendMailSbloccoAnagraficaPratiche(praticheErogabili);
 		}
-		return praticaErogazioneRepository.save(praticheDaAggiornare);
+		return praticaErogazioneRepository.saveAll(praticheDaAggiornare);
 	}
 
 	@Override
@@ -236,10 +237,10 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 	public void autorizzaComitato(List<PraticaErogazione> pratiche) {
 		if (pratiche != null && !pratiche.isEmpty()) {
 			List<BigInteger> ids = pratiche.parallelStream().map(PraticaErogazione::getId).collect(Collectors.toList());
-			pratiche = praticaErogazioneRepository.findAll(ids);
+			pratiche = praticaErogazioneRepository.findAllById(ids);
 			StatoComitato statoComitato = statoComitatoService.getStatoAutorizzazioneComitato();
 			pratiche.stream().forEach(p -> p.aggiornaAutorizzazioneComitato(statoComitato));
-			praticaErogazioneRepository.save(pratiche);
+			praticaErogazioneRepository.saveAll(pratiche);
 			mailService.sendMailAutorizzazioneComitato(pratiche);
 		}
 	}
@@ -248,10 +249,10 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 	public void rifiutaAutorizzazioneComitato(List<PraticaErogazione> pratiche) {
 		if (pratiche != null && !pratiche.isEmpty()) {
 			List<BigInteger> ids = pratiche.stream().map(PraticaErogazione::getIdPraticaErogazione).collect(Collectors.toList());
-			pratiche = praticaErogazioneRepository.findAll(ids);
+			pratiche = praticaErogazioneRepository.findAllById(ids);
 			StatoComitato statoComitato = statoComitatoService.getStatoRifiutoComitato();
 			pratiche.stream().forEach(p -> p.aggiornaAutorizzazioneComitato(statoComitato));
-			praticaErogazioneRepository.save(pratiche);
+			praticaErogazioneRepository.saveAll(pratiche);
 		}
 	}
 
@@ -279,7 +280,7 @@ public class PraticaErogazioneServiceImpl implements PraticaErogazioneService {
 				}
 			}
 		}
-		return praticaErogazioneRepository.save(praticheModificate);
+		return praticaErogazioneRepository.saveAll(praticheModificate);
 	}
 
 	@Override

@@ -8,12 +8,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>uscite-domain</artifactId>
 	<properties>
+		<javax.persistence.version>2.2</javax.persistence.version>
 		<!-- Spring -->
-		<spring-data-jpa.version>1.10.4.RELEASE</spring-data-jpa.version>
+		<spring-data-version>2.0.7.RELEASE</spring-data-version>
 		<!-- Hibernate / JPA -->
-		<hibernate.version>5.1.2.Final</hibernate.version>
-		<querydsl.version>4.1.2</querydsl.version>
-		<ehcache.version>2.6.11</ehcache.version>
+		<hibernate.version>5.2.17.Final</hibernate.version>
+		<ehcache.version>2.10.5</ehcache.version>
 
 		<commons-lang.version>2.2</commons-lang.version>
 		<commons-lang3.version>3.4</commons-lang3.version>
@@ -36,11 +36,28 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>javax.persistence</groupId>
+		    <artifactId>javax.persistence-api</artifactId>
+		    <version>${javax.persistence.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>${spring-data-version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>${spring-data-jpa.version}</version>
+			<version>${spring-data-version}</version>
 		</dependency>
 
 		<dependency>
@@ -53,9 +70,9 @@
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
+			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
-			<scope>compile</scope>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -69,14 +86,14 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>${hibernate.version}</version>
-			<scope>compile</scope>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache-core</artifactId>
+			<artifactId>ehcache</artifactId>
 			<version>${ehcache.version}</version>
-			<scope>compile</scope>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>

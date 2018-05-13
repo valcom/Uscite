@@ -20,15 +20,14 @@ import it.ccse.uscite.domain.OrdineDelGiorno;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations =  {"classpath:/spring/application-context.xml"} )
+@ContextConfiguration(locations = { "classpath:/spring/application-context.xml", "classpath:/spring/infrastructure-context.xml" })
 @Transactional
 public class OrdineDelGiornoServiceTest {
-
 	@Autowired
 	private OrdineDelGiornoService ordineDelGiornoService;
-	
+
 	@Test
-	public void testLoadByID(){
+	public void testLoadByID() {
 		BigInteger id = BigInteger.valueOf(33);
 		OrdineDelGiorno o = ordineDelGiornoService.getOrdineDelGiorno(id);
 		Assert.notNull(o);

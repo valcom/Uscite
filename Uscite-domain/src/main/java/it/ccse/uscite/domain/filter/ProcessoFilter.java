@@ -4,10 +4,13 @@
 package it.ccse.uscite.domain.filter;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.domain.Specifications;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import it.ccse.uscite.domain.OrdineDelGiorno;
 import it.ccse.uscite.domain.ProcessoErogazione;
@@ -20,33 +23,42 @@ import it.ccse.uscite.domain.ProcessoErogazione_;
  *
  */
 public class ProcessoFilter extends PageableFilter<ProcessoErogazione> {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2509416689556743068L;
 	private String owner;
-	
 	private OrdineDelGiorno ordineDelGiorno;
-	
 	private Integer numeroNota;
-	
 	private BigInteger idNota;
-	
 	private List<StatoLavorazioneContabile> statiLavorazioneContabile;
-	
-	private List<StatoProcesso> stati; 
-	
+	private List<StatoProcesso> stati;
+
 	@Override
-	public Specification<ProcessoErogazione> getSpecification() {
-		Specification<ProcessoErogazione> hasId = (root,cq,cb)-> idNota !=null ? cb.equal(root.get(ProcessoErogazione_.id),idNota):null;
-		Specification<ProcessoErogazione> hasNumeroNota = (root,cq,cb)->  numeroNota !=null ? cb.equal(root.get(ProcessoErogazione_.numeroNota),numeroNota):null;
-		Specification<ProcessoErogazione> hasOrdineDelGiorno = (root,cq,cb)->  ordineDelGiorno !=null ? cb.equal(root.get(ProcessoErogazione_.ordineDelGiorno),ordineDelGiorno):null;
-		Specification<ProcessoErogazione> hasOwner = (root,cq,cb)-> owner !=null ? cb.equal(root.get(ProcessoErogazione_.owner),owner):null;
-		Specification<ProcessoErogazione> hasStato = (root,cq,cb)->  stati !=null ? root.get(ProcessoErogazione_.stato).in(stati):null;
-		Specification<ProcessoErogazione> hasStatoLavorazioneContabile =  (root,cq,cb)-> statiLavorazioneContabile !=null ? root.get(ProcessoErogazione_.lavorazioneContabile).in(statiLavorazioneContabile):null;
-		return Specifications.where(hasId).
-				and(hasNumeroNota).
-				and(hasOrdineDelGiorno).
-				and(hasOwner).
-				and(hasStato).
-				and(hasStatoLavorazioneContabile);
+	public Predicate toPredicate(Root<ProcessoErogazione> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		if (idNota != null) {
+			predicates.add(cb.equal(root.get(ProcessoErogazione_.id), idNota));
+		}
+		if (numeroNota != null) {
+			predicates.add(cb.equal(root.get(ProcessoErogazione_.numeroNota), numeroNota));
+		}
+		if (ordineDelGiorno != null) {
+			predicates.add(cb.equal(root.get(ProcessoErogazione_.ordineDelGiorno), ordineDelGiorno));
+		}
+		if (owner != null) {
+			predicates.add(cb.equal(root.get(ProcessoErogazione_.owner), owner));
+		}
+		if (idNota != null) {
+			predicates.add(cb.equal(root.get(ProcessoErogazione_.id), idNota));
+		}
+		if (stati != null) {
+			predicates.add(root.get(ProcessoErogazione_.stato).in(stati));
+		}
+		if (statiLavorazioneContabile != null) {
+			predicates.add(root.get(ProcessoErogazione_.lavorazioneContabile).in(statiLavorazioneContabile));
+		}
+		return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 	}
 
 	/**
@@ -57,7 +69,8 @@ public class ProcessoFilter extends PageableFilter<ProcessoErogazione> {
 	}
 
 	/**
-	 * @param owner the owner to set
+	 * @param owner
+	 *            the owner to set
 	 */
 	public void setOwner(String owner) {
 		this.owner = owner;
@@ -71,7 +84,8 @@ public class ProcessoFilter extends PageableFilter<ProcessoErogazione> {
 	}
 
 	/**
-	 * @param ordineDelGiorno the ordineDelGiorno to set
+	 * @param ordineDelGiorno
+	 *            the ordineDelGiorno to set
 	 */
 	public void setOrdineDelGiorno(OrdineDelGiorno ordineDelGiorno) {
 		this.ordineDelGiorno = ordineDelGiorno;
@@ -85,22 +99,21 @@ public class ProcessoFilter extends PageableFilter<ProcessoErogazione> {
 	}
 
 	/**
-	 * @param numeroNota the numeroNota to set
+	 * @param numeroNota
+	 *            the numeroNota to set
 	 */
 	public void setNumeroNota(Integer numeroNota) {
 		this.numeroNota = numeroNota;
 	}
 
-	
-	
-	public void setIdOrdineDelGiorno(BigInteger idOrdineDelGiorno){
-		if(idOrdineDelGiorno!=null){
+	public void setIdOrdineDelGiorno(BigInteger idOrdineDelGiorno) {
+		if (idOrdineDelGiorno != null) {
 			ordineDelGiorno = new OrdineDelGiorno();
 			ordineDelGiorno.setId(idOrdineDelGiorno);
 		}
 	}
-	
-	public void setIdComitato(BigInteger idOrdineDelGiorno){
+
+	public void setIdComitato(BigInteger idOrdineDelGiorno) {
 		setIdOrdineDelGiorno(idOrdineDelGiorno);
 	}
 
@@ -112,7 +125,8 @@ public class ProcessoFilter extends PageableFilter<ProcessoErogazione> {
 	}
 
 	/**
-	 * @param idNota the idNota to set
+	 * @param idNota
+	 *            the idNota to set
 	 */
 	public void setIdNota(BigInteger idNota) {
 		this.idNota = idNota;
@@ -126,7 +140,8 @@ public class ProcessoFilter extends PageableFilter<ProcessoErogazione> {
 	}
 
 	/**
-	 * @param statiLavorazioneContabile the statiLavorazioneContabile to set
+	 * @param statiLavorazioneContabile
+	 *            the statiLavorazioneContabile to set
 	 */
 	public void setStatiLavorazioneContabile(List<StatoLavorazioneContabile> statiLavorazioneContabile) {
 		this.statiLavorazioneContabile = statiLavorazioneContabile;
@@ -140,10 +155,10 @@ public class ProcessoFilter extends PageableFilter<ProcessoErogazione> {
 	}
 
 	/**
-	 * @param stati the stati to set
+	 * @param stati
+	 *            the stati to set
 	 */
 	public void setStati(List<StatoProcesso> stati) {
 		this.stati = stati;
 	}
-
 }

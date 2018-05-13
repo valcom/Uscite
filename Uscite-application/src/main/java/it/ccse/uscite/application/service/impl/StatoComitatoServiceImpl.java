@@ -17,47 +17,62 @@ import it.ccse.uscite.domain.repository.StatoComitatoRepository;
  */
 @Service
 public class StatoComitatoServiceImpl implements StatoComitatoService {
-
 	@Autowired
 	private StatoComitatoRepository repository;
-	/* (non-Javadoc)
-	 * @see it.ccse.uscite.application.service.StatoComitatoService#getStatoComitatoIniziale()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see it.ccse.uscite.application.service.StatoComitatoService#
+	 * getStatoComitatoIniziale()
 	 */
 	@Override
 	public StatoComitato getStatoComitatoIniziale() {
-		return repository.findOne(AutorizzazioneComitato.UNDEFINED.name());
+		return repository.getOne(AutorizzazioneComitato.UNDEFINED.name());
 	}
 
-	/* (non-Javadoc)
-	 * @see it.ccse.uscite.application.service.StatoComitatoService#findByAutorizzazioneComitato(it.ccse.uscite.domain.StatoComitato.AutorizzazioneComitato)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see it.ccse.uscite.application.service.StatoComitatoService#
+	 * findByAutorizzazioneComitato(it.ccse.uscite.domain.StatoComitato.
+	 * AutorizzazioneComitato)
 	 */
 	@Override
 	public StatoComitato findByAutorizzazioneComitato(AutorizzazioneComitato aut) {
-		return repository.findOne(aut.name());
+		return repository.getOne(aut.name());
 	}
 
-	/* (non-Javadoc)
-	 * @see it.ccse.uscite.application.service.StatoComitatoService#getStatoAutorizzazioneComitato()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see it.ccse.uscite.application.service.StatoComitatoService#
+	 * getStatoAutorizzazioneComitato()
 	 */
 	@Override
 	public StatoComitato getStatoAutorizzazioneComitato() {
-		return repository.findOne(AutorizzazioneComitato.AUTORIZZATO.name());
+		return repository.getOne(AutorizzazioneComitato.AUTORIZZATO.name());
 	}
 
-	/* (non-Javadoc)
-	 * @see it.ccse.uscite.application.service.StatoComitatoService#getStatoRinvioComitato()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see it.ccse.uscite.application.service.StatoComitatoService#
+	 * getStatoRinvioComitato()
 	 */
 	@Override
 	public StatoComitato getStatoRinvioComitato() {
-		return repository.findOne(AutorizzazioneComitato.RINVIATA.name());
+		return repository.getOne(AutorizzazioneComitato.RINVIATA.name());
 	}
 
-	/* (non-Javadoc)
-	 * @see it.ccse.uscite.application.service.StatoComitatoService#getStatoRifiutoComitato()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see it.ccse.uscite.application.service.StatoComitatoService#
+	 * getStatoRifiutoComitato()
 	 */
 	@Override
 	public StatoComitato getStatoRifiutoComitato() {
-		return repository.findOne(AutorizzazioneComitato.NON_AUTORIZZATO.name());
+		return repository.getOne(AutorizzazioneComitato.NON_AUTORIZZATO.name());
 	}
-
 }

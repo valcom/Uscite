@@ -27,22 +27,18 @@ import it.ccse.uscite.domain.repository.ProcessoErogazioneRepository;
  *
  */
 @Service
-@Transactional(readOnly=false)
-public class ProcessoErogazioneServiceImpl implements ProcessoErogazioneService{
-
+@Transactional(readOnly = false)
+public class ProcessoErogazioneServiceImpl implements ProcessoErogazioneService {
 	@Autowired
 	private ProcessoErogazioneRepository processoErogazioneRepository;
-	
 	@Autowired
 	private OrdineDelGiornoRepository ordineDelGiornoRepository;
-	
 	@Autowired
 	private PraticaErogazioneRepository praticaErogazioneRepository;
-	
+
 	@Override
-	public ProcessoErogazione createProcessoErogazione(
-			ProcessoErogazione processo) {
-		OrdineDelGiorno ordineDelGiorno = ordineDelGiornoRepository.findOne(processo.getOrdineDelGiorno().getId());
+	public ProcessoErogazione createProcessoErogazione(ProcessoErogazione processo) {
+		OrdineDelGiorno ordineDelGiorno = ordineDelGiornoRepository.getOne(processo.getOrdineDelGiorno().getId());
 		ordineDelGiorno.aggiungiProcessoErogazione(processo);
 		return processoErogazioneRepository.save(processo);
 	}
@@ -54,87 +50,83 @@ public class ProcessoErogazioneServiceImpl implements ProcessoErogazioneService{
 	}
 
 	@Override
-	public ProcessoErogazione aggiornaProcessoErogazione(
-			ProcessoErogazione processo) {
+	public ProcessoErogazione aggiornaProcessoErogazione(ProcessoErogazione processo) {
 		BigInteger idProcesso = processo.getId();
-	    Integer numeroNota = processo.getNumeroNota();
+		Integer numeroNota = processo.getNumeroNota();
 		String causale = processo.getCausale();
 		String owner = processo.getOwner();
-		processo = processoErogazioneRepository.findOne(idProcesso);
-		processo.aggiorna(numeroNota,causale,owner);
+		processo = processoErogazioneRepository.getOne(idProcesso);
+		processo.aggiorna(numeroNota, causale, owner);
 		return processoErogazioneRepository.save(processo);
 	}
 
 	@Override
 	public ProcessoErogazione apriProcessoErogazione(ProcessoErogazione processo) {
-		processo = processoErogazioneRepository.findOne(processo.getId());
+		processo = processoErogazioneRepository.getOne(processo.getId());
 		processo.apri();
 		return processoErogazioneRepository.save(processo);
 	}
 
 	@Override
-	public ProcessoErogazione chiudiProcessoErogazione(
-			ProcessoErogazione processo) {
-		processo = processoErogazioneRepository.findOne(processo.getId());
+	public ProcessoErogazione chiudiProcessoErogazione(ProcessoErogazione processo) {
+		processo = processoErogazioneRepository.getOne(processo.getId());
 		processo.chiudi();
 		return processoErogazioneRepository.save(processo);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
-	public Set<ProcessoErogazione> getProcessiErogazioneByOrdineDelGiorno(
-			OrdineDelGiorno ordine) {
+	@Transactional(readOnly = true)
+	public Set<ProcessoErogazione> getProcessiErogazioneByOrdineDelGiorno(OrdineDelGiorno ordine) {
 		return processoErogazioneRepository.findByOrdineDelGiorno(ordine);
 	}
 
 	@Override
-	public ProcessoErogazione rinviaProcessoErogazione(ProcessoErogazione processo,OrdineDelGiorno ordine) {
+	public ProcessoErogazione rinviaProcessoErogazione(ProcessoErogazione processo, OrdineDelGiorno ordine) {
 		BigInteger idProcesso = processo.getId();
 		BigInteger idOrdine = ordine.getId();
-		processo = processoErogazioneRepository.findOne(idProcesso);
-		ordine = ordineDelGiornoRepository.findOne(idOrdine);
-		if(processo == null){
-			throw new ApplicationException("Processo non trovato per id "+idProcesso);
+		processo = processoErogazioneRepository.getOne(idProcesso);
+		ordine = ordineDelGiornoRepository.getOne(idOrdine);
+		if (processo == null) {
+			throw new ApplicationException("Processo non trovato per id " + idProcesso);
 		}
-		if(ordine == null){
-			throw new ApplicationException("Ordine non trovato per id "+idOrdine);
+		if (ordine == null) {
+			throw new ApplicationException("Ordine non trovato per id " + idOrdine);
 		}
 		processo.rinvia(ordine);
 		return processoErogazioneRepository.save(processo);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Set<ProcessoErogazione> getProcessiErogazioneInLavorazione(OrdineDelGiorno ordine) {
-		return processoErogazioneRepository.findByOrdineDelGiornoAndLavorazioneContabileIn(ordine,StatoLavorazioneContabile.LAVORABILE,StatoLavorazioneContabile.IN_INSERIMENTO);
+		return processoErogazioneRepository.findByOrdineDelGiornoAndLavorazioneContabileIn(ordine, StatoLavorazioneContabile.LAVORABILE, StatoLavorazioneContabile.IN_INSERIMENTO);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Set<ProcessoErogazione> getProcessiErogazioneLavorati(OrdineDelGiorno ordine) {
-		return processoErogazioneRepository.findByOrdineDelGiornoAndLavorazioneContabileIn(ordine,StatoLavorazioneContabile.LAVORATO);
+		return processoErogazioneRepository.findByOrdineDelGiornoAndLavorazioneContabileIn(ordine, StatoLavorazioneContabile.LAVORATO);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Set<ProcessoErogazione> getProcessiErogazioneLavorabili(OrdineDelGiorno ordine) {
-		return processoErogazioneRepository.findByOrdineDelGiornoAndLavorazioneContabileIn(ordine,StatoLavorazioneContabile.LAVORABILE);
+		return processoErogazioneRepository.findByOrdineDelGiornoAndLavorazioneContabileIn(ordine, StatoLavorazioneContabile.LAVORABILE);
 	}
-	
+
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Page<ProcessoErogazione> searchProcessiErogazione(ProcessoFilter req) {
-		return 	processoErogazioneRepository.findAll(req.getSpecification(),req.getPageable());
+		return processoErogazioneRepository.findAll(req, req.getPageable());
 	}
 
 	@Override
 	public LavorazioneContabile lavorazioneContabile(ProcessoErogazione processo) {
-		processo = processoErogazioneRepository.findOne(processo.getId());
+		processo = processoErogazioneRepository.getOne(processo.getId());
 		LavorazioneContabile lavorazioneContabile = new LavorazioneContabile();
 		lavorazioneContabile.eseguiLavorazione(processo);
-		praticaErogazioneRepository.save(lavorazioneContabile.getPraticheLavorate());
-		processoErogazioneRepository.save(lavorazioneContabile.getProcessiLavorati());
+		praticaErogazioneRepository.saveAll(lavorazioneContabile.getPraticheLavorate());
+		processoErogazioneRepository.saveAll(lavorazioneContabile.getProcessiLavorati());
 		return lavorazioneContabile;
 	}
-
 }

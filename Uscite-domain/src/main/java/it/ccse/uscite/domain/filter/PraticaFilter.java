@@ -5,27 +5,40 @@ package it.ccse.uscite.domain.filter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.domain.Specifications;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.springframework.util.CollectionUtils;
 
+import it.ccse.uscite.domain.OrdineDelGiorno;
 import it.ccse.uscite.domain.OrdineDelGiorno_;
 import it.ccse.uscite.domain.PraticaErogazione;
 import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
 import it.ccse.uscite.domain.PraticaErogazione_;
+import it.ccse.uscite.domain.ProcessoErogazione;
 import it.ccse.uscite.domain.ProcessoErogazione_;
+import it.ccse.uscite.domain.SettoreAttivita;
 import it.ccse.uscite.domain.SettoreAttivita_;
+import it.ccse.uscite.domain.StatoComitato;
 import it.ccse.uscite.domain.StatoComitato.AutorizzazioneComitato;
 import it.ccse.uscite.domain.StatoComitato_;
+import it.ccse.uscite.domain.StatoContabile;
 import it.ccse.uscite.domain.StatoContabile.AutorizzazioneContabile;
 import it.ccse.uscite.domain.StatoContabile_;
+import it.ccse.uscite.domain.StatoFideiussione;
 import it.ccse.uscite.domain.StatoFideiussione.FideiussionePratica;
 import it.ccse.uscite.domain.StatoFideiussione_;
+import it.ccse.uscite.domain.StatoLegale;
 import it.ccse.uscite.domain.StatoLegale.AutorizzazioneLegale;
 import it.ccse.uscite.domain.StatoLegale_;
+import it.ccse.uscite.domain.StatoUnbundling;
 import it.ccse.uscite.domain.StatoUnbundling.UnbundlingPratica;
 import it.ccse.uscite.domain.StatoUnbundling_;
 import it.ccse.uscite.domain.TipoPeriodo;
@@ -34,64 +47,39 @@ import it.ccse.uscite.domain.TipoPeriodo;
  * @author vcompagnone
  *
  */
-public class PraticaFilter extends PageableFilter<PraticaErogazione>{
-	
+public class PraticaFilter extends PageableFilter<PraticaErogazione> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5871703177906919843L;
 	private List<BigInteger> listaIdSettoriAttivita;
-	
 	private Date dataComitatoDa;
-	
 	private Date dataComitatoA;
-	
 	private Integer numeroNota;
-	
 	private BigDecimal importoDa;
-	
 	private BigDecimal importoA;
-	
 	private BigInteger idComponenteTariffaria;
-	
 	private BigInteger idPosizioneFinanziaria;
-	
 	private List<AutorizzazioneLegale> listaValoriAutorizzazioneLegale;
-	
 	private AutorizzazioneComitato autorizzazioneComitato;
-	
-	private AutorizzazioneContabile autorizzazioneContabile ;
-	
+	private AutorizzazioneContabile autorizzazioneContabile;
 	private Date dataScadenzaDa;
-	
 	private Date dataScadenzaA;
-	
 	private Date dataInteressiDa;
-	
 	private Date dataInteressiA;
-	
 	private List<StatoPratica> statiPratica;
-	
 	private Integer annoDa;
-	
 	private Integer annoA;
-	
 	private TipoPeriodo tipoPeriodo;
-	
 	private Integer periodo;
-	
 	private Boolean erogabile;
-	
 	private FideiussionePratica fideiussione;
-	
 	private UnbundlingPratica unbundling;
- 
 	private BigInteger idProcessoErogazione;
-	
 	private List<String> codiciPratica;
-	
 	private Date dataFideiussioneDa;
-	
 	private Date dataFideiussioneA;
 
-	
-	
 	/**
 	 * @return the dataComitatoDa
 	 */
@@ -100,7 +88,8 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param dataComitatoDa the dataComitatoDa to set
+	 * @param dataComitatoDa
+	 *            the dataComitatoDa to set
 	 */
 	public void setDataComitatoDa(Date dataComitatoDa) {
 		this.dataComitatoDa = dataComitatoDa;
@@ -114,12 +103,12 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param dataComitatoA the dataComitatoA to set
+	 * @param dataComitatoA
+	 *            the dataComitatoA to set
 	 */
 	public void setDataComitatoA(Date dataComitatoA) {
 		this.dataComitatoA = dataComitatoA;
 	}
-
 
 	/**
 	 * @return the numeroNota
@@ -129,12 +118,12 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param numeroNota the numeroNota to set
+	 * @param numeroNota
+	 *            the numeroNota to set
 	 */
 	public void setNumeroNota(Integer numeroNota) {
 		this.numeroNota = numeroNota;
 	}
-
 
 	/**
 	 * @return the importoDa
@@ -143,14 +132,13 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 		return importoDa;
 	}
 
-
 	/**
-	 * @param importoDa the importoDa to set
+	 * @param importoDa
+	 *            the importoDa to set
 	 */
 	public void setImportoDa(BigDecimal importoDa) {
 		this.importoDa = importoDa;
 	}
-
 
 	/**
 	 * @return the importoA
@@ -159,14 +147,13 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 		return importoA;
 	}
 
-
 	/**
-	 * @param importoA the importoA to set
+	 * @param importoA
+	 *            the importoA to set
 	 */
 	public void setImportoA(BigDecimal importoA) {
 		this.importoA = importoA;
 	}
-
 
 	/**
 	 * @return the idComponenteTariffaria
@@ -176,7 +163,8 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param idComponenteTariffaria the idComponenteTariffaria to set
+	 * @param idComponenteTariffaria
+	 *            the idComponenteTariffaria to set
 	 */
 	public void setIdComponenteTariffaria(BigInteger idComponenteTariffaria) {
 		this.idComponenteTariffaria = idComponenteTariffaria;
@@ -190,7 +178,8 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param idPosizioneFinanziaria the idPosizioneFinanziaria to set
+	 * @param idPosizioneFinanziaria
+	 *            the idPosizioneFinanziaria to set
 	 */
 	public void setIdPosizioneFinanziaria(BigInteger idPosizioneFinanziaria) {
 		this.idPosizioneFinanziaria = idPosizioneFinanziaria;
@@ -204,7 +193,8 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param statiPratica the statiPratica to set
+	 * @param statiPratica
+	 *            the statiPratica to set
 	 */
 	public void setStatiPratica(List<StatoPratica> statiPratica) {
 		this.statiPratica = statiPratica;
@@ -218,7 +208,8 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param annoDa the annoDa to set
+	 * @param annoDa
+	 *            the annoDa to set
 	 */
 	public void setAnnoDa(Integer annoDa) {
 		this.annoDa = annoDa;
@@ -232,7 +223,8 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param annoA the annoA to set
+	 * @param annoA
+	 *            the annoA to set
 	 */
 	public void setAnnoA(Integer annoA) {
 		this.annoA = annoA;
@@ -246,7 +238,8 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param tipoPeriodo the tipoPeriodo to set
+	 * @param tipoPeriodo
+	 *            the tipoPeriodo to set
 	 */
 	public void setTipoPeriodo(TipoPeriodo tipoPeriodo) {
 		this.tipoPeriodo = tipoPeriodo;
@@ -260,7 +253,8 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param periodo the periodo to set
+	 * @param periodo
+	 *            the periodo to set
 	 */
 	public void setPeriodo(Integer periodo) {
 		this.periodo = periodo;
@@ -274,86 +268,123 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param erogabile the erogabile to set
+	 * @param erogabile
+	 *            the erogabile to set
 	 */
 	public void setErogabile(Boolean erogabile) {
 		this.erogabile = erogabile;
 	}
-	
-	
-	
-	public void setIdNota(BigInteger idNota){
+
+	public void setIdNota(BigInteger idNota) {
 		idProcessoErogazione = idNota;
 	}
-	
-	public void setListaIdSettoriAttivita(List<BigInteger> listaIdSettoriAttivita){
-		this.listaIdSettoriAttivita=listaIdSettoriAttivita;
+
+	public void setListaIdSettoriAttivita(List<BigInteger> listaIdSettoriAttivita) {
+		this.listaIdSettoriAttivita = listaIdSettoriAttivita;
 	}
-	
-	public List<BigInteger> getListaIdSettoriAttivita(){
+
+	public List<BigInteger> getListaIdSettoriAttivita() {
 		return listaIdSettoriAttivita;
 	}
 
-
 	@Override
-	public Specification<PraticaErogazione> getSpecification() {
-		Specification<PraticaErogazione> hasAnnoA =  (root,cq,cb)->  annoA !=null ? cb.le(root.get(PraticaErogazione_.anno),annoA):null;
-		Specification<PraticaErogazione> hasAnnoDa = (root,cq,cb) ->  annoDa!=null ? cb.ge(root.get(PraticaErogazione_.anno),annoDa):null;
-		Specification<PraticaErogazione> hasAutorizzazioneComitato = (root,cq,cb)-> autorizzazioneComitato !=null ? cb.equal(root.get(PraticaErogazione_.statoComitato).get(StatoComitato_.valore),autorizzazioneComitato):null;
-		Specification<PraticaErogazione> hasAutorizzazioneContabile =  (root,cq,cb)-> autorizzazioneContabile !=null ? cb.equal(root.get(PraticaErogazione_.statoContabile).get(StatoContabile_.valore),autorizzazioneContabile):null;
-		Specification<PraticaErogazione> hasAutorizzazioneLegale = (root,cq,cb)-> !CollectionUtils.isEmpty(listaValoriAutorizzazioneLegale) ? root.get(PraticaErogazione_.statoLegale).get(StatoLegale_.valore).in(listaValoriAutorizzazioneLegale):null;
-		Specification<PraticaErogazione> hasCodicePratica = (root,cq,cb)->  !CollectionUtils.isEmpty(codiciPratica) ? root.get(PraticaErogazione_.codicePratica).in(codiciPratica):null;
-		Specification<PraticaErogazione> hasComponenteTariffaria = (root,cq,cb)-> idComponenteTariffaria !=null ? cb.equal(root.get(PraticaErogazione_.idComponenteTariffariaAc),idComponenteTariffaria):null;
-		Specification<PraticaErogazione> hasDataComitatoA = (root,cq,cb)-> dataComitatoA!=null ? cb.lessThanOrEqualTo(root.get(PraticaErogazione_.processoErogazione).get(ProcessoErogazione_.ordineDelGiorno).get(OrdineDelGiorno_.dataComitato),dataComitatoA):null;
-		Specification<PraticaErogazione> hasDataFideiussioneA = (root,cq,cb)->  dataFideiussioneA!=null ? cb.lessThanOrEqualTo(root.get(PraticaErogazione_.dataInteressi),dataFideiussioneA):null;
-		Specification<PraticaErogazione> hasDataComitatoDa = (root,cq,cb)-> dataComitatoDa!=null ? cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.processoErogazione).get(ProcessoErogazione_.ordineDelGiorno).get(OrdineDelGiorno_.dataComitato),dataComitatoDa):null;	
-		Specification<PraticaErogazione> hasDataFideiussioneDa = (root,cq,cb)->  dataFideiussioneDa!=null ? cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataFideiussione),dataFideiussioneDa):null;
-		Specification<PraticaErogazione> hasDataInteressiA = (root,cq,cb)->  dataInteressiA!=null ? cb.lessThanOrEqualTo(root.get(PraticaErogazione_.dataInteressi),dataInteressiA):null;
-		Specification<PraticaErogazione> hasDataInteressiDa = (root,cq,cb)->  dataInteressiDa!=null ? cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataInteressi),dataInteressiDa):null;
-		Specification<PraticaErogazione> hasDataScadenzaA = (root,cq,cb)-> dataScadenzaA!=null ? cb.lessThanOrEqualTo(root.get(PraticaErogazione_.dataScadenza),dataScadenzaA):null;
-		Specification<PraticaErogazione> hasDataScadenzaDa = (root,cq,cb)-> dataScadenzaDa!=null ? cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataScadenza),dataScadenzaDa):null;
-		Specification<PraticaErogazione> hasFideiussione = (root,cq,cb)-> fideiussione !=null ? cb.equal(root.get(PraticaErogazione_.statoFideiussione).get(StatoFideiussione_.valore),fideiussione):null;
-		Specification<PraticaErogazione> hasImportoA = (root,cq,cb)-> importoA !=null ? cb.le(root.get(PraticaErogazione_.impegno),importoA):null;
-		Specification<PraticaErogazione> hasImportoDa = (root,cq,cb)-> importoDa!=null ? cb.ge(root.get(PraticaErogazione_.impegno),importoDa):null;
-		Specification<PraticaErogazione> hasNumeroNota = (root,cq,cb)-> numeroNota !=null ? cb.equal(root.get(PraticaErogazione_.processoErogazione).get(ProcessoErogazione_.numeroNota),numeroNota):null;
-		Specification<PraticaErogazione> hasPeriodo =  (root,cq,cb)->  periodo !=null ? cb.equal(root.get(PraticaErogazione_.periodo),periodo):null;
-		Specification<PraticaErogazione> hasPosizioneFinanziaria =  (root,cq,cb)-> idPosizioneFinanziaria !=null ? cb.equal(root.get(PraticaErogazione_.idPosizioneFinanziariaAc),idPosizioneFinanziaria):null;
-		Specification<PraticaErogazione> hasProcessoErogazione = (root,cq,cb)->  idProcessoErogazione !=null ? cb.equal(root.get(PraticaErogazione_.processoErogazione).get(ProcessoErogazione_.id),idProcessoErogazione):null;
-		Specification<PraticaErogazione> hasSettoreAttivita = (root,cq,cb)->!CollectionUtils.isEmpty(listaIdSettoriAttivita) ? root.get(PraticaErogazione_.settoreAttivita).get(SettoreAttivita_.id).in(listaIdSettoriAttivita):null;
-		Specification<PraticaErogazione> hasStatoPratica = (root,cq,cb)->  !CollectionUtils.isEmpty(statiPratica) ? root.get(PraticaErogazione_.lavorazioneContabile).in(statiPratica):null;
-		Specification<PraticaErogazione> hasTipoPeriodo = (root,cq,cb)->  tipoPeriodo !=null ? cb.equal(root.get(PraticaErogazione_.tipoPeriodo),tipoPeriodo):null;
-		Specification<PraticaErogazione> hasUnbundling = (root,cq,cb)->  unbundling !=null ? cb.equal(root.get(PraticaErogazione_.statoUnbundling).get(StatoUnbundling_.valore),unbundling):null;
-	
-		
-		return Specifications.where(hasAnnoA)
-				.and(hasAnnoDa)
-				.and(hasAutorizzazioneComitato)
-				.and(hasAutorizzazioneContabile)
-				.and(hasAutorizzazioneLegale)
-				.and(hasCodicePratica)
-				.and(hasComponenteTariffaria)
-				.and(hasDataComitatoA)
-				.and(hasDataComitatoDa)
-				.and(hasDataFideiussioneA)
-				.and(hasDataFideiussioneDa)
-				.and(hasDataInteressiA)
-				.and(hasDataInteressiDa)
-				.and(hasDataScadenzaA)
-				.and(hasDataScadenzaDa)
-				.and(hasFideiussione)
-				.and(hasImportoA)
-				.and(hasImportoDa)
-				.and(hasNumeroNota)
-				.and(hasPeriodo)
-				.and(hasPosizioneFinanziaria)
-				.and(hasProcessoErogazione)
-				.and(hasSettoreAttivita)
-				.and(hasStatoPratica)
-				.and(hasTipoPeriodo)
-				.and(hasUnbundling);
+	public Predicate toPredicate(Root<PraticaErogazione> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		Join<PraticaErogazione, ProcessoErogazione> joinNota = root.join(PraticaErogazione_.processoErogazione);
+		Join<ProcessoErogazione, OrdineDelGiorno> joinComitato = joinNota.join(ProcessoErogazione_.ordineDelGiorno);
+		root.fetch(PraticaErogazione_.processoErogazione).fetch(ProcessoErogazione_.ordineDelGiorno);
+		root.fetch(PraticaErogazione_.statoComitato);
+		root.fetch(PraticaErogazione_.statoContabile);
+		root.fetch(PraticaErogazione_.statoLegale);
+		root.fetch(PraticaErogazione_.statoFideiussione);
+		root.fetch(PraticaErogazione_.settoreAttivita);
+		root.fetch(PraticaErogazione_.tipoPeriodo);
+		root.fetch(PraticaErogazione_.statoUnbundling);
+		if (annoA != null) {
+			predicates.add(cb.le(root.get(PraticaErogazione_.anno), annoA));
+		}
+		if (annoDa != null) {
+			predicates.add(cb.ge(root.get(PraticaErogazione_.anno), annoDa));
+		}
+		if (autorizzazioneComitato != null) {
+			Join<PraticaErogazione, StatoComitato> joinStatoComitato = root.join(PraticaErogazione_.statoComitato);
+			predicates.add(cb.equal(joinStatoComitato.get(StatoComitato_.valore), autorizzazioneComitato));
+		}
+		if (autorizzazioneContabile != null) {
+			Join<PraticaErogazione, StatoContabile> joinStatoContabile = root.join(PraticaErogazione_.statoContabile);
+			predicates.add(cb.equal(joinStatoContabile.get(StatoContabile_.valore), autorizzazioneContabile));
+		}
+		if (!CollectionUtils.isEmpty(listaValoriAutorizzazioneLegale)) {
+			Join<PraticaErogazione, StatoLegale> joinStatoLegale = root.join(PraticaErogazione_.statoLegale);
+			predicates.add(joinStatoLegale.get(StatoLegale_.valore).in(listaValoriAutorizzazioneLegale));
+		}
+		if (!CollectionUtils.isEmpty(codiciPratica)) {
+			predicates.add(root.get(PraticaErogazione_.codicePratica).in(codiciPratica));
+		}
+		if (idComponenteTariffaria != null) {
+			predicates.add(cb.equal(root.get(PraticaErogazione_.idComponenteTariffariaAc), idComponenteTariffaria));
+		}
+		if (dataComitatoA != null) {
+			predicates.add(cb.lessThanOrEqualTo(joinComitato.get(OrdineDelGiorno_.dataComitato), dataComitatoA));
+		}
+		if (dataFideiussioneA != null) {
+			predicates.add(cb.lessThanOrEqualTo(root.get(PraticaErogazione_.dataInteressi), dataFideiussioneA));
+		}
+		if (dataComitatoDa != null) {
+			predicates.add(cb.greaterThanOrEqualTo(joinComitato.get(OrdineDelGiorno_.dataComitato), dataComitatoDa));
+		}
+		if (dataFideiussioneDa != null) {
+			predicates.add(cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataFideiussione), dataFideiussioneDa));
+		}
+		if (dataInteressiA != null) {
+			predicates.add(cb.lessThanOrEqualTo(root.get(PraticaErogazione_.dataInteressi), dataInteressiA));
+		}
+		if (dataInteressiDa != null) {
+			predicates.add(cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataInteressi), dataInteressiDa));
+		}
+		if (dataScadenzaA != null) {
+			predicates.add(cb.lessThanOrEqualTo(root.get(PraticaErogazione_.dataScadenza), dataScadenzaA));
+		}
+		if (dataScadenzaDa != null) {
+			predicates.add(cb.greaterThanOrEqualTo(root.get(PraticaErogazione_.dataScadenza), dataScadenzaDa));
+		}
+		if (fideiussione != null) {
+			Join<PraticaErogazione, StatoFideiussione> joinStatoFideiussione = root.join(PraticaErogazione_.statoFideiussione);
+			predicates.add(cb.equal(joinStatoFideiussione.get(StatoFideiussione_.valore), fideiussione));
+		}
+		if (importoA != null) {
+			predicates.add(cb.le(root.get(PraticaErogazione_.impegno), importoA));
+		}
+		if (importoDa != null) {
+			predicates.add(cb.ge(root.get(PraticaErogazione_.impegno), importoDa));
+		}
+		if (numeroNota != null) {
+			predicates.add(cb.equal(joinNota.get(ProcessoErogazione_.numeroNota), numeroNota));
+		}
+		if (idPosizioneFinanziaria != null) {
+			predicates.add(cb.equal(root.get(PraticaErogazione_.idPosizioneFinanziariaAc), idPosizioneFinanziaria));
+		}
+		if (idProcessoErogazione != null) {
+			predicates.add(cb.equal(joinNota.get(ProcessoErogazione_.id), idProcessoErogazione));
+		}
+		if (!CollectionUtils.isEmpty(listaIdSettoriAttivita)) {
+			Join<PraticaErogazione, SettoreAttivita> joinSettoreAttivita = root.join(PraticaErogazione_.settoreAttivita);
+			predicates.add(joinSettoreAttivita.get(SettoreAttivita_.id).in(listaIdSettoriAttivita));
+		}
+		if (!CollectionUtils.isEmpty(statiPratica)) {
+			predicates.add(root.get(PraticaErogazione_.lavorazioneContabile).in(statiPratica));
+		}
+		if (tipoPeriodo != null) {
+			Join<PraticaErogazione, TipoPeriodo> joinTipoPeriodo = root.join(PraticaErogazione_.tipoPeriodo);
+			predicates.add(cb.equal(joinTipoPeriodo, tipoPeriodo));
+		}
+		if (unbundling != null) {
+			Join<PraticaErogazione, StatoUnbundling> joinUnbundling = root.join(PraticaErogazione_.statoUnbundling);
+			predicates.add(cb.equal(joinUnbundling.get(StatoUnbundling_.valore), unbundling));
+		}
+		return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 	}
 
-	
 	/**
 	 * @return the idProcessoErogazione
 	 */
@@ -362,7 +393,8 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	}
 
 	/**
-	 * @param idProcessoErogazione the idProcessoErogazione to set
+	 * @param idProcessoErogazione
+	 *            the idProcessoErogazione to set
 	 */
 	public void setIdProcessoErogazione(BigInteger idProcessoErogazione) {
 		this.idProcessoErogazione = idProcessoErogazione;
@@ -463,6 +495,4 @@ public class PraticaFilter extends PageableFilter<PraticaErogazione>{
 	public void setUnbundling(UnbundlingPratica unbundling) {
 		this.unbundling = unbundling;
 	}
-	
-	
 }

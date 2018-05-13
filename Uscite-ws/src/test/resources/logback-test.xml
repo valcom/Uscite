@@ -12,11 +12,12 @@
 	 <!--Daily rolling file appender -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>C:\CCSE\uscite\log\Uscite.log</File>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>C:\CCSE\uscite\log\history\%d{yyyy,aux}\%d{MMM,aux}\uscite.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>5MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<FileNamePattern>${user.home}\logs\CCSE\uscite\log\history\%d{yyyy,aux}\%d{MMM,aux}\uscite.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+			 <!-- each file should be at most 5MB, keep 360 days worth of history, but at most 20GB -->
+      		 <maxFileSize>5MB</maxFileSize>    
+      		 <maxHistory>360</maxHistory>
+       		 <totalSizeCap>20GB</totalSizeCap>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>

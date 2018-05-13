@@ -3,6 +3,9 @@
  */
 package it.ccse.uscite.application.service;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigInteger;
 
 import org.junit.Test;
@@ -11,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import it.ccse.uscite.domain.OrdineDelGiorno;
 
@@ -30,7 +32,7 @@ public class OrdineDelGiornoServiceTest {
 	public void testLoadByID() {
 		BigInteger id = BigInteger.valueOf(33);
 		OrdineDelGiorno o = ordineDelGiornoService.getOrdineDelGiorno(id);
-		Assert.notNull(o);
-		Assert.isTrue(o.getId().equals(id));
+		assertNotNull(o);
+		assertTrue(o.getId().equals(id));
 	}
 }

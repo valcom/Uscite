@@ -3,6 +3,11 @@
  */
 package it.ccse.uscite.application.service;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigInteger;
 
 import org.junit.Test;
@@ -12,7 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import it.ccse.uscite.domain.PraticaErogazione;
 import it.ccse.uscite.domain.PraticaErogazione.StatoPratica;
@@ -33,9 +38,8 @@ public class PraticaErogazioneServiceTest {
 	public void testLoadByID() {
 		BigInteger id = BigInteger.valueOf(4733);
 		PraticaErogazione pratica = praticaErogazioneService.getById(id);
-		Assert.notNull(pratica, "");
-		boolean test = pratica.getId().equals(id);
-		Assert.isTrue(test);
+		assertNotNull(pratica);
+		assertTrue(pratica.getId().equals(id));
 	}
 
 	@Test
@@ -44,7 +48,7 @@ public class PraticaErogazioneServiceTest {
 		PraticaErogazione pratica = praticaErogazioneService.getById(id);
 		praticaErogazioneService.delete(pratica);
 		pratica = praticaErogazioneService.getById(id);
-		Assert.isNull(pratica.getId());
+		assertNull(pratica);
 	}
 
 	@Test
@@ -54,7 +58,7 @@ public class PraticaErogazioneServiceTest {
 		praticaErogazioneService.delete(pratica);
 		pratica.setLavorazioneContabile(StatoPratica.UNDEFINED);
 		praticaErogazioneService.createPraticaErogazione(pratica);
-		Assert.notNull(pratica);
+		assertNotNull(pratica);
 	}
 
 	@Test
@@ -66,15 +70,15 @@ public class PraticaErogazioneServiceTest {
 		praticaErogazioneService.savePraticaErogazione(pratica);
 		pratica = praticaErogazioneService.getById(id);
 		boolean test = pratica.getAnno().equals(annoDaInserire);
-		Assert.isTrue(test);
+		assertTrue(test);
 	}
 
 	@Test
 	public void testGetByCodicePratica() {
 		String codicePratica = "2013B0215212V11DICXX0GASDSTD01";
 		PraticaErogazione pratica = praticaErogazioneService.getByCodicePratica(codicePratica);
-		Assert.notNull(pratica);
-		Assert.isTrue(pratica.getCodicePratica().equals(codicePratica));
+		assertNotNull(pratica);
+		assertTrue(pratica.getCodicePratica().equals(codicePratica));
 	}
 
 	@Test
@@ -84,6 +88,6 @@ public class PraticaErogazioneServiceTest {
 		filter.setAnnoA(2014);
 		filter.setErogabile(true);
 		Page<PraticaErogazione> pratiche = praticaErogazioneService.searchPraticheErogazione(filter);
-		Assert.notNull(pratiche);
+		assertFalse(CollectionUtils.isEmpty(pratiche.getContent()));
 	}
 }

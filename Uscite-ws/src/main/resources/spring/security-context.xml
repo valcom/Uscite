@@ -8,15 +8,16 @@
 		<authentication-provider >
 			<password-encoder ref="passwordEncoder"/>
 			<user-service > 
-				<user name="gestionale" password="ccse2014" authorities="ROLE_GESTIONALE" />
-				<user name="serviceBus" password="ccse2014" authorities="ROLE_ESB" />
-				<user name="restUser" password="ccse2014" authorities="ROLE_REST_USER" />
-				<user name="admin" password="ccse2014" authorities="ROLE_ESB,ROLE_GESTIONALE,ROLE_REST_USER" />
+				<user name="gestionale" password="$2a$10$m4NPMq10ewW46TwkenuO5uKy9wiZnk7ianuZ8mgcWrKqyqrA4EOiK" authorities="ROLE_GESTIONALE" />
+				<user name="serviceBus" password="$2a$10$m4NPMq10ewW46TwkenuO5uKy9wiZnk7ianuZ8mgcWrKqyqrA4EOiK" authorities="ROLE_ESB" />
+				<user name="restUser" password="$2a$10$m4NPMq10ewW46TwkenuO5uKy9wiZnk7ianuZ8mgcWrKqyqrA4EOiK" authorities="ROLE_REST_USER" />
+				<user name="admin" password="$2a$10$wDzRrZqcRA8ZRo63vsb1CeKel0i6Uya1/IBeUEYs.5irmb1QElTyO" authorities="ROLE_ESB,ROLE_GESTIONALE,ROLE_REST_USER" />
+				<!-- ccse2014-->
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
 	
-	<beans:bean id ="passwordEncoder" class = "org.springframework.security.crypto.password.NoOpPasswordEncoder" factory-method = "getInstance" />
+	<beans:bean id ="passwordEncoder" class = "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	
 	<http request-matcher="regex" security="none" pattern="\/services\/.*\?(wsdl|_wadl)" />
 

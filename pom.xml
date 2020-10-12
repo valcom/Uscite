@@ -25,7 +25,7 @@
 		<commons-lang3.version>3.4</commons-lang3.version>
 		
 		<!-- Test -->
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<mysql-connector.version>8.0.11</mysql-connector.version>
 		
 	</properties>

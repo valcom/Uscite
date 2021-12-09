@@ -13,7 +13,7 @@
 		<junit.version>4.12</junit.version>
 		<mysql-connector.version>8.0.9-rc</mysql-connector.version>
 		<cxf.version>3.1.6</cxf.version>
-		<jackson-databind.version>2.9.9</jackson-databind.version>
+		<jackson-databind.version>2.9.10.8</jackson-databind.version>
 		
 		<build-helper-maven-plugin.version>1.10</build-helper-maven-plugin.version>
 		<maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>

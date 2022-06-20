@@ -26,7 +26,7 @@
 		
 		<!-- Test -->
 		<junit.version>4.12</junit.version>
-		<mysql-connector.version>8.0.11</mysql-connector.version>
+		<mysql-connector.version>8.0.28</mysql-connector.version>
 		
 	</properties>
 

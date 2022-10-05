@@ -10,7 +10,7 @@
 	<properties>
 		<javax.persistence.version>2.2</javax.persistence.version>
 		<!-- Spring -->
-		<spring-data-version>2.0.7.RELEASE</spring-data-version>
+		<spring-data-version>2.1.0.RELEASE</spring-data-version>
 		<!-- Hibernate / JPA -->
 		<hibernate.version>5.2.17.Final</hibernate.version>
 		<ehcache.version>2.10.5</ehcache.version>

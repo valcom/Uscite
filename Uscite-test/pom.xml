@@ -9,7 +9,7 @@
 	<artifactId>uscite-test</artifactId>
 	<packaging>jar</packaging>
 	<properties>
-		<spring-framework.version>4.2.6.RELEASE</spring-framework.version>
+		<spring-framework.version>6.0.0</spring-framework.version>
 		<junit.version>4.12</junit.version>
 		<mysql-connector.version>8.0.9-rc</mysql-connector.version>
 		<cxf.version>3.1.6</cxf.version>
